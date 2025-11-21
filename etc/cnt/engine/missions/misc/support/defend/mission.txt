@@ -1,0 +1,121 @@
+MISSION
+
+############################################
+# Support mission for ships design
+# Created by Shock (Igor Khotin) 16.06.2008
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Design";
+$SideName2 = "Attackers";
+
+
+############################
+#Creating far space objects
+############################
+CREATE "Terra"
+CLASS "Terra Planet"
+AT 20000000 -10000000 100000000;
+
+##################################
+#Creating navigation buoys
+#around space-time anomaly points
+##################################
+
+CREATE "T-8711 W"
+CLASS "Buoy"
+AT	-2000	-100	2000;
+
+CREATE "T-8711 X"
+CLASS "Buoy"
+AT	-2200	100	1800;
+
+CREATE "T-8711 Y"
+CLASS "Buoy"
+AT	-1800	100	1800;
+
+CREATE "T-8711 Z"
+CLASS "Buoy"
+AT	-2000	100	2200;
+
+
+#Creating navigation buoys around space-time anomaly point T-8713
+
+CREATE "T-8713 W"
+CLASS "Buoy"
+AT	2000	-100	2000;
+
+CREATE "T-8713 X"
+CLASS "Buoy"
+AT	2200	100	1800;
+
+CREATE "T-8713 Y"
+CLASS "Buoy"
+AT	1800	100	1800;
+
+CREATE "T-8713 Z"
+CLASS "Buoy"
+AT	2000	100	2200;
+
+
+
+PROC CONSTRUCTOR;
+
+CREATE "Ship"
+	CLASS "Outpost"
+	AT 0 0 0;
+    SET "Ship" SIDE = 1;
+    SET "Ship" HUMAN_CONTROLLED = 1;
+    SET "Ship" AI_CONTROLLED = 1;
+    SET "Ship" YAW = -90;
+    
+    
+	#VIEWS
+	CREATE "CamSat 1"
+		CLASS "CamSat"
+		AT 0 0 -800;
+	SET "CamSat 1" PLAYER_PLACED = 1;
+
+	BIND_CAMERA_TO "CamSat 1";
+END PROC;
+
+
+$GLOBAL = 1;
+$SW = 1;
+
+PROC LCR;
+	CREATE $NAME
+		CLASS "Zero"
+		AT -2000 0 2000;
+END PROC;
+
+PROC RCR;
+	CREATE $NAME
+		CLASS "Zero"
+		AT 2000 0 2000;
+END PROC;
+
+PROC EVERY 10;
+	$NAME = "Zero " + $GLOBAL;
+	CALL LCR;
+	SET $NAME SIDE = 2;
+	SET $NAME AGRESSION = 3;
+	SET $NAME PLAYER_PLACED = 0;
+	SET $NAME PLAYER_CONTROLLED = 0;
+	$GLOBAL = $GLOBAL + 1;	
+
+	$NAME = "Zero " + $GLOBAL;
+	CALL RCR;
+	SET $NAME SIDE = 2;
+	SET $NAME AGRESSION = 3;
+	SET $NAME PLAYER_PLACED = 0;
+	SET $NAME PLAYER_CONTROLLED = 0;
+	$GLOBAL = $GLOBAL + 1;	
+
+	MESSAGE "New zeros exiting from anomaly!";
+END PROC;
+
+PROC ON TIME 0.2;
+	MESSAGE "We are awaiting for enemy fighters incoming" BEEP;
+END PROC;

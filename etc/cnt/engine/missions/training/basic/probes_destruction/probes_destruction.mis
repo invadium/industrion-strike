@@ -1,0 +1,136 @@
+MISSION
+
+############################################
+# Training mission "Probes destruction"
+# Created by Shock (Igor Khotin) 31.05.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Defenders";
+$SideInfo1 = "(you)";
+$SideName2 = "Attackers";
+
+
+#Creating far space objects
+
+CREATE "Proxima"
+CLASS "Moon"
+AT 20000000 -10000000 100000000;
+
+#Creating navigation buoys around space-time anomaly point T-8711
+
+CREATE "T-8711 W"
+CLASS "Buoy"
+AT	-1000	-100	1000;
+
+CREATE "T-8711 X"
+CLASS "Buoy"
+AT	-1200	100	800;
+
+CREATE "T-8711 Y"
+CLASS "Buoy"
+AT	-800	100	800;
+
+CREATE "T-8711 Z"
+CLASS "Buoy"
+AT	-1000	100	1200;
+
+
+
+#Creating navigation buoys around space-time anomaly point T-8713
+
+CREATE "T-8713 W"
+CLASS "Buoy"
+AT	1000	-100	1000;
+
+CREATE "T-8713 X"
+CLASS "Buoy"
+AT	1200	100	800;
+
+CREATE "T-8713 Y"
+CLASS "Buoy"
+AT	800		100	800;
+
+CREATE "T-8713 Z"
+CLASS "Buoy"
+AT	1000	100	1200;
+
+
+#Probe navigation point
+CREATE "Nav Point A"
+	CLASS	"Nav Point"
+	AT	0	0	-200;
+CREATE "Nav Point B"
+	CLASS	"Nav Point"
+	AT	0	0	-1200;
+
+#Protecting side
+CREATE "Turret"
+	CLASS "Flak Turret"
+	AT 0 0 0;
+SET "Turret" SIDE = 1;
+SET "Turret" HUMAN_CONTROLLED = 1;
+
+
+#Probes flight plan
+PLAN 1 SIDE 2
+FOLLOW "Nav Point A" AND "Nav Point B"
+WITH AGRESSION 1;
+
+BIND_CAMERA_TO "Turret";
+
+$Mission = -1;
+$PROBES = 15;
+$KILL = 0;
+$MUSTKILL = 15;
+$GLOBAL = 1;
+$SW = 1;
+$PL = 1;
+
+PROC LCR;
+	CREATE $NAME
+		CLASS "Probe"
+		AT -1000 0 1000;
+END PROC;
+
+PROC RCR;
+	CREATE $NAME
+		CLASS "Probe"
+		AT 1000 0 1000;
+	$PL = 0;
+END PROC;
+
+PROC PROBEKILL;
+	$KILL = $KILL + 1;
+	IF ($KILL == $MUSTKILL) CALL SUCCESS;
+END PROC;
+
+PROC SUCCESS;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC EVERY 8;
+	IF ($GLOBAL > $PROBES) EXIT;
+	$NAME = "Probe " + $GLOBAL;
+	IF ($PL == 1) CALL LCR;
+	IF ($PL == 2) CALL RCR;
+	$PL = $PL + 1;
+	SET $NAME SIDE = 2;
+	SET $NAME PLAN = 1;
+	SET $NAME PLAYER_PLACED = 0;
+	SET $NAME SPEED = 160;
+	SET $NAME KILLPROC = PROBEKILL;
+
+	$GLOBAL = $GLOBAL + 1;	
+	MESSAGE "New probe exiting from anomaly - " + $NAME BEEP;
+END PROC;
+
+
+PROC ON TIME 0.2;
+	MESSAGE "We are awaiting for enemy probes incoming" BEEP;
+END PROC;
+PROC ON TIME 0.3;
+	MESSAGE "Destroy them all" BEEP;
+END PROC;

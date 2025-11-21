@@ -1,0 +1,133 @@
+MISSION
+
+############################################
+# Training mission "Probes destruction"
+# Created by Shock (Igor Khotin) 06.06.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Interseptors";
+$SideInfo1 = "(you)";
+$SideName2 = "Drones";
+
+
+############################
+#Creating far space objects
+############################
+CREATE "Proxima"
+CLASS "Moon"
+AT 20000000 -10000000 100000000;
+
+
+###########################
+#Creating navigation buoys
+###########################
+CREATE "Buoy A"
+CLASS "Buoy"
+AT	0	0	5000;
+
+CREATE "Buoy B"
+CLASS "Buoy"
+AT	-7500	0	0;
+
+CREATE "Buoy C"
+CLASS "Buoy"
+AT	7500	0	0;
+
+CREATE "Buoy D"
+CLASS "Buoy"
+AT	0	0	-10000;
+
+######################################
+# Interseptors side
+######################################
+CREATE "Interseptor"
+	CLASS "Mirage"
+	AT 0 0 0;
+SET "Interseptor" SIDE = 1;
+SET "Interseptor" HUMAN_CONTROLLED = 1;
+
+######################################
+# Drones side
+######################################
+CREATE ""
+	CLASS "Drone"
+	AT -200 0 5000;
+SET "Drone 1" SIDE = 2;
+SET "Drone 1" PLAYER_PLACED = 0;
+
+CREATE ""
+	CLASS "Drone"
+	AT 200 0 5000;
+SET "Drone 2" SIDE = 2;
+SET "Drone 2" PLAYER_PLACED = 0;
+
+CREATE ""
+	CLASS "Drone"
+	AT 0 0 5400;
+SET "Drone 3" SIDE = 2;
+SET "Drone 3" PLAYER_PLACED = 0;
+
+
+#Left drones flight plan
+PLAN 1 SIDE 2
+FOLLOW "Buoy B" AND "Buoy D"
+WITH AGRESSION 1;
+
+#Right drones flight plan
+PLAN 2 SIDE 2
+FOLLOW "Buoy C" AND "Buoy D"
+WITH AGRESSION 1;
+
+#Center drones flight plan
+PLAN 3 SIDE 2
+FOLLOW "Buoy D"
+WITH AGRESSION 1;
+
+
+BIND_CAMERA_TO "Interseptor";
+
+$Mission = -1;
+$KILL = 0;
+$MUSTKILL = 3;
+
+PROC NewKill;
+	$KILL = $KILL + 1;
+	IF ($KILL == $MUSTKILL) CALL MSuccess;
+END PROC;
+
+PROC Reached;
+	IF ($ReachedObject == "Buoy D") CALL MFailed;
+END PROC;
+
+PROC MSuccess;
+	IF ($Mission < -1) EXIT;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC MFailed;
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC ON TIME 0.1;
+	MESSAGE "Intelligence locates drones at Buoy A" BEEP;
+	SET "Drone 1" PLAN = 1;
+	SET "Drone 1" REACHPROC = "Reached";
+	SET "Drone 1" KILLPROC = "NewKill";
+END PROC;
+
+PROC ON TIME 0.2;
+	MESSAGE "Destroy them all before they reached Buoy D" BEEP;
+	SET "Drone 2" PLAN = 2;
+	SET "Drone 2" REACHPROC = "Reached";
+	SET "Drone 2" KILLPROC = "NewKill";
+END PROC;
+
+PROC ON TIME 0.10;
+	SET "Drone 3" PLAN = 3;
+	SET "Drone 3" REACHPROC = "Reached";
+	SET "Drone 3" KILLPROC = "NewKill";	
+END PROC;

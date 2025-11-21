@@ -1,0 +1,152 @@
+MISSION
+
+############################################
+# Dominion
+# Battle #1
+# Mission #1 "First skirmish"
+# Created by Shock (Igor Khotin) 10.06.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Dominion";
+$SideInfo1 = "(you)";
+$SideName2 = "Pirates";
+
+
+#Creating far space objects
+
+CREATE "Magdalena"
+CLASS "Magdalena"
+AT 20000000 -10000000 100000000;
+
+#Creating navigation buoys along trade way
+
+CREATE "TradeWay B1"
+CLASS "Buoy"
+AT	-5000	-1000	50000;
+
+CREATE "TradeWay B2"
+CLASS "Buoy"
+AT	5000	1000	50000;
+
+#Navigation point
+CREATE "Nav Point A"
+	CLASS	"Nav Point"
+	AT	0	0	45000;
+
+
+#######################################
+#			   DOMINION
+#######################################
+
+CREATE "Superb"
+	CLASS "Wasp"
+	AT 0 0 400;
+SET "Superb" SIDE = 1;
+SET "Superb" PLAYER_PLACED = 0;
+
+CREATE ""
+	CLASS "Hornet"
+	AT -800 0 300;
+SET "Hornet 1" SIDE = 1;
+SET "Hornet 1" PLAYER_PLACED = 0;
+SET "Hornet 1" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 500 0 500;
+SET "Hornet 2" SIDE = 1;
+SET "Hornet 2" PLAYER_PLACED = 0;
+SET "Hornet 2" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT -400 0 -1200;
+SET "Hornet 3" SIDE = 1;
+SET "Hornet 3" PLAYER_PLACED = 1;
+SET "Hornet 3" HUMAN_CONTROLLED = 1;
+SET "Hornet 3" SPEED = 50;
+SET "Hornet 3" PLAN = 2;
+
+#Dominion flight plan: protecting corvete
+PLAN 1 SIDE 1
+FOLLOW "Superb"
+WITH AGRESSION 3;
+
+#Dominion flight plan 1: Hornet 3 wingman
+PLAN 2 SIDE 1
+FOLLOW "Nav Point A"
+WITH AGRESSION 1;
+
+BIND_CAMERA_TO "Hornet 3";
+
+##############################################
+#				    PIRATES
+##############################################
+CREATE ""
+	CLASS "Mirage"
+	AT -2000 0 51000;
+SET "Mirage 1" SIDE = 2;
+SET "Mirage 1" PLAYER_PLACED = 0;
+SET "Mirage 1" PLAN = 1;
+SET "Mirage 1" LOAD = 0, 0;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 2000 0 51000;
+SET "Mirage 2" SIDE = 2;
+SET "Mirage 2" PLAYER_PLACED = 0;
+SET "Mirage 2" PLAN = 1;
+SET "Mirage 2" LOAD = 0, 1;
+
+#Pirates flight plan
+PLAN 1 SIDE 2
+	FOLLOW "TradeWay B1" AND "TradeWay B2"
+	WITH AGRESSION 3;
+
+
+$Agressive = 0;
+$Mission = -1;
+$Sc = 0;
+$Kill = 0;
+$MustKill = 2;
+
+PROC SUCCESS;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC FAILED;
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC Scirmish;
+	$Agressive = 1;
+	MESSAGE "Hostile action from unknown ships" COLOR 255 0 0;
+	MESSAGE "Destroy them all" BEEP COLOR 255 0 0;
+	SET "Mirage 1" AGRESSION = 4;
+	SET "Mirage 2" AGRESSION = 4;
+END PROC;
+
+PROC MirageKill;
+	$Kill = $Kill + 1;
+	IF ($Agressive == 0) CALL FAILED;
+	IF ($Kill == $MustKill) CALL SUCCESS;
+END PROC;
+
+PROC HornetKill;
+	CALL FAILED;
+END PROC;
+
+
+PROC ON TIME 0.1;
+	SET "Hornet 3" KILLPROC = "HornetKill";
+	SET "Mirage 1" KILLPROC = "MirageKill";
+	SET "Mirage 2" KILLPROC = "MirageKill";
+END PROC;
+
+PROC EVERY 5;
+	IF ((GET "Hornet 3".Z > 42000) & ($Agressive == 0)) CALL Scirmish;
+END PROC;

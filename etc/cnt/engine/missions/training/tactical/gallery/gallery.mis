@@ -1,0 +1,251 @@
+MISSION
+
+############################################
+# Training mission "Gallery"
+# Created by Shock (Igor Khotin) 19.02.2006
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Dominion";
+$SideName2 = "Industrion";
+
+
+############################
+#Creating far space objects
+############################
+CREATE "Terra"
+CLASS "Terra Planet"
+AT 20000000 -10000000 100000000;
+
+
+$Ship = "";
+PROC SetShip;
+	SET $Ship AI_CONTROLLED = 0;
+	SET $Ship MISSION_CONTROLLED = 1;
+	SET $Ship PLAYER_PLACED = 1;
+	SET $Ship PLAYER_CONTROLLED = 1;
+	SET $Ship SPEED = 0;
+	SET $Ship YAW = -90;
+	#SET $Ship PITCH = -30;
+END PROC;
+
+PROC SetDominion;
+	SET $Ship SIDE = 1;
+	CALL SetShip;
+END PROC;
+
+PROC SetIndustion;
+	SET $Ship SIDE = 2;
+	CALL SetShip;
+END PROC;
+
+      
+$DX = 150;
+$IX = -150;
+$NX = 0;
+$NY = 100;
+#Z-Shift of ships
+$ZShift = -200;
+$DZ = 1000;
+
+$DXX = -15000;
+$IXX = 15000;
+$CY = 20000;
+$ZZShift = -900;
+$DDZ = 5000;
+
+
+PROC CONSTRUCTOR;
+
+	CREATE ""
+		CLASS "Zero"
+		AT	$DX 0 $DZ;
+	$Ship = "Zero 1";
+	CALL SetIndustion;
+
+	CREATE ""
+		CLASS "Infinity"
+		AT	$DX 0 ($DZ + 1 * $ZShift);
+	$Ship = "Infinity 1";
+	CALL SetIndustion;
+	
+
+	CREATE ""
+		CLASS "Indefinite"
+		AT	$DX 0 ($DZ + 2 * $ZShift);
+	$Ship = "Indefinite 1";
+	CALL SetIndustion;
+
+	CREATE ""
+		CLASS "Orion"
+		AT	$DX 0 ($DZ + 3 * $ZShift);
+	$Ship = "Orion 1";
+	CALL SetIndustion;
+
+	CREATE ""
+		CLASS "Comet"
+		AT	$DX 0 ($DZ + 4 * $ZShift);
+	$Ship = "Comet 1";
+	CALL SetIndustion;	
+
+
+
+	#Dominion Fighters
+	CREATE "Hornet 1"
+		CLASS "Hornet"
+		AT $IX 0 $DZ;
+	$Ship = "Hornet 1";
+	CALL SetDominion;
+
+
+	CREATE ""
+		CLASS "Falcon"
+		AT $IX 0 ($DZ + 1 * $ZShift);
+	$Ship = "Falcon 1";
+	CALL SetDominion;
+
+	CREATE ""
+		CLASS "Phantom"
+		AT $IX 0 ($DZ + 2 * $ZShift);
+	$Ship = "Phantom 1";
+	CALL SetDominion;
+
+	CREATE ""
+		CLASS "Dragonfly"
+		AT $IX 0 ($DZ + 3 * $ZShift);
+	$Ship = "Dragonfly 1";
+	CALL SetDominion;
+
+	CREATE ""
+		CLASS "Tornado"
+		AT $IX 0 ($DZ + 4 * $ZShift);
+	$Ship = "Tornado 1";
+	CALL SetDominion;
+
+	CREATE ""
+		CLASS "Raptor"
+		AT $IX 0 ($DZ + 5 * $ZShift);
+	$Ship = "Raptor 1";
+	CALL SetDominion;
+
+
+
+	#Neutral ships
+	CREATE ""
+		CLASS "Mirage"
+		AT $NX $NY ($DZ);
+	$Ship = "Mirage 1";
+	CALL SetShip;
+
+	CREATE ""
+		CLASS "Drone"
+		AT $NX $NY ($DZ + 1 * $ZShift);
+	$Ship = "Drone 1";
+	CALL SetShip;
+
+	CREATE ""
+		CLASS "Shuttle"
+		AT $NX $NY ($DZ + 2 * $ZShift);
+	$Ship = "Shuttle 1";
+	CALL SetShip;
+
+	CREATE ""
+		CLASS "Flak Turret"
+		AT $NX $NY ($DZ + 3 * $ZShift);
+	$Ship = "Flak Turret 1";
+	CALL SetShip;
+
+	CREATE ""
+		CLASS "Laser Turret"
+		AT $NX $NY ($DZ + 4 * $ZShift);
+	$Ship = "Laser Turret 1";
+	CALL SetShip;
+
+	CREATE ""
+		CLASS "Constellation"
+		AT $NX $NY ($DZ + 200);
+	$Ship = "Constellation 1";
+	CALL SetShip;	
+
+
+
+
+	#Industion CapShips
+	CREATE ""
+		CLASS "Lynx"
+		AT $IXX $CY ($DDZ + 0 * $ZZShift);
+	$Ship = "Lynx 1";
+	CALL SetIndustion;
+
+	CREATE ""
+		CLASS "Panther"
+		AT $IXX $CY ($DDZ + 1 * $ZZShift);
+	$Ship = "Panther 1";
+	CALL SetIndustion;
+
+	CREATE ""
+		CLASS "Leopard"
+		AT $IXX $CY ($DDZ + 2 * $ZZShift);
+	$Ship = "Leopard 1";
+	CALL SetIndustion;
+
+	CREATE ""
+		CLASS "Jaguar"
+		AT $IXX $CY ($DDZ + 3 * $ZZShift);
+	$Ship = "Jaguar 1";
+	CALL SetIndustion;
+
+	CREATE ""
+		CLASS "Tiger"
+		AT $IXX $CY ($DDZ + 4 * $ZZShift);
+	$Ship = "Tiger 1";
+	CALL SetIndustion;
+
+
+	#Dominion CapShips
+	CREATE ""
+		CLASS "Wasp"
+		AT $DXX $CY ($DDZ + 0 * $ZZShift);
+	$Ship = "Wasp 1";
+	CALL SetDominion;	
+
+	CREATE ""
+		CLASS "Oscar"
+		AT $DXX $CY ($DDZ + 1 * $ZZShift);
+	$Ship = "Oscar 1";
+	CALL SetDominion;
+
+
+	CREATE ""
+		CLASS "Maradeur"
+		AT $DXX $CY ($DDZ + 2 * $ZZShift);
+	$Ship = "Maradeur 1";
+	CALL SetDominion;
+
+	CREATE ""
+		CLASS "Tsunami"
+		AT $DXX $CY ($DDZ + 3 * $ZZShift);
+	$Ship = "Tsunami 1";
+	CALL SetDominion;
+
+
+	#VIEWS
+	CREATE "Fighters"
+		CLASS "CamSat"
+		AT 0 0 0;
+	SET "Fighters" PLAYER_PLACED = 1;
+
+	CREATE "Dominion CapShips"
+		CLASS "CamSat"
+		AT $DXX $CY -2000;
+	SET "Dominion CapShips" PLAYER_PLACED = 1;
+
+	CREATE "Industion CapShips"
+		CLASS "CamSat"
+		AT $IXX $CY -2000;
+	SET "Industion CapShips" PLAYER_PLACED = 1;
+
+	BIND_CAMERA_TO "Fighters";
+
+END PROC;

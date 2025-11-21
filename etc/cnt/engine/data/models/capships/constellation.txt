@@ -1,0 +1,303 @@
+MODEL
+#SHIP | FIGHTER | WEAPON | MISSILE | STATIC
+SHIP;
+NAME = "Constellation";
+IDNAME = "CST";
+IMAGE = "data/models/images/constellation.gif";
+COST = 900;
+
+RADIUS = 400;
+ENERGY = 40;
+RECHARGE = 1;
+SHIELD = 250;
+SHRECHARGE = 1;
+HULL = 400;
+FUELTANK = 75000;
+
+#Maneuring properties
+ACCELERATION = 1;
+FUEL_DEPLETION = 8;
+MAXSPEED = 75;
+CRUISESPEED = 60;
+MAXYAW = 60;
+YAW_ACCELERATION = 5;
+YAW_FUEL_DEPLETION = 4;
+MAXPITCH = 60;
+PITCH_ACCELERATION = 5;
+PITCH_FUEL_DEPLETION = 4;
+MAXROLL = 60;
+ROLL_ACCELERATION = 5;
+ROLL_FUEL_DEPLETION = 4;
+
+MARK = 5;
+
+#Mount some weapons
+MOUNT_TURRET "laser 7MW" TO 0 -20 20
+		WITH SECTOR 1 1 0 0 1 1 0 0;
+MOUNT_TURRET "laser 7MW" TO 0  10 0
+		WITH SECTOR 0 0 1 1 0 0 1 1;
+
+FRAGMENT "Fragment T2";
+FRAGMENTS_COUNT = 6;
+BLOW "Destruct";
+BLOWS_COUNT = 4;
+
+##################  HULL  #####################
+COLOR	140 140 140;
+#top panels
+SOLID METAL 10 RECTANGLE
+	-20		5		70
+	20		5		70
+	40		10		30
+	-40		10		30;
+SOLID METAL 10 RECTANGLE
+	-40		10		30
+	40		10		30
+	40		10		-30
+	-40		10		-30;
+SOLID METAL 10 RECTANGLE
+	-30		8		-50
+	30		8		-50
+	40		10		-30
+	-40		10		-30;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	-20		-15		70
+	20		-15		70
+	40		-20		30
+	-40		-20		30;
+SOLID METAL 10 RECTANGLE
+	-40		-20		30
+	40		-20		30
+	40		-20		-30
+	-40		-20		-30;
+SOLID METAL 10 RECTANGLE
+	-30		-15		-50
+	30		-15		-50
+	40		-20		-30
+	-40		-20		-30;
+
+################# SIDE ######################
+SOLID METAL 10 RECTANGLE
+	-20		-15		70
+	-20		5		70
+	-40		10		30
+	-40		-20		30;
+SOLID METAL 10 RECTANGLE
+	-40		-20		30
+	-40		10		30
+	-40		10		-30
+	-40		-20		-30;
+SOLID METAL 10 RECTANGLE
+	-40		10		-30
+	-40		-20		-30
+	-30		-15		-50
+	-30		8		-50;
+
+SOLID METAL 10 RECTANGLE
+	20		-15		70
+	20		5		70
+	40		10		30
+	40		-20		30;
+SOLID METAL 10 RECTANGLE
+	40		-20		30
+	40		10		30
+	40		10		-30
+	40		-20		-30;
+SOLID METAL 10 RECTANGLE
+	40		10		-30
+	40		-20		-30
+	30		-15		-50
+	30		8		-50;
+
+############ ENGINE & CABIN ################
+COLOR	0 0 120;
+SOLID METAL 250 RECTANGLE
+	-20		5		70
+	-20		-15		70
+	20		-15		70
+	20		5		70;
+
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	-30		8		-50
+	-30		-15		-50
+	30		-15		-50
+	30		8		-50;
+
+
+
+###############################################
+#                LEFT CONTAINER
+###############################################
+COLOR	140 140 140;
+#top panels
+SOLID METAL 10 RECTANGLE
+	-50		25		-20
+	-40		25		-20
+	-30		30		-40
+	-60		30		-40;
+SOLID METAL 10 RECTANGLE
+	-60		30		-40
+	-30		30		-40
+	-30		30		-100
+	-60		30		-100;
+SOLID METAL 10 RECTANGLE
+	-50		25		-110
+	-40		25		-110
+	-30		30		-100
+	-60		30		-100;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	-50		15		-20
+	-40		15		-20
+	-30		10		-40
+	-60		10		-40;
+SOLID METAL 10 RECTANGLE
+	-60		10		-40
+	-30		10		-40
+	-30		10		-100
+	-60		10		-100;
+SOLID METAL 10 RECTANGLE
+	-50		15		-110
+	-40		15		-110
+	-30		10		-100
+	-60		10		-100;
+
+################# SIDE ######################
+SOLID METAL 10 RECTANGLE
+	-50		15		-20
+	-50		25		-20
+	-60		30		-40
+	-60		10		-40;
+SOLID METAL 10 RECTANGLE
+	-60		10		-40
+	-60		30		-40
+	-60		30		-100
+	-60		10		-100;
+SOLID METAL 10 RECTANGLE
+	-60		30		-100
+	-60		10		-100
+	-50		15		-110
+	-50		25		-110;
+
+SOLID METAL 10 RECTANGLE
+	-40		15		-20
+	-40		25		-20
+	-30		30		-40
+	-30		10		-40;
+SOLID METAL 10 RECTANGLE
+	-30		10		-40
+	-30		30		-40
+	-30		30		-100
+	-30		10		-100;
+SOLID METAL 10 RECTANGLE
+	-30		30		-100
+	-30		10		-100
+	-40		15		-110
+	-40		25		-110;
+
+############ ENGINE & CABIN ################
+COLOR	0 0 120;
+SOLID METAL 250 RECTANGLE
+	-50		25		-20
+	-50		15		-20
+	-40		15		-20
+	-40		25		-20;
+
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	-50		25		-110
+	-50		15		-110
+	-40		15		-110
+	-40		25		-110;
+
+###############################################
+#                RIGHT CONTAINER
+###############################################
+COLOR	140 140 140;
+#top panels
+SOLID METAL 10 RECTANGLE
+	50		25		-20
+	40		25		-20
+	30		30		-40
+	60		30		-40;
+SOLID METAL 10 RECTANGLE
+	60		30		-40
+	30		30		-40
+	30		30		-100
+	60		30		-100;
+SOLID METAL 10 RECTANGLE
+	50		25		-110
+	40		25		-110
+	30		30		-100
+	60		30		-100;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	50		15		-20
+	40		15		-20
+	30		10		-40
+	60		10		-40;
+SOLID METAL 10 RECTANGLE
+	60		10		-40
+	30		10		-40
+	30		10		-100
+	60		10		-100;
+SOLID METAL 10 RECTANGLE
+	50		15		-110
+	40		15		-110
+	30		10		-100
+	60		10		-100;
+
+################# SIDE ######################
+SOLID METAL 10 RECTANGLE
+	50		15		-20
+	50		25		-20
+	60		30		-40
+	60		10		-40;
+SOLID METAL 10 RECTANGLE
+	60		10		-40
+	60		30		-40
+	60		30		-100
+	60		10		-100;
+SOLID METAL 10 RECTANGLE
+	60		30		-100
+	60		10		-100
+	50		15		-110
+	50		25		-110;
+
+SOLID METAL 10 RECTANGLE
+	40		15		-20
+	40		25		-20
+	30		30		-40
+	30		10		-40;
+SOLID METAL 10 RECTANGLE
+	30		10		-40
+	30		30		-40
+	30		30		-100
+	30		10		-100;
+SOLID METAL 10 RECTANGLE
+	30		30		-100
+	30		10		-100
+	40		15		-110
+	40		25		-110;
+
+############ ENGINE & CABIN ################
+COLOR	0 0 120;
+SOLID METAL 250 RECTANGLE
+	50		25		-20
+	50		15		-20
+	40		15		-20
+	40		25		-20;
+
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	50		25		-110
+	50		15		-110
+	40		15		-110
+	40		25		-110;
+
+INCREASE_SCALE 10;

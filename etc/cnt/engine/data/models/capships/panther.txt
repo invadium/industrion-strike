@@ -1,0 +1,270 @@
+MODEL
+#SHIP | FIGHTER | WEAPON | MISSILE | STATIC
+SHIP;
+NAME = "Panther";
+IDNAME = "PNT";
+IMAGE = "data/models/images/panther.gif";
+
+RADIUS = 600;
+ENERGY = 400;
+RECHARGE = 6;
+SHIELD = 400;
+SHRECHARGE = 1;
+HULL = 700;
+FUELTANK = 150000;
+
+#Maneuring properties
+ACCELERATION = 2;
+FUEL_DEPLETION = 5;
+MAXSPEED = 75;
+CRUISESPEED = 60;
+MAXYAW = 60;
+YAW_ACCELERATION = 5;
+YAW_FUEL_DEPLETION = 2;
+MAXPITCH = 60;
+PITCH_ACCELERATION = 5;
+PITCH_FUEL_DEPLETION = 2;
+MAXROLL = 60;
+ROLL_ACCELERATION = 5;
+ROLL_FUEL_DEPLETION = 2;
+
+MARK = 6;
+
+#Mount some weapons
+#Mount some weapons
+MOUNT_TURRET "laser 10MW" TO 0 -40 -50
+		WITH SECTOR 1 1 0 0 1 1 0 0;
+
+MOUNT_TURRET "laser 10MW" TO 0  10 0
+		WITH SECTOR 0 0 1 1 0 0 1 1;
+
+#front turret
+MOUNT_TURRET "laser 10MW" TO 0  -7 100
+		WITH SECTOR 1 1 1 1 0 0 0 0;
+
+MOUNT_LAUNCHER "sparrow" CAPACITY 24 TO 0 400 0;
+
+
+FRAGMENT "Fragment T2";
+FRAGMENTS_COUNT = 10;
+BLOW "Destruct";
+BLOWS_COUNT = 5;
+
+##################  HULL  #####################
+COLOR	140 140 140;
+#top panels
+SOLID METAL 10 RECTANGLE
+	-10		-5		100
+	10		-5		100
+	40		-10		60
+	-40		-10		60;
+SOLID METAL 10 RECTANGLE
+	-40		-10		60
+	40		-10		60
+	40		-10		-70
+	-40		-10		-70;
+SOLID METAL 10 RECTANGLE
+	-20		-5		-90
+	20		-5		-90
+	40		-10		-70
+	-40		-10		-70;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	-10		5		100
+	10		5		100
+	40		10		60
+	-40		10		60;
+SOLID METAL 10 RECTANGLE
+	-40		10		60
+	40		10		60
+	40		10		-70
+	-40		10		-70;
+SOLID METAL 10 RECTANGLE
+	-20		5		-90
+	20		5		-90
+	40		10		-70
+	-40		10		-70;
+
+################# SIDE ######################
+SOLID METAL 10 RECTANGLE
+	-10		-5		100
+	-10		5		100
+	-40		10		60
+	-40		-10		60;
+SOLID METAL 10 RECTANGLE
+	-40		-10		60
+	-40		10		60
+	-40		10		0
+	-40		-10		0;
+SOLID METAL 10 RECTANGLE
+	-40		10		-70
+	-40		-10		-70
+	-20		-5		-90
+	-20		5		-90;
+
+SOLID METAL 10 RECTANGLE
+	10		-5		100
+	10		5		100
+	40		10		60
+	40		-10		60;
+SOLID METAL 10 RECTANGLE
+	40		-10		60
+	40		10		60
+	40		10		0
+	40		-10		0;
+SOLID METAL 10 RECTANGLE
+	40		10		-70
+	40		-10		-70
+	20		-5		-90
+	20		5		-90;
+
+############ ENGINE & CABIN ################
+COLOR	0 0 120;
+SOLID METAL 250 RECTANGLE
+	-10		5		100
+	-10		-5		100
+	10		-5		100
+	10		5		100;
+
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	-20		5		-90
+	-20		-5		-90
+	20		-5		-90
+	20		5		-90;
+
+############# SMALL HULL ################
+COLOR	190 190 190;
+#top panels
+SOLID METAL 10 RECTANGLE
+	-10		-35		-10
+	10		-35		-10
+	20		-40		-30
+	-20		-40		-30;
+SOLID METAL 10 RECTANGLE
+	-20		-40		-30
+	20		-40		-30
+	20		-40		-60
+	-20		-40		-60;
+SOLID METAL 10 RECTANGLE
+	-10		-35		-70
+	10		-35		-70
+	20		-40		-60
+	-20		-40		-60;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	-10		-35		-10
+	10		-35		-10
+	20		-30		-30
+	-20		-30		-30;
+SOLID METAL 10 RECTANGLE
+	-20		-30		-30
+	20		-30		-30
+	20		-30		-60
+	-20		-30		-60;
+SOLID METAL 10 RECTANGLE
+	-10		-35		-70
+	10		-35		-70
+	20		-30		-60
+	-20		-30		-60;
+
+########## SMALL SIDES ##########
+SOLID METAL 10 TRIANGLE
+	-10		-35		-10
+	-20		-30		-30
+	-20		-40		-30;
+SOLID METAL 10 RECTANGLE
+	-20		-30		-30
+	-20		-40		-30
+	-20		-40		-60
+	-20		-30		-60;
+SOLID METAL 10 TRIANGLE
+	-10		-35		-70
+	-20		-40		-60
+	-20		-30		-60;
+
+SOLID METAL 10 TRIANGLE
+	10		-35		-10
+	20		-30		-30
+	20		-40		-30;
+SOLID METAL 10 RECTANGLE
+	20		-30		-30
+	20		-40		-30
+	20		-40		-60
+	20		-30		-60;
+SOLID METAL 10 TRIANGLE
+	10		-35		-70
+	20		-40		-60
+	20		-30		-60;
+
+############## BEARING ###################
+COLOR 120 120 120;
+LINE
+	-5		-10		-40
+	-5		-30		-40;
+LINE
+	5		-10		-40
+	5		-30		-40;
+LINE
+	-5		-10		-50
+	-5		-30		-50;
+LINE
+	5		-10		-50
+	5		-30		-50;
+
+LINE
+	-5		-40		-40
+	-5		-60		-40;
+LINE
+	5		-40		-40
+	5		-60		-40;
+LINE
+	-5		-40		-50
+	-5		-60		-50;
+LINE
+	5		-40		-50
+	5		-60		-50;
+############### WINGS ####################
+COLOR	100 100 100;
+SOLID METAL 100 RECTANGLE
+	-120	0		0
+	-40		-10		0
+	-40		-10		-70
+	-120	0		-30;
+SOLID METAL 100 RECTANGLE
+	-120	0		0
+	-40		10		0
+	-40		10		-70
+	-120	0		-30;
+SOLID METAL 100 TRIANGLE
+	-40		-10		0
+	-40		10		0
+	-120	0		0;
+SOLID METAL 100 TRIANGLE
+	-40		-10		-70
+	-40		10		-70
+	-120	0		-30;
+
+SOLID METAL 100 RECTANGLE
+	120		0		0
+	40		-10		0
+	40		-10		-70
+	120		0		-30;
+SOLID METAL 100 RECTANGLE
+	120		0		0
+	40		10		0
+	40		10		-70
+	120		0		-30;
+SOLID METAL 100 TRIANGLE
+	40		-10		0
+	40		10		0
+	120		0		0;
+SOLID METAL 100 TRIANGLE
+	40		-10		-70
+	40		10		-70
+	120		0		-30;
+
+
+INCREASE_SCALE 12;

@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+
+<project name="Industrion" basedir="." default="help">
+
+	<property name="name" value="industrion"/>
+	
+	<property name="src.dir" value="src"/>
+	<property name="doc.dir" value="doc"/>
+	<property name="etc.dir" value="etc"/>
+	<property name="cnt.dir" value="${etc.dir}/cnt"/>
+
+	<property name="out.dir" value="out"/>
+	<property name="dist.dir" value="${out.dir}"/>
+	<property name="jar.dir" value="${out.dir}/engine"/>	
+	<property name="bin.dir" value="bin"/>
+	<property name="web.dir" value="${bin.dir}"/>
+	
+	<property name="app.properties" value="${etc.dir}/app.properties"/>
+
+	<target name="help">	
+		<echo message=""/>
+		<echo message="Industrion build script"/>
+		<echo message="------------------------------------------------------"/>
+		<echo message=""/>
+		<echo message="Available targets are:"/>
+		<echo message=""/>
+		<echo message="clean    --> Clean output dirs"/>
+		<echo message="build    --> Compile main Java sources and copy libraries"/>
+		<echo message="run      --> Run the application"/>
+		<echo message=""/>
+	</target>
+	
+	<target name="clean" description="Clean output dirs (build, weblib, dist)">
+		<delete dir="${bin.dir}"/>
+		<delete dir="${out.dir}"/>
+		<delete dir="${doc.dir}"/>
+	</target>
+	
+	<target name="make" description="Compile main source tree java files into class files, generate jar file">
+		<mkdir dir="${bin.dir}"/>
+		
+		<javac destdir="${bin.dir}" source="8" target="8" debug="true"
+				deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}"/>
+		</javac>
+	</target>
+	
+	<target name="jar">
+		<mkdir dir="${jar.dir}"/>
+		<jar jarfile="${jar.dir}/${name}.jar" compress="true" basedir="${bin.dir}">
+		</jar>
+		
+		<!-- Copy static web content -->
+		<copy todir="${dist.dir}">
+			<fileset dir="${cnt.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="doc" description="Create complete Javadoc documentation">
+		<mkdir dir="${doc.dir}"/>		
+		<javadoc
+			destdir="${doc.dir}"
+	        	author="true"
+	        	version="true"
+	        	use="true"
+	        	windowtitle="${ant.project.name}"
+	        	sourcepath="${src.dir}"
+	        	classpath="${bin.dir}"
+	        	packagenames="*"
+	        	verbose="false">
+	        	<doctitle><![CDATA[<h1>${ant.project.name}</h1>]]></doctitle>
+	        	<bottom>
+		            <![CDATA[<i>Copyright &#169; 2003 All Rights Reserved.</i>]]>
+		        </bottom>
+		        <tag name="todo" scope="all" description="To do:"/>
+		</javadoc>	
+	</target>
+	
+	<target name="bver" description="increase build version">
+		<echo message="Build Versioning..."/>	
+		
+		<propertyfile file="${app.properties}">
+		  <entry  key="date" type="date" value="now" pattern="yyyy-MM-dd hh:mm"/>
+		  <entry  key="build" type="int" operation="+" value="1"/>
+		  <entry  key="revision_build" type="int" operation="+" value="1"/>
+		</propertyfile>
+	</target>
+	
+	<target name="sver" description="increase subversion">
+		<echo message="Subversioning..."/>
+
+		<propertyfile file="${app.properties}">
+		  <entry  key="date" type="date" value="now" pattern="yyyy-MM-dd hh:mm"/>
+		  <entry  key="revision" type="int" operation="+" value="1"/>
+		  <entry  key="revision_build" type="int" operation="=" value="0"/>
+		</propertyfile>
+	</target>
+	
+	<target name="version" description="get version info">
+		<loadproperties srcFile="${app.properties}"/>
+		
+		<echo message="app: ${app}"/>
+		<echo message="version: ${version}.${revision}.${revision_build}"/>
+		<echo message="build: #${build}"/>
+		<echo message="date: ${date}"/>
+	</target>
+	
+	<target name="run" description="Runs the application">
+        <java dir="${out.dir}" jar="${out.dir}/${name}.jar" args="startup" fork="true"/>
+	</target>
+
+	<target name="probe" depends="clean,make,doc,jar,version" description="probe build"/>
+	<target name="build" depends="clean,make,doc,bver,jar,version" description="regular build of the application"/>
+	<target name="revision" depends="clean,make,doc,bver,sver,jar,version" description="Next revision of the application"/>
+</project>

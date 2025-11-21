@@ -1,0 +1,31 @@
+#######################################
+# hight-speed light flak laser
+# mounted mainly on flak turrets
+#
+# Created by Igor Khotin (aka Shock)
+#######################################
+
+MODEL
+WEAPON;
+NAME = "laser 5MW";
+IDNAME = "LS5";
+SOUND = 0;
+
+RADIUS = 200;
+SHIELD = 5;
+HULL = 0;
+FUELTANK = 0;
+MAXSPEED = 1800;
+LIFETIME = 40;
+RECHARGETIME = 6;
+TARGET_FACTOR = 2100;
+
+MARK = 0;
+FARCOLOR	240 160 45;
+FARSIZE = 1;
+
+COLOR 	240 160 45;
+
+VOLUME 4 LINE
+0	0	-200
+0	0	200;

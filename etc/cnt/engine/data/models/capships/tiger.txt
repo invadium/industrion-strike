@@ -1,0 +1,323 @@
+MODEL
+#SHIP | FIGHTER | WEAPON | MISSILE | STATIC
+SHIP;
+NAME = "Tiger";
+IDNAME = "TGR";
+IMAGE = "data/models/images/tiger.gif";
+COST = 2500000;
+
+RADIUS = 1500;
+ENERGY = 3500;
+RECHARGE = 20;
+SHIELD = 2500;
+SHRECHARGE = 2;
+HULL = 12000;
+FUELTANK = 4500000;
+
+#Maneuring properties
+ACCELERATION = 1;
+FUEL_DEPLETION = 35;
+MAXSPEED = 45;
+CRUISESPEED = 40;
+MAXYAW = 50;
+YAW_ACCELERATION = 10;
+YAW_FUEL_DEPLETION = 10;
+MAXPITCH = 50;
+PITCH_ACCELERATION = 10;
+PITCH_FUEL_DEPLETION = 10;
+MAXROLL = 50;
+ROLL_ACCELERATION = 10;
+ROLL_FUEL_DEPLETION = 10;
+
+MARK = 8;
+
+#Mount some weapons
+#Mount main caliber
+MOUNT_TURRET "laser 50MW" TO 0 -15 0
+		WITH SECTOR 1 1 1 1 0 0 0 0;
+MOUNT_TURRET "laser 50MW" TO 0  15 0
+		WITH SECTOR 0 0 0 0 1 1 1 1;
+
+MOUNT_TURRET "laser 10MW" TO -85 -10 -10
+		WITH SECTOR 1 1 1 1 0 0 0 0;
+MOUNT_TURRET "laser 10MW" TO -85  10 -10
+		WITH SECTOR 0 0 0 0 1 1 1 1;
+
+MOUNT_TURRET "laser 10MW" TO 85 -10 -10
+		WITH SECTOR 1 1 1 1 0 0 0 0;
+MOUNT_TURRET "laser 10MW" TO 85  10 -10
+		WITH SECTOR 0 0 0 0 1 1 1 1;
+
+
+#launchers
+MOUNT_LAUNCHER "avalanche" CAPACITY 48 TO 0 200 0;
+MOUNT_LAUNCHER "sparrow" CAPACITY 48 TO 0 200 0;
+
+
+FRAGMENT "Fragment T2";
+FRAGMENTS_COUNT = 10;
+BLOW "Destruct";
+BLOWS_COUNT = 5;
+
+FRAMES_COUNT = 80;
+
+##################  HULL  #####################
+COLOR	140 140 140;
+#top panels
+SOLID METAL 10 RECTANGLE
+	-10		0		100
+	10		0		100
+	10		-15		0
+	-10		-15		0;
+SOLID METAL 10 RECTANGLE
+	-10		-15		0
+	10		-15		0
+	15		-5		-80
+	-15		-5		-80;
+
+
+SOLID METAL 10 TRIANGLE
+	-10		0		100
+	-10		-15		0
+	-30		0		-10;
+SOLID METAL 10 TRIANGLE
+	10		0		100
+	10		-15		0
+	30		0		-10;
+
+SOLID METAL 10 TRIANGLE
+	-10		-15		0
+	-15		-5		-80
+	-30		0		-10;
+SOLID METAL 10 TRIANGLE
+	10		-15		0
+	15		-5		-80
+	30		0		-10;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	-10		0		100
+	10		0		100
+	10		15		0
+	-10		15		0;
+SOLID METAL 10 RECTANGLE
+	-10		15		0
+	10		15		0
+	15		5		-80
+	-15		5		-80;
+
+SOLID METAL 10 TRIANGLE
+	-10		0		100
+	-10		15		0
+	-30		0		-10;
+SOLID METAL 10 TRIANGLE
+	10		0		100
+	10		15		0
+	30		0		-10;
+
+SOLID METAL 10 TRIANGLE
+	-10		15		0
+	-15		5		-80
+	-30		0		-10;
+SOLID METAL 10 TRIANGLE
+	10		15		0
+	15		5		-80
+	30		0		-10;
+
+############### ENGINE #################
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	-15		5		-80
+	-15     -5      -80
+	15		-5		-80
+	15		5		-80;
+
+
+##############  LEFT COCKPIT  ##################
+COLOR	140 140 140;
+#top panels
+SOLID METAL 10 RECTANGLE
+	-90		0		20
+	-80		0		20
+	-80		-10		-10
+	-90		-10		-10;
+SOLID METAL 10 RECTANGLE
+	-90		-10		-10
+	-80		-10		-10
+	-75		-3		-40
+	-95		-3		-40;
+
+
+SOLID METAL 10 TRIANGLE
+	-90		0		20
+	-90		-10		-10
+	-100	0		-15;
+SOLID METAL 10 TRIANGLE
+	-80		0		20
+	-80		-10		-10
+	-70		0		-15;
+
+SOLID METAL 10 TRIANGLE
+	-95		-3		-40
+	-90		-10		-10
+	-100	0		-15;
+SOLID METAL 10 TRIANGLE
+	-75		-3		-40
+	-80		-10		-10
+	-70		0		-15;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	-90		0		20
+	-80		0		20
+	-80		10		-10
+	-90		10		-10;
+SOLID METAL 10 RECTANGLE
+	-90		10		-10
+	-80		10		-10
+	-75		3		-40
+	-95		3		-40;
+
+
+SOLID METAL 10 TRIANGLE
+	-90		0		20
+	-90		10		-10
+	-100	0		-15;
+SOLID METAL 10 TRIANGLE
+	-80		0		20
+	-80		10		-10
+	-70		0		-15;
+
+SOLID METAL 10 TRIANGLE
+	-95		3		-40
+	-90		10		-10
+	-100	0		-15;
+SOLID METAL 10 TRIANGLE
+	-75		3		-40
+	-80		10		-10
+	-70		0		-15;
+
+############### LEFT ENGINE #################
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	-95		3		-40
+	-95     -3      -40
+	-75		-3		-40
+	-75		3		-40;
+
+##############  RIGHT COCKPIT  ##################
+COLOR	140 140 140;
+#top panels
+SOLID METAL 10 RECTANGLE
+	90		0		20
+	80		0		20
+	80		-10		-10
+	90		-10		-10;
+SOLID METAL 10 RECTANGLE
+	90		-10		-10
+	80		-10		-10
+	75		-3		-40
+	95		-3		-40;
+
+
+SOLID METAL 10 TRIANGLE
+	90		0		20
+	90		-10		-10
+	100	0		-15;
+SOLID METAL 10 TRIANGLE
+	80		0		20
+	80		-10		-10
+	70		0		-15;
+
+SOLID METAL 10 TRIANGLE
+	95		-3		-40
+	90		-10		-10
+	100	0		-15;
+SOLID METAL 10 TRIANGLE
+	75		-3		-40
+	80		-10		-10
+	70		0		-15;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	90		0		20
+	80		0		20
+	80		10		-10
+	90		10		-10;
+SOLID METAL 10 RECTANGLE
+	90		10		-10
+	80		10		-10
+	75		3		-40
+	95		3		-40;
+
+
+SOLID METAL 10 TRIANGLE
+	90		0		20
+	90		10		-10
+	100	0		-15;
+SOLID METAL 10 TRIANGLE
+	80		0		20
+	80		10		-10
+	70		0		-15;
+
+SOLID METAL 10 TRIANGLE
+	95		3		-40
+	90		10		-10
+	100	0		-15;
+SOLID METAL 10 TRIANGLE
+	75		3		-40
+	80		10		-10
+	70		0		-15;
+
+############### RIGHT ENGINE #################
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	95		3		-40
+	95     -3      -40
+	75		-3		-40
+	75		3		-40;
+
+
+############### RIGHT WING #####################
+COLOR	140 140 140;
+#top panel
+SOLID METAL 10 RECTANGLE
+	-70		0		-15
+	-30		0		-10
+	-15     -5      -80
+	-75		-3		-40;
+#bottom panel
+SOLID METAL 10 RECTANGLE
+	-70		0		-15
+	-30		0		-10
+	-15    	5		-80
+	-75		3		-40;
+#back panel
+SOLID METAL 10 RECTANGLE
+	-75		-3		-40
+	-75		3		-40
+	-15		5		-80
+	-15     -5      -80;
+
+############### LEFT WING #####################
+COLOR	140 140 140;
+#top panel
+SOLID METAL 10 RECTANGLE
+	70		0		-15
+	30		0		-10
+	15     -5      -80
+	75		-3		-40;
+#bottom panel
+SOLID METAL 10 RECTANGLE
+	70		0		-15
+	30		0		-10
+	15    	5		-80
+	75		3		-40;
+#back panel
+SOLID METAL 10 RECTANGLE
+	75		-3		-40
+	75		3		-40
+	15		5		-80
+	15     -5      -80;
+
+INCREASE_SCALE 20;

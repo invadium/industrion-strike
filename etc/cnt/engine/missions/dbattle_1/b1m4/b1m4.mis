@@ -1,0 +1,268 @@
+MISSION
+
+############################################
+# Dominion
+# Battle #1
+# Mission #4 "Stop the convoy"
+# Created by Shock (Igor Khotin) 14.12.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Dominion";
+$SideInfo1 = "(you)";
+$SideName2 = "Industrion";
+
+#######################################
+#              SPACE
+#######################################
+
+CREATE "Magdalena"
+CLASS "Magdalena"
+AT 20000000 -10000000 100000000;
+
+
+
+
+
+#######################################
+#              NEUTRAL
+#######################################
+
+CREATE "Anomaly N-9412 B"
+	CLASS "Buoy"
+	AT 0	0	25000;
+
+
+
+
+
+##############################################
+#           INDUSTRION CONVOY
+##############################################
+
+CREATE "TC-212"
+	CLASS "Constellation"
+	AT 0 0 5000;
+SET "TC-212" SIDE = 2;
+SET "TC-212" PLAYER_PLACED = 0;
+SET "TC-212" PLAN = 1;
+
+CREATE "TC-180"
+	CLASS "Constellation"
+	AT 0 0 4000;
+SET "TC-180" SIDE = 2;
+SET "TC-180" PLAYER_PLACED = 0;
+SET "TC-180" PLAN = 1;
+
+CREATE ""
+	CLASS "Lynx"
+	AT 0 0 3000;
+SET "Lynx 1" SIDE = 2;
+SET "Lynx 1" PLAYER_PLACED = 0;
+SET "Lynx 1" PLAN = 1;
+
+
+#fighter escort
+CREATE "Zero Leader"
+	CLASS "Zero"
+	AT 0 400 1000;
+SET "Zero Leader" SIDE = 2;
+SET "Zero Leader" PLAYER_PLACED = 0;
+SET "Zero Leader" PLAN = 2;
+
+CREATE "Zero 2"
+	CLASS "Zero"
+	AT 0 400 1500;
+SET "Zero 2" SIDE = 2;
+SET "Zero 2" PLAYER_PLACED = 0;
+SET "Zero 2" PLAN = 2;
+
+CREATE "Zero 3"
+	CLASS "Zero"
+	AT 0 400 2000;
+SET "Zero 3" SIDE = 2;
+SET "Zero 3" PLAYER_PLACED = 0;
+SET "Zero 3" PLAN = 2;
+
+CREATE "Zero 4"
+	CLASS "Zero"
+	AT 0 400 2500;
+SET "Zero 4" SIDE = 2;
+SET "Zero 4" PLAYER_PLACED = 0;
+SET "Zero 4" PLAN = 2;
+
+
+#########################################
+PLAN 1 SIDE 2
+	FOLLOW "Anomaly N-9412 B"
+	WITH AGRESSION 4;
+
+PLAN 2 SIDE 2
+	FOLLOW "Lynx 1"
+	WITH AGRESSION 4;
+PLAN 2 SIDE 2
+	FOLLOW "TC-212"
+	WITH AGRESSION 4;
+PLAN 2 SIDE 2
+	FOLLOW "TC-180"
+	WITH AGRESSION 4;
+#########################################
+
+
+
+
+#########################################
+#           DOMINION FORCES
+#########################################
+#######################################
+#             DOMINION
+#######################################
+
+CREATE "Superb"
+	CLASS "Wasp"
+	AT 0 -15000 25000;
+SET "Superb" SIDE = 1;
+SET "Superb" PLAYER_PLACED = 1;
+SET "Superb" PLAYER_CONTROLLED = 1;
+SET "Superb" AGRESSION = 2;
+
+
+
+CREATE ""
+	CLASS "Falcon"
+	AT 0 -15500 25500;
+SET "Falcon 1" SIDE = 1;
+SET "Falcon 1" PLAYER_PLACED = 1;
+SET "Falcon 1" PLAYER_CONTROLLED = 1;
+
+CREATE ""
+	CLASS "Falcon"
+	AT 0 -15500 26000;
+SET "Falcon 2" SIDE = 1;
+SET "Falcon 2" PLAYER_PLACED = 1;
+SET "Falcon 2" PLAYER_CONTROLLED = 1;
+SET "Falcon 2" TARGET_TYPE = FOLLOW;
+SET "Falcon 2" PRIMARY = "Falcon 1";
+SET "Falcon 2" AGRESSION = 4;
+
+CREATE ""
+	CLASS "Falcon"
+	AT 0 -14500 25500;
+SET "Falcon 3" SIDE = 1;
+SET "Falcon 3" PLAYER_PLACED = 1;
+SET "Falcon 3" PLAYER_CONTROLLED = 1;
+SET "Falcon 3" TARGET_TYPE = FOLLOW;
+SET "Falcon 3" PRIMARY = "Falcon 1";
+SET "Falcon 3" AGRESSION = 4;
+
+CREATE ""
+	CLASS "Falcon"
+	AT 0 -14500 26000;
+SET "Falcon 4" SIDE = 1;
+SET "Falcon 4" PLAYER_PLACED = 1;
+SET "Falcon 4" PLAYER_CONTROLLED = 1;
+SET "Falcon 4" TARGET_TYPE = FOLLOW;
+SET "Falcon 4" PRIMARY = "Falcon 1";
+SET "Falcon 4" AGRESSION = 4;
+
+CREATE ""
+	CLASS "Phantom"
+	AT 400 -15000 27000;
+SET "Phantom 1" SIDE = 1;
+SET "Phantom 1" PLAYER_PLACED = 1;
+SET "Phantom 1" PLAYER_CONTROLLED = 1;
+
+CREATE ""
+	CLASS "Phantom"
+	AT -400 -15000 27000;
+SET "Phantom 2" SIDE = 1;
+SET "Phantom 2" PLAYER_PLACED = 1;
+SET "Phantom 2" PLAYER_CONTROLLED = 1;
+SET "Phantom 2" TARGET_TYPE = FOLLOW;
+SET "Phantom 2" PRIMARY = "Phantom 1";
+SET "Phantom 2" AGRESSION = 4;
+
+
+#########################################
+
+BIND_CAMERA_TO "Falcon 1";
+
+#########################################
+
+
+
+
+#########################################
+#               ACTION
+#########################################
+$Mission = -1;
+$Kill = 0;
+$MustKill = 3;
+
+PROC FoeKill;
+	$Kill = $Kill + 1;
+	CALL CheckSuccess;
+END PROC;
+
+PROC CheckSuccess;
+	IF ($Mission == -2) RET;
+	IF (($Kill == $MustKill)) CALL SUCCESS;
+END PROC;
+
+PROC SUCCESS;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC Failure;
+	IF ($Mission == -2) RET; #no needs to show failure sequence twice
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC AnomalyReached;
+	$Hx = GET $ActionObject.X;
+	$Hy = GET $ActionObject.Y;
+	$Hz = GET $ActionObject.Z;
+	SET $ActionObject LIFE = 0;
+
+	CREATE "Tunnel"
+	CLASS "Magdalena"
+	AT $Hx $Hy $Hz;
+	SET "Tunnel" LIFE_TIME = 20;
+
+	MESSAGE "Mission are failure!";	
+	MESSAGE "One of them break through the anomaly!";	
+
+	CALL Failure;
+END PROC;
+
+
+PROC CONSTRUCTOR;
+	#Note:
+	#we set event procedures
+	#set them here, 'couse there is no one
+	#of them when we created objects
+
+	SET "TC-212" KILLPROC = "FoeKill";
+	SET "TC-180" KILLPROC = "FoeKill";
+	SET "Lynx 1" KILLPROC = "FoeKill";
+	SET "Lynx 2" KILLPROC = "FoeKill";
+	MESSAGE "After Error";
+
+	SET "TC-212" REACHPROC = "AnomalyReached";
+	SET "TC-180" REACHPROC = "AnomalyReached";
+	SET "Lynx 1" REACHPROC = "AnomalyReached";
+END PROC;
+
+
+PROC ON TIME 0.2;
+	#$Homo = 0;
+	#LABEL Fuck;
+	
+	#	MESSAGE "Foe bogies incoming";
+	#	$Homo = $Homo + 1;
+
+	#IF ($Homo < 5) GOTO Fuck;
+END PROC;

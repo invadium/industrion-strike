@@ -1,0 +1,9 @@
+MODEL
+SPACE;
+NAME = "Magdalena";
+
+MARK = 0;
+
+IMAGE = "data/models/images/magdalena.jpg";
+BITMAPPED TRIXEL
+	0		0		0;

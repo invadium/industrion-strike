@@ -1,0 +1,125 @@
+MODEL
+#SHIP | FIGHTER | WEAPON
+FIGHTER;
+NAME = "Falcon";
+IDNAME = "FLC";
+IMAGE = "data/models/images/falcon.gif";
+SOUND = 3;
+
+RADIUS = 200;
+ENERGY = 150;
+RECHARGE = 6;
+SHIELD = 20;
+SHRECHARGE = 1;
+HULL = 40;
+FUELTANK = 75000;
+
+#Maneuring properties
+ACCELERATION = 2;
+FUEL_DEPLETION = 2;
+MAXSPEED = 450;
+CRUISESPEED = 360;
+MAXYAW = 140;
+YAW_ACCELERATION = 20;
+YAW_FUEL_DEPLETION = 1;
+MAXPITCH = 140;
+PITCH_ACCELERATION = 20;
+PITCH_FUEL_DEPLETION = 1;
+MAXROLL = 140;
+ROLL_ACCELERATION = 20;
+ROLL_FUEL_DEPLETION = 1;
+
+MARK = 3;
+
+#Mount some weapons
+MOUNT "laser 10MW" TO -20 0 50;
+MOUNT "laser 10MW" TO  20 0 50;
+MOUNT_LAUNCHER "stinger" CAPACITY 3 TO -40 0 0;
+MOUNT_LAUNCHER "stinger" CAPACITY 3 TO 40  0 0;
+
+FRAGMENT "Fragment T1";
+FRAGMENTS_COUNT = 10;
+BLOW "Blow";
+BLOWS_COUNT = 5;
+
+#Models primitives
+FRAMES_COUNT = 40;
+
+##################  HULL  #####################
+COLOR	140 0 0;
+SOLID METAL 10 RECTANGLE
+	-10		10		20
+	10		10		20
+	10		10		-60
+	-10		10		-60;
+
+SOLID METAL 10 RECTANGLE
+	-10		10		20
+	-10		-10		20
+	-10		-10		-60
+	-10		10		-60;
+SOLID METAL 10 RECTANGLE
+	10		10		20
+	10		-10		20
+	10		-10		-60
+	10		10		-60;
+
+COLOR	180 0 0;
+SOLID METAL 10 RECTANGLE
+	-10		-10		20
+	10		-10		20
+	10		-10		-60
+	-10		-10		-60;
+
+COLOR	220 160 0;
+SOLID METAL 20 RECTANGLE
+	-10		10		-60
+	-10		-10		-60
+	10		-10		-60
+	10		10		-60;
+
+
+################  COCKPIT  ###################
+COLOR	120 0 240;
+SOLID METAL 0 TRIANGLE
+	-10		10		20
+	10		10		20
+	0		0		60;
+SOLID METAL 0 TRIANGLE
+	-10		10		20
+	-10		-10		20
+	0		0		60;
+SOLID METAL 0 TRIANGLE
+	10		10		20
+	10		-10		20
+	0		0		60;
+
+#Canopy 
+COLOR	0 0 120;
+METAL 250 TRIANGLE
+	-10		-10		20
+	10		-10		20
+	0		0		60;
+
+#################  WINGS  ####################
+COLOR	200 170 0;
+SOLID METAL 20 TRIANGLE
+	-10		0		20
+	-50		0		-60
+	-10		0		-60;
+SOLID METAL 20 	TRIANGLE
+	10		0		20
+	50		0		-60
+	10		0		-60;
+
+#################  LASERS  ####################
+COLOR	120 0 255;
+VOLUME 2 LINE
+	-20		0		0
+	-20		0		20;
+VOLUME 2 LINE
+	20		0		0
+	20		0		20;
+	
+
+INCREASE_SCALE 4;

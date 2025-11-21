@@ -1,0 +1,159 @@
+MODEL
+#SHIP | FIGHTER | WEAPON
+FIGHTER;
+NAME = "Infinity";
+IDNAME = "INF";
+IMAGE = "data/models/images/infinity.gif";
+COST = 80;
+SOUND = 3;
+
+RADIUS = 150;
+ENERGY = 120;
+RECHARGE = 2;
+SHIELD = 40;
+SHRECHARGE = 1;
+HULL = 50;
+FUELTANK = 650000;
+
+#Chain properties
+RANGE = 250000;
+RECHARGETIME = 1200;
+
+#Maneuring properties
+ACCELERATION = 2;
+FUEL_DEPLETION = 5;
+MAXSPEED = 460;
+CRUISESPEED = 400;
+MAXYAW = 150;
+YAW_ACCELERATION = 20;
+YAW_FUEL_DEPLETION = 2;
+MAXPITCH = 150;
+PITCH_ACCELERATION = 20;
+PITCH_FUEL_DEPLETION = 2;
+MAXROLL = 150;
+ROLL_ACCELERATION = 20;
+ROLL_FUEL_DEPLETION = 2;
+
+MARK = 3;
+
+#Mount some weapons
+MOUNT "laser 15MW" TO -50 10 60;
+MOUNT "laser 15MW" TO  50 10 60;
+MOUNT_LAUNCHER "sparrow" CAPACITY 6 TO 100 0 0;
+MOUNT_LAUNCHER "stinger" CAPACITY 4 TO -100 0 0;
+
+FRAGMENT "Fragment T1";
+FRAGMENTS_COUNT = 10;
+BLOW "Blow";
+BLOWS_COUNT = 5;
+
+#Models primitives
+FRAMES_COUNT = 40;
+
+COLOR	0 100 240;
+
+##################  HULL  #####################
+COLOR	140 0 0;
+SOLID METAL 10 RECTANGLE
+	-30		0		60
+	30		0		60
+	30		0		-100
+	-30		0		-100;
+
+SOLID METAL 10 RECTANGLE
+	-30		0		60
+	-10		-20		60
+	-10		-20		-100
+	-30		0		-100;
+SOLID METAL 10 RECTANGLE
+	30		0		60
+	10		-20		60
+	10		-20		-100
+	30		0		-100;
+
+COLOR	180 0 0;
+SOLID METAL 10 RECTANGLE
+	-10		-20		60
+	10		-20		60
+	10		-20		-100
+	-10		-20		-100;
+
+COLOR	220 160 0;
+SOLID METAL 20 RECTANGLE
+	-30		0		-100
+	-10		-20		-100
+	10		-20		-100
+	30		0		-100;
+
+
+################  COCKPIT  ###################
+COLOR	120 0 240;
+SOLID METAL 0 RECTANGLE
+	-30		0		60
+	30		0		60
+	10		-10		100
+	-10		-10		100;
+SOLID METAL 0 TRIANGLE
+	-30		0		60
+	-10		-20		60
+	-10		-10		100;
+SOLID METAL 0 TRIANGLE
+	30		0		60
+	10		-20		60
+	10		-10		100;
+
+#Canopy 
+COLOR	0 0 120;
+METAL 250 RECTANGLE
+	-10		-20		60
+	10		-20		60
+	10		-10		100
+	-10		-10		100;
+
+#################  WINGS  ####################
+COLOR	200 170 0;
+SOLID METAL 20 RECTANGLE
+	-90		20		0
+	-30		0		-20
+	-30		0		-100
+	-90		20		-40;
+SOLID METAL 20 RECTANGLE
+	90		20		0
+	30		0		-20
+	30		0		-100
+	90		20		-40;
+
+############### FIRST WINGS ###################
+COLOR	200 170 0;
+SOLID METAL 20 RECTANGLE
+	-30		0		60
+	-50		0		40
+	-50		0		20
+	-30		0		0;
+SOLID METAL 20 RECTANGLE
+	30		0		60
+	50		0		40
+	50		0		20
+	30		0		0;
+
+
+#################  LASERS  ####################
+COLOR	120 0 255;
+VOLUME 2 LINE
+	-51		0		20
+	-51		0		60;
+VOLUME 2 LINE
+	51		0		20
+	51		0		60;
+
+#################  LAUNCHERS  ####################
+COLOR	220 0 50;
+VOLUME 3 LINE
+	-90		20		-40
+	-90		20		20;
+VOLUME 3 LINE
+	90		20		-40
+	90		20		20;
+	
+
+INCREASE_SCALE 2;

@@ -1,0 +1,166 @@
+MISSION
+
+############################################
+# Industrion
+# Battle #1
+# Mission #1 "First convoy"
+# Created by Shock (Igor Khotin) 11.06.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Industrion";
+$SideInfo1 = "(you)";
+$SideName2 = "Dominion";
+
+
+#Creating far space objects
+
+CREATE "Proxima"
+CLASS "Moon"
+AT 20000000 -10000000 100000000;
+
+#Creating navigation buoys along trade way
+
+CREATE "Buoy T2"
+CLASS "Buoy"
+AT	-1000	0	20000;
+
+CREATE "Buoy T1"
+CLASS "Buoy"
+AT	1000	0	20000;
+
+#Navigation points
+CREATE "Anomaly Point"
+	CLASS	"Nav Point"
+	AT	0	0	20000;
+
+CREATE "Back Point"
+	CLASS	"Nav Point"
+	AT	0	0	0;
+
+##############################################
+#			    INDUSTRION
+##############################################
+CREATE "L-42"
+	CLASS "Lynx"
+	AT 600 0 1500;
+SET "L-42" SIDE = 1;
+SET "L-42" PLAYER_PLACED = 0;
+SET "L-42" AGRESSION = 2;
+
+CREATE "C-214"
+	CLASS "Constellation"
+	AT 0 0 0;
+SET "C-214" SIDE = 1;
+SET "C-214" PLAYER_PLACED = 1;
+SET "C-214" PLAN = 1;
+
+CREATE ""
+	CLASS "Zero"
+	AT 300 0 -1500;
+SET "Zero 1" SPEED = 100;
+SET "Zero 1" SIDE = 1;
+SET "Zero 1" PLAYER_PLACED = 1;
+SET "Zero 1" HUMAN_CONTROLLED = 1;
+SET "Zero 1" PLAN = 2;
+
+CREATE ""
+	CLASS "Zero"
+	AT -500 0 -500;
+SET "Zero 2" SIDE = 1;
+SET "Zero 2" PLAYER_PLACED = 1;
+SET "Zero 2" PLAN = 2;
+
+#transport flight plan
+PLAN 1 SIDE 1
+	FOLLOW "Anomaly Point"
+	WITH AGRESSION 2;
+
+PLAN 2 SIDE 1
+	FOLLOW "C-214"
+	WITH AGRESSION 3;
+
+
+#######################################
+#			   DOMINION
+#######################################
+
+CREATE "Star Pollen"
+	CLASS "Wasp"
+	AT 1000 -2000 20000;
+SET "Star Pollen" SIDE = 2;
+SET "Star Pollen" PLAYER_PLACED = 0;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 1000 -4000 21000;
+SET "Hornet 1" SIDE = 2;
+SET "Hornet 1" PLAYER_PLACED = 0;
+SET "Hornet 1" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 1400 -3000 19000;
+SET "Hornet 2" SIDE = 2;
+SET "Hornet 2" PLAYER_PLACED = 0;
+SET "Hornet 2" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT -400 0 23000;
+SET "Hornet 3" SIDE = 2;
+SET "Hornet 3" PLAYER_PLACED = 1;
+SET "Hornet 3" PLAN = 2;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 400 1000 23000;
+SET "Hornet 4" SIDE = 2;
+SET "Hornet 4" PLAYER_PLACED = 1;
+SET "Hornet 4" PLAN = 2;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 1400 0 23000;
+SET "Hornet 5" SIDE = 2;
+SET "Hornet 5" PLAYER_PLACED = 1;
+SET "Hornet 5" PLAN = 2;
+
+#Dominion flight plan: protecting corvete
+PLAN 1 SIDE 2
+FOLLOW "Star Pollen"
+WITH AGRESSION 3;
+
+#Dominion flight plan
+PLAN 2 SIDE 2
+FOLLOW "Anomaly Point"
+WITH AGRESSION 4;
+##################################################
+
+BIND_CAMERA_TO "Zero 1";
+
+
+$Mission = -1;
+
+PROC SUCCESS;
+	SET "C-214" LIFE = 0;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC TransportKill;
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC TransportReach;
+	IF ($ReachedObject == "Anomaly Point") CALL SUCCESS;
+END PROC;
+
+PROC ON TIME 0.1;
+	SET "C-214" KILLPROC = "TransportKill";
+	SET "C-214" REACHPROC = "TransportReach";
+
+	MESSAGE "L-42 to convoy: Good Luck!" BEEP;
+END PROC;

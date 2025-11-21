@@ -1,0 +1,9 @@
+MODEL
+SPACE;
+NAME = "Snaevar";
+
+MARK = 0;
+
+IMAGE = "data/models/images/moon3.jpg";
+BITMAPPED TRIXEL
+	0		0		0;

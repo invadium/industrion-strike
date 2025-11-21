@@ -1,0 +1,71 @@
+MISSION
+
+############################################
+# Training mission "Multiplay"
+# Created by Shock (Igor Khotin) 20.10.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Interseptor";
+$SideInfo1 = "(you)";
+$SideName2 = "Enemy";
+
+$TurnBased = 1;		#games is turn based
+$ActionTime = 10;	#time of action (non static motion)
+$TurnTime = 10;		#turn time (on each side in static)
+$TurnSides = 2;		#sides, affected in turns action
+
+
+############################
+#Creating far space objects
+############################
+CREATE "Proxima"
+CLASS "Moon"
+AT 20000000 -10000000 100000000;
+
+
+######################################
+# Interseptor side
+######################################
+CREATE "Interseptor"
+	CLASS "Mirage"
+	AT 0 0 0;
+SET "Interseptor" SIDE = 1;
+SET "Interseptor" PLAYER_PLACED = 1;
+SET "Interseptor" HUMAN_CONTROLLED = 1;
+
+######################################
+# Enemy side
+######################################
+CREATE "Foe"
+	CLASS "Mirage"
+	AT 0 0 7500;
+SET "Foe" SIDE = 2;
+SET "Foe" PLAYER_PLACED = 1;
+SET "Foe" HUMAN_CONTROLLED = 1;
+SET "Foe" PLAN = 1;
+#############################################
+
+
+BIND_CAMERA_TO "Interseptor";
+
+$Mission = -1;
+
+PROC Successful;
+	IF ($Mission < -1) EXIT;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC Failed;
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC ON TIME 0.1;
+	MESSAGE "Engage the enemy!" BEEP;
+
+	SET "Foe" KILLPROC = "Successful";
+	SET "Interseptor" KILLPROC = "Failed";
+END PROC;

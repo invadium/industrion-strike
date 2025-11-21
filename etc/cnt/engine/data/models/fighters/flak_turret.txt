@@ -1,0 +1,103 @@
+MODEL
+#SHIP | FIGHTER | WEAPON
+FIGHTER;
+NAME = "Flak Turret";
+IDNAME = "FTR";
+IMAGE = "data/models/images/flak_turret.gif";
+SOUND = 3;
+
+RADIUS = 120;
+ENERGY = 250;
+RECHARGE = 8;
+SHIELD = 50;
+SHRECHARGE = 1;
+HULL = 100;
+FUELTANK = 50000;
+
+#Maneuring properties
+ACCELERATION = 0;
+FUEL_DEPLETION = 2;
+MAXSPEED = 0;
+CRUISESPEED = 0;
+MAXYAW = 150;
+YAW_ACCELERATION = 30;
+YAW_FUEL_DEPLETION = 1;
+MAXPITCH = 150;
+PITCH_ACCELERATION = 30;
+PITCH_FUEL_DEPLETION = 1;
+MAXROLL = 150;
+ROLL_ACCELERATION = 30;
+ROLL_FUEL_DEPLETION = 1;
+TARGET_FACTOR = 1500;
+
+MARK = 3;
+
+#Mount some weapons
+MOUNT "laser 5MW" TO -25 0 0;
+MOUNT "laser 5MW" TO  25 0 0;
+
+FRAGMENT "Fragment T1";
+FRAGMENTS_COUNT = 10;
+BLOW "Blow";
+BLOWS_COUNT = 5;
+
+#Models primitives
+
+################  COCKPIT  ###################
+COLOR	120 0 240;
+SOLID METAL 0 RECTANGLE
+	-30		10		10
+	30		10		10
+	10		10		30
+	-10		10		30;
+SOLID METAL 0 TRIANGLE
+	-30		10		10
+	-10		-10		10
+	-10		10		30;
+SOLID METAL 0 TRIANGLE
+	30		10		10
+	10		-10		10
+	10		10		30;
+
+#Canopy 
+COLOR	0 0 150;
+METAL 250 RECTANGLE
+	-10		-10		10
+	10		-10		10
+	10		10		30
+	-10		10		30;
+
+##############  BACK HULL ###################
+COLOR	120 0 240;
+SOLID METAL 0 RECTANGLE
+	-30		10		10
+	30		10		10
+	10		10		-30
+	-10		10		-30;
+SOLID METAL 0 TRIANGLE
+	-30		10		10
+	-10		-10		10
+	-10		10		-30;
+SOLID METAL 0 TRIANGLE
+	30		10		10
+	10		-10		10
+	10		10		-30;
+
+METAL 250 RECTANGLE
+	-10		-10		10
+	10		-10		10
+	10		10		-30
+	-10		10		-30;
+
+
+#################  LASERS  ####################
+COLOR	200 180 100;
+VOLUME 3 LINE
+	-22		5		12
+	-22		5		30;
+VOLUME 3 LINE
+	22		5		12
+	22		5		30;
+	
+
+INCREASE_SCALE 10;

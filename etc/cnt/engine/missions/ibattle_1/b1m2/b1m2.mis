@@ -1,0 +1,145 @@
+MISSION
+
+############################################
+# Industrion
+# Battle #1
+# Mission #2 "Meet the shuttle"
+# Created by Shock (Igor Khotin) 08.05.2006
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Industrion";
+$SideInfo1 = "(you)";
+$SideName2 = "Dominion";
+
+
+#Creating far space objects
+
+CREATE "Magdalena"
+CLASS "Magdalena"
+AT 20000000 -10000000 100000000;
+
+#Creating navigation buoys along trade way
+
+#Navigation points
+CREATE "Anomaly Point"
+	CLASS	"Nav Point"
+	AT	0	10000	25000;
+
+CREATE "Back Point"
+	CLASS	"Nav Point"
+	AT	0	0	0;
+
+##############################################
+#			    INDUSTRION
+##############################################
+CREATE "P-14"
+	CLASS "Panther"
+	AT 400 0 1500;
+SET "P-14" SIDE = 1;
+SET "P-14" PLAYER_PLACED = 1;
+SET "P-14" AGRESSION = 2;
+
+
+CREATE "Comet 1"
+	CLASS "Comet"
+	AT 300 0 -1500;
+SET "Comet 1" SPEED = 100;
+SET "Comet 1" SIDE = 1;
+SET "Comet 1" PLAYER_PLACED = 1;
+SET "Comet 1" HUMAN_CONTROLLED = 1;
+SET "Comet 1" PLAN = 2;
+
+CREATE "Comet 2"
+	CLASS "Comet"
+	AT -500 0 -500;
+SET "Comet 2" SIDE = 1;
+SET "Comet 2" PLAYER_PLACED = 1;
+SET "Comet 2" PLAN = 2;
+
+#Industion shuttle flight plan
+PLAN 1 SIDE 1
+FOLLOW "Back Point"
+WITH AGRESSION 1;
+
+
+#######################################
+#			   DOMINION
+#######################################
+
+CREATE "O-7"
+	CLASS "Oscar"
+	AT 4000 -10000 15000;
+SET "O-7" SIDE = 2;
+SET "O-7" PLAYER_PLACED = 0;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 1000 -10000 15000;
+SET "Hornet 1" SIDE = 2;
+SET "Hornet 1" PLAYER_PLACED = 0;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 1500 -10000 15000;
+SET "Hornet 2" SIDE = 2;
+SET "Hornet 2" PLAYER_PLACED = 0;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 4000 -11000 16000;
+SET "Hornet 3" SIDE = 2;
+SET "Hornet 3" PLAYER_PLACED = 0;
+SET "Hornet 3" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 4000 -9000 16000;
+SET "Hornet 4" SIDE = 2;
+SET "Hornet 4" PLAYER_PLACED = 0;
+SET "Hornet 4" PLAN = 1;
+
+#Dominion flight plan: protecting corvete
+PLAN 1 SIDE 2
+FOLLOW "O-7"
+WITH AGRESSION 3;
+##################################################
+
+BIND_CAMERA_TO "Comet 1";
+
+
+$Mission = -1;
+
+PROC SUCCESS;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC ShuttleKill;
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC TransportReach;
+	IF ($ReachedObject == "Back Point") CALL SUCCESS;
+END PROC;
+
+PROC ON TIME 0.10;
+	CREATE ""
+		CLASS "Shuttle"
+		AT 0 10000 25200;
+	SET "Shuttle 1" SIDE = 1;	
+	SET "Shuttle 1" PLAYER_PLACED = 0;
+	SET "Shuttle 1" PLAN = 1;
+
+	#Dominion flight plan: attack the shuttle
+	PLAN 2 SIDE 2
+	ATTACK "Shuttle 1"
+	WITH AGRESSION 3;
+
+	SET "Hornet 1" PLAN = 2;
+	SET "Hornet 2" PLAN = 2;
+
+	MESSAGE "Meet the shuttle!" BEEP;
+END PROC;

@@ -1,0 +1,82 @@
+MODEL
+#SHIP | FIGHTER | WEAPON | MISSILE | STATIC
+STATIC;
+NAME = "Buoy";
+IDNAME = "BUY";
+IMAGE = "data/models/images/buoy.gif";
+
+RADIUS = 50;
+ENERGY = 0;
+RECHARGE = 0;
+SHIELD = 0;
+SHRECHARGE = 0;
+HULL = 2000;
+FUELTANK = 0;
+
+#Maneuring properties
+ACCELERATION = 0;
+FUEL_DEPLETION = 0;
+MAXSPEED = 0;
+CRUISESPEED = 0;
+MAXYAW = 0;
+YAW_ACCELERATION = 0;
+YAW_FUEL_DEPLETION = 0;
+MAXPITCH = 0;
+PITCH_ACCELERATION = 0;
+PITCH_FUEL_DEPLETION = 0;
+MAXROLL = 0;
+ROLL_ACCELERATION = 0;
+ROLL_FUEL_DEPLETION = 0;
+
+MARK = 4;
+
+#Models primitives
+FRAMES_COUNT = 100;
+
+COLOR	0 100 240;
+
+
+COLOR	0 0 255;
+SOLID TRIANGLE
+	0		0	50
+	50		0	-50
+	-50		0	-50;
+
+LINE
+	0	0		50
+	0	-80 	0;
+LINE
+	50	 0  	-50
+	0	-80 	0;
+LINE
+	-50	  0		-50
+	0	-80 	0;
+
+LINE
+	0	0		50
+	0	80  	0;
+LINE
+	50	 0  	-50
+	0	80  	0;
+LINE
+	-50	  0		-50
+	0	80  	0;
+
+LINE
+	0	0		50
+	0	0  		100;
+LINE
+	50	 0  	-50
+	100	 0  	-100;
+LINE
+	-50	  0		-50
+	-100  0  	-100;
+
+COLOR	255 0 0;
+FRAMES 1 40 VOLUME 12 TRIXEL
+	0		-85		0;
+
+#text
+#COLOR 	255 255 45;
+#VOLUME 8 TEXT "Buoy"
+#	0		-100		0;

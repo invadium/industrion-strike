@@ -1,0 +1,72 @@
+MISSION
+
+CREATE "Figerinadon"
+CLASS "Terra Planet"
+AT 0 0 100000000;
+
+CREATE "Fobos"
+CLASS "Moon"
+AT 40000000 -30000000 100000000;
+
+CREATE "Dragon 1"
+CLASS "Dragon Mk II"
+AT 1000 0 0;
+SET "Dragon 1" SIDE = 1;
+
+CREATE "Dragon 2"
+CLASS "Dragon Mk II"
+AT -1000 0 0;
+
+SET "Dragon 2" SIDE = 1;
+SET "Dragon 2" ENERGY = 20;
+SET "Dragon 2" AI_CONTROLLED = 1;
+SET "Dragon 2" MISSION_CONTROLLED = 0;
+SET "Dragon 2" HUMAN_CONTROLLED = 0;
+SET "Dragon 2" NET_CONTROLLED = 0;
+
+CREATE "Dragon 3"
+CLASS "Dragon Mk II"
+AT 0 0 1000;
+SET "Dragon 3" SIDE = 2;
+
+CREATE "Dragon 4"
+CLASS "Dragon Mk II"
+AT 0 0 -1000;
+SET "Dragon 4" SIDE = 2;
+
+CREATE "Dragon 5"
+CLASS "Dragon Mk II"
+AT 0 -1000 0;
+SET "Dragon 5" SIDE = 2;
+
+CREATE "Dragon 6"
+CLASS "Dragon Mk II"
+AT 0 1000 0;
+SET "Dragon 6" SIDE = 2;
+
+CREATE "Dragon 7"
+CLASS "Dragon Mk II"
+AT 1500 1000 -2500;
+
+
+
+CREATE "Carrier"
+CLASS "Strike Carrier"
+AT 0 0 0;
+
+
+#BUOYS
+#CREATE "Buoy B0"
+#CLASS "Buoy"
+#AT	200	200	100;
+
+#CREATE "Buoy B1"
+#CLASS "Buoy"
+#AT	0	0	4000;
+
+#CREATE "Buoy B2"
+#CLASS "Buoy"
+#AT	0	0	-4000;
+
+
+BIND_CAMERA_TO "Carrier";

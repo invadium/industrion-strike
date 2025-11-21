@@ -1,0 +1,40 @@
+MISSION
+
+############################################
+# Support mission for ships design
+# Created by Shock (Igor Khotin) 19.02.2006
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Dominion";
+$SideName2 = "Industrion";
+
+
+############################
+#Creating far space objects
+############################
+CREATE "Terra"
+CLASS "Terra Planet"
+AT 20000000 -10000000 100000000;
+
+
+PROC CONSTRUCTOR;
+
+CREATE "Ship"
+	CLASS "Outpost"
+	AT 0 0 0;
+    SET "Ship" SIDE = 1;
+    SET "Ship" HUMAN_CONTROLLED = 0;
+    SET "Ship" AI_CONTROLLED = 0;
+
+
+	#VIEWS
+	CREATE "CamSat 1"
+		CLASS "CamSat"
+		AT 0 0 -500;
+	SET "CamSat 1" PLAYER_PLACED = 1;
+
+	BIND_CAMERA_TO "CamSat 1";
+
+END PROC;

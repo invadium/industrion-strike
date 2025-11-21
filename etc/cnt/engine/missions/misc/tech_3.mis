@@ -1,0 +1,37 @@
+MISSION
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Dominion";
+$SideName2 = "Industrion";
+
+$TurnBased = 1;
+$TurnSides = 2;
+$ActionTime = 60;
+$TurnTime = 60;
+
+
+CREATE "Proxima"
+CLASS "Terra Planet"
+AT 0 0 100000000;
+
+
+#DOMINION
+CREATE "Turrent 1"
+	CLASS "Flak Turrent"
+	AT -1500 0 -10700;
+SET "Turrent 1" SIDE = 1;
+
+
+
+
+#INDUSTRION
+CREATE "Mirage 1"
+	CLASS "Mirage"
+	AT -200 0 6000;
+SET "Mirage 1" SIDE = 2;
+
+CREATE "Mirage 2"
+	CLASS "Mirage"
+	AT 200 0 6000;
+SET "Mirage 2" SIDE = 2;

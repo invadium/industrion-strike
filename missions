@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ ! -d "./out" ]; then
+    echo "Missing the output folder!"
+    echo "Building the project..."
+    ./build
+    echo "================================"
+fi
+
+find ./out -name '*.mis' |  cut -d'/' -f5-
+

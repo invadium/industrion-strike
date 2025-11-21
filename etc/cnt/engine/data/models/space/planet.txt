@@ -1,0 +1,9 @@
+MODEL
+SPACE;
+NAME = "Terra Planet";
+
+MARK = 0;
+
+IMAGE = "data/models/images/terra_planet.jpg";
+BITMAPPED TRIXEL
+	0		0		0;

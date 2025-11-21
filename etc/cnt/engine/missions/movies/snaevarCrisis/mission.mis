@@ -1,0 +1,409 @@
+MISSION
+
+############################################
+# Snaevar Crisis
+# Created by Shock (Igor Khotin) 16.06.2008
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Industrion";
+$SideName2 = "Dominion";
+
+
+############################
+#Creating far space objects
+############################
+CREATE "Snaevar"
+CLASS "Snaevar"
+AT 20000000 -10000000 100000000;
+
+CREATE "Proxima"
+CLASS "Moon"
+AT 60000000 -50000000 50000000;
+
+CREATE "Nebula"
+CLASS "Steel Nebula"
+AT -20000000 -10000000 -100000000;
+
+
+###########################
+#Creating navigation buoys
+###########################
+CREATE "Buoy A"
+CLASS "Buoy"
+AT	-1000	0	10200;
+
+CREATE "Buoy AA"
+CLASS "Buoy"
+AT	-2000	0	7000;
+
+CREATE "Buoy B"
+CLASS "Buoy"
+AT	-4000	0	0;
+
+CREATE "Buoy C"
+CLASS "Buoy"
+AT	4000	0	0;
+
+CREATE "Buoy D"
+CLASS "Buoy"
+AT	0	0	-7000;
+
+######################################
+# Industrion side
+######################################
+CREATE "Snaevar Starport"
+	CLASS "Outpost"
+	AT 0 -300 0;
+SET "Snaevar Starport" SIDE = 1;
+SET "Snaevar Starport" HUMAN_CONTROLLED = 0;
+SET "Snaevar Starport" PLAYER_PLACED = 1;
+SET "Snaevar Starport" AGRESSION = 4;
+SET "Snaevar Starport" YAW = 30;
+
+# defends network
+CREATE "Turret 1"
+    CLASS "Flak Turret"
+    AT -1000 -500 1000;
+SET "Turret 1" SIDE = 1;
+SET "Turret 1" PLAYER_PLACED = 1;
+
+CREATE "Turret 2"
+    CLASS "Flak Turret"
+    AT 1000 -500 1000;
+SET "Turret 2" SIDE = 1;
+SET "Turret 2" PLAYER_PLACED = 1;
+
+
+
+
+#Patrol fighters
+CREATE "Infinity 1"
+    CLASS "Infinity"
+    AT -3100 0 0;
+SET "Infinity 1" SIDE = 1;
+SET "Infinity 1" PLAYER_PLACED = 1;
+SET "Infinity 1" PLAN = 1;
+
+CREATE "Infinity 2"
+    CLASS "Infinity"
+    AT 1500 0 0;
+SET "Infinity 2" SIDE = 1;
+SET "Infinity 2" PLAYER_PLACED = 1;
+SET "Infinity 2" PLAN = 1;
+
+CREATE "Infinity 3"
+    CLASS "Infinity"
+    AT 0 0 7000;
+SET "Infinity 3" SIDE = 1;
+SET "Infinity 3" PLAYER_PLACED = 1;
+SET "Infinity 3" PLAN = 1;
+
+CREATE "Infinity 4"
+    CLASS "Infinity"
+    AT 0 0 -7500;
+SET "Infinity 4" SIDE = 1;
+SET "Infinity 4" PLAYER_PLACED = 1;
+SET "Infinity 4" PLAN = 1;
+
+CREATE "Zero 1"
+    CLASS "Zero"
+    AT 500 -400 -1200;
+SET "Zero 1" SIDE = 1;
+SET "Zero 1" PLAYER_PLACED = 1;
+#SET "Zero 1" PLAN = 1;
+YAW "Zero 1" 9000;
+
+CREATE "Zero 2"
+    CLASS "Zero"
+    AT 550 -400 -1200;
+SET "Zero 2" SIDE = 1;
+SET "Zero 2" PLAYER_PLACED = 1;
+#SET "Zero 2" PLAN = 1;
+YAW "Zero 2" 9000;
+
+CREATE "Zero 3"
+    CLASS "Zero"
+    AT 600 -400 -1200;
+SET "Zero 3" SIDE = 1;
+SET "Zero 3" PLAYER_PLACED = 1;
+#SET "Zero 3" PLAN = 1;
+YAW "Zero 3" 9000;
+
+CREATE "Zero 4"
+    CLASS "Zero"
+    AT 650 -400 -1200;
+SET "Zero 4" SIDE = 1;
+SET "Zero 4" PLAYER_PLACED = 1;
+#SET "Zero 4" PLAN = 1;
+YAW "Zero 4" 9000;
+
+
+
+
+# transport
+CREATE "T-811"
+    CLASS "Constellation"
+    AT 900 0 0;
+SET "T-811" SIDE = 1;
+SET "T-811" PLAYER_PLACED = 1;
+SET "T-811" AGRESSION = 3;
+YAW "T-811" 9000;
+
+#CREATE "T-207"
+#    CLASS "Constellation"
+#    AT 700 0 0;
+#SET "T-207" SIDE = 1;
+#SET "T-207" PLAYER_PLACED = 1;
+#SET "T-207" AGRESSION = 3;
+#YAW "T-207" 9000;
+
+
+######################################
+PLAN 1 SIDE 1
+    FOLLOW "Snaevar Starport"
+    WITH AGRESSION 4;
+######################################
+
+
+
+######################################
+# Dominion side
+######################################
+
+######################################
+PLAN 1 SIDE 2
+    FOLLOW "Buoy B" AND "Buoy D"
+    WITH AGRESSION 4;
+PLAN 1 SIDE 2
+    FOLLOW "Buoy C" AND "Buoy A"
+    WITH AGRESSION 4;
+PLAN 1 SIDE 2
+    JUMP TO 1;
+    
+PLAN 2 SIDE 2
+    FOLLOW "Buoy C" AND "Buoy D"
+    WITH AGRESSION 4;
+PLAN 2 SIDE 2
+    FOLLOW "Buoy B" AND "Buoy A"
+    WITH AGRESSION 4;
+PLAN 2 SIDE 2
+    JUMP TO 1;
+    
+PLAN 3 SIDE 2
+    ATTACK "Snaevar Starport"
+    WITH AGRESSION 3;
+######################################
+
+
+######################################
+# Observers
+######################################
+CREATE "CamSat 1"
+		CLASS "CamSat"
+		AT 500 -500 -2000;
+SET "CamSat 1" PLAYER_PLACED = 1;
+
+CREATE "CamSat 2"
+		CLASS "CamSat"
+		AT -300 100 8500;
+YAW "CamSat 2" 1000;
+SET "CamSat 2" PLAYER_PLACED = 1;
+
+CREATE "CamSat 3"
+		CLASS "CamSat"
+		AT 0 0 8000;
+SET "CamSat 3" PLAYER_PLACED = 1;
+
+
+PROC CONSTRUCTOR;
+    BIND_CAMERA_TO "CamSat 1";
+END PROC;
+
+PROC ON TIME 0.2;
+    MESSAGE "Snaevar System, territory claimed by Industrion" BEEP;
+END PROC;
+
+PROC ON TIME 0.4;
+    MESSAGE "Snaevar Starport construction site" BEEP;
+END PROC;
+
+PROC ON TIME 0.17;
+    BIND_CAMERA_TO "Infinity 4" 2;
+END PROC;
+
+PROC ON TIME 0.25;
+    BIND_CAMERA_TO "CamSat 2" 0;
+END PROC;
+
+PROC ON TIME 0.27;
+    MESSAGE "Incoming!!!" BEEP;
+    
+    CREATE "Antarctica"
+	    CLASS "Maradeur"
+        AT 100 50 9800;
+        SET "Antarctica" SPEED = 200;
+        SET "Antarctica" HUMAN_CONTROLLED = 0;
+        SET "Antarctica" PLAYER_PLACED = 1;
+        SET "Antarctica" SIDE = 2;
+        SET "Antarctica" PLAN = 1;
+END PROC;
+
+PROC ON TIME 0.28;
+    MESSAGE "Dominion Task force penetrate into the system" BEEP;
+    CREATE "Lamia"
+	    CLASS "Maradeur"
+        AT 100 50 9800;
+        SET "Lamia" SPEED = 200;
+        SET "Lamia" HUMAN_CONTROLLED = 0;
+        SET "Lamia" PLAYER_PLACED = 1;
+        SET "Lamia" SIDE = 2;
+        SET "Lamia" PLAN = 2;
+END PROC;
+
+PROC ON TIME 0.29;
+    BIND_CAMERA_TO "Lamia" 1;
+END PROC;
+
+PROC ON TIME 0.32;
+    BIND_CAMERA_TO "CamSat 2" 0;
+END PROC;
+
+PROC ON TIME 0.34;
+    CREATE "Glory"
+	    CLASS "Tsunami"
+        AT 100 50 9700;
+        SET "Glory" SPEED = 0;
+        SET "Glory" HUMAN_CONTROLLED = 0;
+        SET "Glory" PLAYER_PLACED = 1;
+        SET "Glory" SIDE = 2;
+        YAW "Glory" 9000;
+        PITCH "Glory" 21000;
+END PROC;
+
+PROC ON TIME 0.35;
+    SET "Glory" AGRESSION = 3;
+END PROC;
+
+PROC ON TIME 0.37;
+    BIND_CAMERA_TO "Antarctica" 1;
+END PROC;
+
+PROC ON TIME 0.55;
+    BIND_CAMERA_TO "Turret 2" 1;
+END PROC;
+
+PROC ON TIME 1.10;
+    SMART_CAMERA_ON;
+END PROC;
+
+PROC ON TIME 2.05;
+    SMART_CAMERA_OFF;
+    BIND_CAMERA_TO "Snaevar Starport" 1;
+END PROC;
+
+PROC ON TIME 2.25;
+    SMART_CAMERA_ON;
+END PROC;
+
+PROC ON TIME 3.0;
+    SMART_CAMERA_OFF;
+    BIND_CAMERA_TO "CamSat 3" 0;
+END PROC;
+
+PROC ON TIME 3.1;
+    MESSAGE "Second wave" BEEP;
+END PROC;
+
+PROC ON TIME 3.02;
+    CREATE "Tornado 1"
+	    CLASS "Tornado"
+        AT 150 50 9300;
+        SET "Tornado 1" SPEED = 150;
+        SET "Tornado 1" HUMAN_CONTROLLED = 0;
+        SET "Tornado 1" PLAYER_PLACED = 1;
+        SET "Tornado 1" SIDE = 2;
+        SET "Tornado 1" PLAN = 3;
+        YAW "Tornado 1" 9000;
+        PITCH "Tornado 1" 21000;
+END PROC;
+
+PROC ON TIME 3.04;
+    CREATE "Tornado 2"
+	    CLASS "Tornado"
+        AT 150 50 9300;
+        SET "Tornado 2" SPEED = 150;
+        SET "Tornado 2" HUMAN_CONTROLLED = 0;
+        SET "Tornado 2" PLAYER_PLACED = 1;
+        SET "Tornado 2" SIDE = 2;
+        SET "Tornado 2" PLAN = 3;
+        YAW "Tornado 2" 9000;
+        PITCH "Tornado 2" 21000;
+END PROC;
+
+PROC ON TIME 3.06;
+    CREATE "Tornado 3"
+	    CLASS "Tornado"
+        AT 150 50 9300;
+        SET "Tornado 3" SPEED = 150;
+        SET "Tornado 3" HUMAN_CONTROLLED = 0;
+        SET "Tornado 3" PLAYER_PLACED = 1;
+        SET "Tornado 3" SIDE = 2;
+        SET "Tornado 3" PLAN = 3;
+        YAW "Tornado 3" 9000;
+        PITCH "Tornado 3" 21000;
+END PROC;
+
+PROC ON TIME 3.08;
+    CREATE "Tornado 4"
+	    CLASS "Tornado"
+        AT 150 50 9300;
+        SET "Tornado 4" SPEED = 150;
+        SET "Tornado 4" HUMAN_CONTROLLED = 0;
+        SET "Tornado 4" PLAYER_PLACED = 1;
+        SET "Tornado 4" SIDE = 2;
+        SET "Tornado 4" PLAN = 3;
+        YAW "Tornado 4" 9000;
+        PITCH "Tornado 4" 21000;
+END PROC;
+
+PROC ON TIME 3.10;
+    CREATE "Tornado 5"
+	    CLASS "Tornado"
+        AT 150 50 9300;
+        SET "Tornado 5" SPEED = 150;
+        SET "Tornado 5" HUMAN_CONTROLLED = 0;
+        SET "Tornado 5" PLAYER_PLACED = 1;
+        SET "Tornado 5" SIDE = 2;
+        SET "Tornado 5" PLAN = 3;
+        YAW "Tornado 5" 9000;
+        PITCH "Tornado 5" 21000;
+END PROC;
+
+PROC ON TIME 3.12;
+    CREATE "Tornado 6"
+	    CLASS "Tornado"
+        AT 150 50 9300;
+        SET "Tornado 6" SPEED = 150;
+        SET "Tornado 6" HUMAN_CONTROLLED = 0;
+        SET "Tornado 6" PLAYER_PLACED = 1;
+        SET "Tornado 6" SIDE = 2;
+        SET "Tornado 6" PLAN = 3;
+        YAW "Tornado 6" 9000;
+        PITCH "Tornado 6" 21000;
+END PROC;
+
+PROC ON TIME 3.14;
+    BIND_CAMERA_TO "Tornado 1" 1;
+END PROC;
+
+PROC ON TIME 3.40;
+    SMART_CAMERA_ON;
+END PROC;
+
+
+PROC ON TIME 3.50;
+    SMART_CAMERA_OFF;
+    BIND_CAMERA_TO "Snaevar Starport" 1;
+END PROC;

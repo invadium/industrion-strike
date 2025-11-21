@@ -1,0 +1,5 @@
+#models files
+
+#space objects models
+"data/models/space/map.mod"
+"data/models/space/camsat.mod"

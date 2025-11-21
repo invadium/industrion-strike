@@ -1,0 +1,10 @@
+MODEL
+SPACE;
+NAME = "Steel Nebula";
+
+MARK = 0;
+
+IMAGE = "data/models/images/steel_nebula.jpg";
+BITMAPPED TRIXEL
+	0		0		0;
+

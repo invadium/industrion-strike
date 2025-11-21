@@ -1,0 +1,123 @@
+MODEL
+#SHIP | FIGHTER | WEAPON
+FIGHTER;
+NAME = "Mirage";
+IDNAME = "MRG";
+IMAGE = "data/models/images/mirage.gif";
+SOUND = 3;
+
+COST = 40;
+RADIUS = 200;
+ENERGY = 200;
+RECHARGE = 4;
+SHIELD = 10;
+SHRECHARGE = 1;
+HULL = 30;
+FUELTANK = 35000;
+
+#Maneuring properties
+ACCELERATION = 2;
+FUEL_DEPLETION = 2;
+MAXSPEED = 350;
+CRUISESPEED = 250;
+MAXYAW = 130;
+YAW_ACCELERATION = 20;
+YAW_FUEL_DEPLETION = 1;
+MAXPITCH = 130;
+PITCH_ACCELERATION = 20;
+PITCH_FUEL_DEPLETION = 1;
+MAXROLL = 130;
+ROLL_ACCELERATION = 20;
+ROLL_FUEL_DEPLETION = 1;
+REACH_RANGE = 7500;
+
+MARK = 3;
+
+#Mount some weapons
+MOUNT "laser 10MW" TO -25 10 0;
+MOUNT "laser 10MW" TO  25 10 0;
+MOUNT_LAUNCHER "stinger" CAPACITY 2 TO 0 200 0;
+
+FRAGMENT "Fragment T1";
+FRAGMENTS_COUNT = 10;
+BLOW "Blow";
+BLOWS_COUNT = 5;
+
+#Models primitives
+FRAMES_COUNT = 40;
+
+COLOR	0 100 240;
+
+##################  HULL  #####################
+COLOR	140 0 0;
+SOLID METAL 10 RECTANGLE
+	-25		10		20
+	25		10		20
+	15		10		-30
+	-15		10		-30;
+
+SOLID METAL 10 TRIANGLE
+	-25		10		20
+	-15		-10		20
+	-15		10		-30;
+SOLID METAL 10 TRIANGLE
+	25		10		20
+	15		-10		20
+	15		10		-30;
+
+COLOR	180 0 0;
+SOLID METAL 10 RECTANGLE
+	-15		-10		20
+	15		-10		20
+	15		10		-30
+	-15		10		-30;
+
+	
+################  COCKPIT  ###################
+COLOR	120 0 240;
+SOLID METAL 0 TRIANGLE
+	-25		10		20
+	25		10		20
+	0		10		40;
+
+SOLID METAL 0 TRIANGLE
+	-25		10		20
+	-15		-10		20
+	0		10		40;
+SOLID METAL 0 TRIANGLE
+	25		10		20
+	15		-10		20
+	0		10		40;
+
+#Canopy 
+COLOR	0 0 120;
+SOLID METAL 250 TRIANGLE
+	-15		-10		20
+	15		-10		20
+	0		10		40;
+
+
+#################  WINGS  ####################
+COLOR	200 170 0;
+SOLID METAL 20 RECTANGLE
+	-25		10		20
+	-65		10		0
+	-55		10		-20
+	-15		10		-30;
+SOLID METAL 20 RECTANGLE
+	25		10		20
+	65		10		0
+	55		10		-20
+	15		10		-30;
+
+#################  LASERS  ####################
+COLOR	120 0 255;
+VOLUME 2 LINE
+	-25		10		20
+	-25		10		30;
+VOLUME 2 LINE
+	25		10		20
+	25		10		30;
+	
+
+INCREASE_SCALE 5;

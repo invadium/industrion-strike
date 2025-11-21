@@ -1,0 +1,155 @@
+MODEL
+#SHIP | FIGHTER | WEAPON
+FIGHTER;
+NAME = "Phantom";
+IDNAME = "PHN";
+IMAGE = "data/models/images/phantom.gif";
+SOUND = 3;
+
+RADIUS = 250;
+ENERGY = 160;
+RECHARGE = 8;
+SHIELD = 40;
+SHRECHARGE = 1;
+HULL = 80;
+FUELTANK = 250000;
+
+#Maneuring properties
+ACCELERATION = 1;
+FUEL_DEPLETION = 8;
+MAXSPEED = 320;
+CRUISESPEED = 280;
+MAXYAW = 120;
+YAW_ACCELERATION = 20;
+YAW_FUEL_DEPLETION = 1;
+MAXPITCH = 120;
+PITCH_ACCELERATION = 20;
+PITCH_FUEL_DEPLETION = 1;
+MAXROLL = 120;
+ROLL_ACCELERATION = 20;
+ROLL_FUEL_DEPLETION = 1;
+
+MARK = 3;
+
+#Mount some weapons
+MOUNT "laser 10MW" TO -25 0 100;
+MOUNT "laser 10MW" TO  25 0 100;
+MOUNT "laser 10MW" TO -15 -20 50;
+MOUNT "laser 10MW" TO  15 -20 50;
+MOUNT_LAUNCHER "sparrow" CAPACITY 4 TO -15 -20 0;
+MOUNT_LAUNCHER "sparrow" CAPACITY 4 TO 15  -20 0;
+
+#Models primitives
+FRAMES_COUNT = 40;
+
+##########  HULL TOP & BOTTOM ###############
+COLOR	140 0 0;
+SOLID METAL 10 RECTANGLE
+	-25		0		20
+	25		0		20
+	35		0		-10
+	-35		0		-10;
+SOLID METAL 10 RECTANGLE
+	-25		-10		20
+	25		-10		20
+	35		-10		-10
+	-35		-10		-10;
+
+SOLID METAL 10 TRIANGLE
+	-25		0		20
+	25		0		20
+	0		0		30;
+SOLID METAL 10 TRIANGLE
+	-25		-10		20
+	25		-10		20
+	0		-10		30;
+
+SOLID METAL 10 RECTANGLE
+	-35		0		-10
+	35		0		-10
+	15		0		-20
+	-15		0		-20;
+SOLID METAL 10 RECTANGLE
+	-35		-10		-10
+	35		-10		-10
+	15		-10		-20
+	-15		-10		-20;
+
+
+############## HULL SIDES  #################
+COLOR	200 170 0;
+SOLID METAL 10 RECTANGLE
+	-15		0		-20
+	-15		-10		-20
+	15		-10		-20
+	15		0		-20;
+
+SOLID METAL 10 RECTANGLE
+	-15		0		-20
+	-15		-10		-20
+	-35		-10		-10
+	-35		0		-10;
+SOLID METAL 10 RECTANGLE
+	15		0		-20
+	15		-10		-20
+	35		-10		-10
+	35		0		-10;
+
+SOLID METAL 10 RECTANGLE
+	-35		0		-10
+	-35		-10		-10
+	-25		-10		20
+	-25		0		20;
+SOLID METAL 10 RECTANGLE
+	35		0		-10
+	35		-10		-10
+	25		-10		20
+	25		0		20;
+
+#Canopy 
+COLOR	0 0 120;
+SOLID METAL 250 RECTANGLE
+	-25		0		20
+	-25		-10		20
+	0		-10		30
+	0		0		30;
+SOLID METAL 250 RECTANGLE
+	25		0		20
+	25		-10		20
+	0		-10		30
+	0		0		30;
+
+################# TOP WING ####################
+COLOR	200 170 0;
+SOLID METAL 10 RECTANGLE
+	-25		-20		-20
+	25		-20		-20
+	15		-20		-10
+	-15		-20		-10;
+
+LINE
+	-15	-10	-15
+	-15	-20	-15;
+LINE
+	15	-10	-15
+	15	-20	-15;
+	
+
+#################  LASERS  ####################
+COLOR	120 0 255;
+VOLUME 2 LINE
+	-25		0		20
+	-25		0		30;
+VOLUME 2 LINE
+	25		0		20
+	25		0		30;
+
+VOLUME 2 LINE
+	-15		-20		-10
+	-15		-20		0;
+VOLUME 2 LINE
+	15		-20		-10
+	15		-20		0;
+	
+
+INCREASE_SCALE 8;

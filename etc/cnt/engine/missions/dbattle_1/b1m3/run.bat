@@ -1,0 +1,1 @@
+D:\j2sdk1.4.2_04\bin\appletviewer.exe mission.html

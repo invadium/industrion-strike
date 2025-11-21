@@ -1,0 +1,163 @@
+MISSION
+
+############################################
+# Training mission "Zero point"
+# Created by Shock (Igor Khotin) 20.05.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Defenders";
+$SideInfo1 = "(you)";
+$SideName2 = "Attackers";
+
+############################
+#Creating far space objects
+############################
+
+CREATE "Proxima"
+CLASS "Moon"
+AT 20000000 -10000000 100000000;
+
+
+##################################
+#Creating navigation buoys
+#around space-time anomaly points
+##################################
+
+CREATE "T-8711 W"
+CLASS "Buoy"
+AT	-2000	-100	2000;
+
+CREATE "T-8711 X"
+CLASS "Buoy"
+AT	-2200	100	1800;
+
+CREATE "T-8711 Y"
+CLASS "Buoy"
+AT	-1800	100	1800;
+
+CREATE "T-8711 Z"
+CLASS "Buoy"
+AT	-2000	100	2200;
+
+
+#Creating navigation buoys around space-time anomaly point T-8713
+
+CREATE "T-8713 W"
+CLASS "Buoy"
+AT	2000	-100	2000;
+
+CREATE "T-8713 X"
+CLASS "Buoy"
+AT	2200	100	1800;
+
+CREATE "T-8713 Y"
+CLASS "Buoy"
+AT	1800	100	1800;
+
+CREATE "T-8713 Z"
+CLASS "Buoy"
+AT	2000	100	2200;
+
+
+#######################################
+#          Defenders side
+#######################################
+CREATE "Turret 1"
+	CLASS "Flak Turret"
+	AT 0 0 0;
+SET "Turret 1" SIDE = 1;
+SET "Turret 1" HUMAN_CONTROLLED = 1;
+SET "Turret 1" PLAN = 1;
+
+CREATE "Turret 2"
+	CLASS "Flak Turret"
+	AT -500 0 0;
+SET "Turret 2" SIDE = 1;
+SET "Turret 2" PLAN = 1;
+
+CREATE "Turret 3"
+	CLASS "Flak Turret"
+	AT 500 0 0;
+SET "Turret 3" SIDE = 1;
+SET "Turret 3" PLAN = 1;
+
+CREATE "Turret 4"
+	CLASS "Flak Turret"
+	AT -1000 0 0;
+SET "Turret 4" SIDE = 1;
+SET "Turret 4" PLAN = 1;
+
+CREATE "Turret 5"
+	CLASS "Flak Turret"
+	AT 1000 0 0;
+SET "Turret 5" SIDE = 1;
+SET "Turret 5" PLAN = 1;
+
+#plan for the defenders
+PLAN 1 SIDE 1
+FOLLOW "T-8711 X"
+WITH AGRESSION 2;
+
+#attacking plan
+PLAN 1 SIDE 2
+ATTACK "Turret 1" AND "Turret 2"
+WITH AGRESSION 1;
+
+PLAN 1 SIDE 2
+ATTACK "Turret 3" AND "Turret 4"
+WITH AGRESSION 1;
+
+PLAN 1 SIDE 2
+ATTACK "Turret 5"
+WITH AGRESSION 1;
+
+PLAN 1 SIDE 2
+FOLLOW "T-8713 W"
+WITH AGRESSION 3;
+
+BIND_CAMERA_TO "Turret 1";
+
+$GLOBAL = 1;
+$SW = 1;
+
+PROC LCR;
+	CREATE $NAME
+		CLASS "Zero"
+		AT -2000 0 2000;
+END PROC;
+
+PROC RCR;
+	CREATE $NAME
+		CLASS "Zero"
+		AT 2000 0 2000;
+END PROC;
+
+PROC EVERY 10;
+	$NAME = "Zero " + $GLOBAL;
+	CALL LCR;
+	SET $NAME SIDE = 2;
+	SET $NAME PLAN = 1;
+	SET $NAME PLAYER_PLACED = 0;
+	SET $NAME PLAYER_CONTROLLED = 0;
+	$GLOBAL = $GLOBAL + 1;	
+
+	$NAME = "Zero " + $GLOBAL;
+	CALL RCR;
+	SET $NAME SIDE = 2;
+	SET $NAME PLAN = 1;
+	SET $NAME PLAYER_PLACED = 0;
+	SET $NAME PLAYER_CONTROLLED = 0;
+	$GLOBAL = $GLOBAL + 1;	
+
+	MESSAGE "New zeros exiting from anomaly!";
+END PROC;
+
+PROC ON TIME 0.2;
+	MESSAGE "We are awaiting for enemy fighters incoming" BEEP;
+END PROC;
+
+PROC ON TIME 0.5;
+	MESSAGE "Destroy them all" BEEP;
+END PROC;

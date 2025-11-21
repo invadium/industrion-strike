@@ -1,0 +1,451 @@
+MISSION
+
+############################################
+# Dominion
+# Battle #1
+# Mission #3 "Hold your positions"
+# Created by Shock (Igor Khotin) 14.11.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Dominion";
+$SideInfo1 = "(you)";
+$SideName2 = "Pirates";
+
+#######################################
+#              SPACE
+#######################################
+
+CREATE "Magdalena"
+CLASS "Magdalena"
+AT 20000000 -10000000 100000000;
+
+
+
+
+
+#######################################
+#              NEUTRAL
+#######################################
+
+CREATE "Tor Anomaly"
+	CLASS "Buoy"
+	AT -10000	2000	4000;
+
+CREATE "Rendezvous"
+	CLASS "Nav Point"
+	AT 0 -500 800;
+
+CREATE "Attack Vector"
+	CLASS "Nav Point"
+	AT 0 0 0;
+
+
+#######################################
+#             DOMINION
+#######################################
+
+CREATE "Superb"
+	CLASS "Wasp"
+	AT 0 0 400;
+SET "Superb" SIDE = 1;
+SET "Superb" PLAYER_PLACED = 1;
+SET "Superb" PLAYER_CONTROLLED = 1;
+SET "Superb" AGRESSION = 2;
+
+CREATE "Hercules"
+	CLASS "Wasp"
+	AT -1600 -200	1000;
+
+SET "Hercules" SIDE = 1;
+SET "Hercules" PLAYER_PLACED = 1;
+SET "Hercules" PLAYER_CONTROLLED = 1;
+SET "Hercules" AGRESSION = 2;
+
+
+CREATE ""
+	CLASS "Hornet"
+	AT -800 0 300;
+SET "Hornet 1" SIDE = 1;
+SET "Hornet 1" PLAYER_PLACED = 1;
+SET "Hornet 1" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 500 0 500;
+SET "Hornet 2" SIDE = 1;
+SET "Hornet 2" PLAYER_PLACED = 1;
+SET "Hornet 2" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 200 -400 -400;
+SET "Hornet 3" SIDE = 1;
+SET "Hornet 3" PLAYER_PLACED = 1;
+SET "Hornet 3" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 400 200 -1200;
+SET "Hornet 4" SIDE = 1;
+SET "Hornet 4" PLAYER_PLACED = 1;
+SET "Hornet 4" HUMAN_CONTROLLED = 1;
+SET "Hornet 4" SPEED = 150;
+SET "Hornet 4" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT -500 400 -700;
+SET "Hornet 5" SIDE = 1;
+SET "Hornet 5" PLAYER_PLACED = 1;
+SET "Hornet 5" HUMAN_CONTROLLED = 1;
+SET "Hornet 5" SPEED = 150;
+SET "Hornet 5" PLAN = 1;
+
+#########################################
+#Dominion flight plan: protecting corvete
+PLAN 1 SIDE 1
+FOLLOW "Superb"
+WITH AGRESSION 4;
+
+#Dominion flight plan for incoming fleet
+PLAN 2 SIDE 1
+FOLLOW "Superb" AND "Hercules"
+WITH AGRESSION 4;
+PLAN 2 SIDE 1
+FOLLOW "Attack Vector"
+WITH AGRESSION 4;
+
+PLAN 3 SIDE 1
+FOLLOW "Attack Vector"
+WITH AGRESSION 4;
+
+PLAN 4 SIDE 1
+FOLLOW "Rendezvous"
+WITH AGRESSION 3;
+#########################################
+
+
+BIND_CAMERA_TO "Hornet 4";
+
+
+
+
+
+##############################################
+#				    PIRATES
+##############################################
+
+######################################
+#          Corvette wave
+######################################
+CREATE ""
+	CLASS "Lynx"
+	AT 0 0 25000;
+SET "Lynx 1" SIDE = 2;
+SET "Lynx 1" PLAYER_PLACED = 0;
+SET "Lynx 1" PLAN = 3;
+
+CREATE ""
+	CLASS "Lynx"
+	AT -200 0 25500;
+SET "Lynx 2" SIDE = 2;
+SET "Lynx 2" PLAYER_PLACED = 0;
+SET "Lynx 2" PLAN = 4;
+
+CREATE ""
+	CLASS "Lynx"
+	AT 200 0 25500;
+SET "Lynx 3" SIDE = 2;
+SET "Lynx 3" PLAYER_PLACED = 0;
+SET "Lynx 3" PLAN = 5;
+
+
+######################################
+#            First wave
+######################################
+CREATE ""
+	CLASS "Mirage"
+	AT 0 0 20000;
+SET "Mirage 1" SIDE = 2;
+SET "Mirage 1" PLAYER_PLACED = 0;
+SET "Mirage 1" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -700 0 20000;
+SET "Mirage 2" SIDE = 2;
+SET "Mirage 2" PLAYER_PLACED = 0;
+SET "Mirage 2" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 700 0 20000;
+SET "Mirage 3" SIDE = 2;
+SET "Mirage 3" PLAYER_PLACED = 0;
+SET "Mirage 3" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 0 -700 20000;
+SET "Mirage 4" SIDE = 2;
+SET "Mirage 4" PLAYER_PLACED = 0;
+SET "Mirage 4" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 0 700 20000;
+SET "Mirage 5" SIDE = 2;
+SET "Mirage 5" PLAYER_PLACED = 0;
+SET "Mirage 5" PLAN = 1;
+
+######################################
+#            Second wave
+######################################
+CREATE ""
+	CLASS "Mirage"
+	AT 0 0 30000;
+SET "Mirage 6" SIDE = 2;
+SET "Mirage 6" PLAYER_PLACED = 0;
+SET "Mirage 6" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -700 0 30000;
+SET "Mirage 7" SIDE = 2;
+SET "Mirage 7" PLAYER_PLACED = 0;
+SET "Mirage 7" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 700 0 30000;
+SET "Mirage 8" SIDE = 2;
+SET "Mirage 8" PLAYER_PLACED = 0;
+SET "Mirage 8" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 0 -700 30000;
+SET "Mirage 9" SIDE = 2;
+SET "Mirage 9" PLAYER_PLACED = 0;
+SET "Mirage 9" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 0 700 30000;
+SET "Mirage 10" SIDE = 2;
+SET "Mirage 10" PLAYER_PLACED = 0;
+SET "Mirage 10" PLAN = 2;
+
+######################################
+#            Final wave
+######################################
+
+CREATE ""
+	CLASS "Mirage"
+	AT 700 0 50000;
+SET "Mirage 11" SIDE = 2;
+SET "Mirage 11" PLAYER_PLACED = 0;
+SET "Mirage 11" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -700 0 50500;
+SET "Mirage 12" SIDE = 2;
+SET "Mirage 12" PLAYER_PLACED = 0;
+SET "Mirage 12" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -1400 0 51000;
+SET "Mirage 13" SIDE = 2;
+SET "Mirage 13" PLAYER_PLACED = 0;
+SET "Mirage 13" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -2100 0 51500;
+SET "Mirage 14" SIDE = 2;
+SET "Mirage 14" PLAYER_PLACED = 0;
+SET "Mirage 14" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 700 0 50500;
+SET "Mirage 15" SIDE = 2;
+SET "Mirage 15" PLAYER_PLACED = 0;
+SET "Mirage 15" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 1400 0 51000;
+SET "Mirage 16" SIDE = 2;
+SET "Mirage 16" PLAYER_PLACED = 0;
+SET "Mirage 16" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 2100 0 51500;
+SET "Mirage 17" SIDE = 2;
+SET "Mirage 17" PLAYER_PLACED = 0;
+SET "Mirage 17" PLAN = 1;
+
+
+#########################################
+#Attack corvettes
+PLAN 1 SIDE 2
+	FOLLOW "Attack Vector"
+	WITH AGRESSION 2;
+
+#Attack corvettes
+PLAN 2 SIDE 2
+	FOLLOW "Rendezvous"
+	WITH AGRESSION 2;
+
+#Attack corvettes
+PLAN 3 SIDE 2
+	FOLLOW "Superb"
+	WITH AGRESSION 4;
+PLAN 3 SIDE 2
+	FOLLOW "Hercules"
+	WITH AGRESSION 4;
+PLAN 3 SIDE 2
+	FOLLOW "Attack Vector"
+	WITH AGRESSION 4;
+
+PLAN 4 SIDE 2
+	FOLLOW "Hercules"
+	WITH AGRESSION 4;
+PLAN 4 SIDE 2
+	FOLLOW "Superb"
+	WITH AGRESSION 4;
+PLAN 4 SIDE 2
+	FOLLOW "Attack Vector"
+	WITH AGRESSION 4;
+
+#Attack corvettes
+PLAN 5 SIDE 2
+	FOLLOW "Attack Vector"
+	WITH AGRESSION 4;
+#########################################
+
+
+
+
+
+#########################################
+#               ACTION
+#########################################
+$Mission = -1;
+$Sc = 0;
+$Kill = 0;
+$MustKill = 20;
+$MustProvide = 0;
+
+PROC SUCCESS;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC MirageKill;
+	$Kill = $Kill + 1;
+	CALL CheckSuccess;
+END PROC;
+
+PROC WaspKill;
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC CarierReach;
+	IF ($ReachedObject == "Rendezvous") CALL RReached;
+END PROC;
+
+PROC RReached;
+	$MustProvide = 1;
+	CALL CheckSuccess;
+END PROC;
+
+PROC CheckSuccess;
+	IF ($Mission == -2) RET;
+	IF (($Kill == $MustKill) & ($MustProvide == 1)) CALL SUCCESS;
+END PROC;
+
+
+PROC ON TIME 0.1;
+	#Note:
+	#we set event procedures
+	#set them here, 'couse there is no one
+	#of these procedures when we created objects
+
+	SET "Superb" KILLPROC = "WaspKill";
+	SET "Mirage 1" KILLPROC = "MirageKill";
+	SET "Mirage 2" KILLPROC = "MirageKill";
+	SET "Mirage 3" KILLPROC = "MirageKill";
+	SET "Mirage 4" KILLPROC = "MirageKill";
+	SET "Mirage 5" KILLPROC = "MirageKill";
+	SET "Mirage 6" KILLPROC = "MirageKill";
+	SET "Mirage 7" KILLPROC = "MirageKill";
+	SET "Mirage 8" KILLPROC = "MirageKill";
+	SET "Mirage 9" KILLPROC = "MirageKill";
+	SET "Mirage 10" KILLPROC = "MirageKill";
+	SET "Mirage 11" KILLPROC = "MirageKill";
+	SET "Mirage 12" KILLPROC = "MirageKill";
+	SET "Mirage 13" KILLPROC = "MirageKill";
+	SET "Mirage 14" KILLPROC = "MirageKill";
+	SET "Mirage 15" KILLPROC = "MirageKill";
+	SET "Mirage 16" KILLPROC = "MirageKill";
+	SET "Mirage 17" KILLPROC = "MirageKill";
+
+	SET "Lynx 1" KILLPROC = "MirageKill";
+	SET "Lynx 2" KILLPROC = "MirageKill";
+	SET "Lynx 3" KILLPROC = "MirageKill";
+
+	
+	SET "Hercules" KILLPROC = "WaspKill";
+	SET "Superb" KILLPROC = "WaspKill";
+END PROC;
+
+PROC ON TIME 0.2;
+	MESSAGE "Foe bogies incoming";
+	MESSAGE "Protect our corvettes" BEEP;
+END PROC;
+
+PROC ON TIME 1.45;
+	MESSAGE "Destroyer Iron Duke passed through the point" BEEP;
+	
+	CREATE "Iron Duke"
+		CLASS "Oscar"
+		AT -9500	1700	4000;
+	SET "Iron Duke" SIDE = 1;
+	SET "Iron Duke" PLAYER_PLACED = 1;
+	SET "Iron Duke" PLAN = 2;
+	SET "Iron Duke" SPEED = 40;
+END PROC;
+
+PROC ON TIME 2.00;
+	MESSAGE "Destroyer Princess Royal passed through the point" BEEP;
+	
+	CREATE "Princess Royal"
+		CLASS "Oscar"
+		AT -9500	1700	4000;
+	SET "Princess Royal" SIDE = 1;
+	SET "Princess Royal" PLAYER_PLACED = 1;
+	SET "Princess Royal" PLAN = 3;
+	SET "Princess Royal" SPEED = 80;
+END PROC;
+
+
+PROC ON TIME 2.15;
+	MESSAGE "Carrier Thunderer passed through the point" BEEP;
+	
+	CREATE "Thunderer"
+		CLASS "Tsunami"
+		AT -9500	1700	4000;
+	SET "Thunderer" SIDE = 1;
+	SET "Thunderer" PLAYER_PLACED = 1;
+	SET "Thunderer" PLAN = 4;
+	SET "Thunderer" SPEED = 35;
+	SET "Thunderer" REACHPROC = "CarierReach";
+END PROC;

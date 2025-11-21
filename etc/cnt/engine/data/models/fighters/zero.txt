@@ -1,0 +1,132 @@
+MODEL
+#SHIP | FIGHTER | WEAPON
+FIGHTER;
+NAME = "Zero";
+IDNAME = "ZERO";
+IMAGE = "data/models/images/zero.gif";
+COST = 55;
+SOUND = 3;
+
+RADIUS = 120;
+ENERGY = 120;
+RECHARGE = 2;
+SHIELD = 10;
+SHRECHARGE = 1;
+HULL = 20;
+FUELTANK = 55000;
+
+#Chain properties
+RANGE = 250000;
+RECHARGETIME = 800;
+
+#Maneuring properties
+ACCELERATION = 3;
+FUEL_DEPLETION = 2;
+MAXSPEED = 600;
+CRUISESPEED = 520;
+MAXYAW = 150;
+YAW_ACCELERATION = 20;
+YAW_FUEL_DEPLETION = 1;
+MAXPITCH = 150;
+PITCH_ACCELERATION = 20;
+PITCH_FUEL_DEPLETION = 1;
+MAXROLL = 150;
+ROLL_ACCELERATION = 20;
+ROLL_FUEL_DEPLETION = 1;
+
+MARK = 3;
+
+#Mount some weapons
+MOUNT "laser 10MW" TO -50 10 20;
+MOUNT "laser 10MW" TO  50 10 20;
+MOUNT_LAUNCHER "stinger" CAPACITY 2 TO 0 200 0;
+
+FRAGMENT "Fragment T1";
+FRAGMENTS_COUNT = 10;
+BLOW "Blow";
+BLOWS_COUNT = 5;
+
+#Models primitives
+
+##################  HULL  #####################
+COLOR	140 0 0;
+SOLID METAL 10 RECTANGLE
+	-30		0		30
+	30		0		30
+	30		0		-70
+	-30		0		-70;
+
+SOLID METAL 10 RECTANGLE
+	-30		0		30
+	-10		-20		30
+	-10		-20		-70
+	-30		0		-70;
+SOLID METAL 10 RECTANGLE
+	30		0		30
+	10		-20		30
+	10		-20		-70
+	30		0		-70;
+
+COLOR	180 0 0;
+SOLID METAL 10 RECTANGLE
+	-10		-20		30
+	10		-20		30
+	10		-20		-70
+	-10		-20		-70;
+
+COLOR	220 160 0;
+SOLID METAL 20 RECTANGLE
+	-30		0		-70
+	-10		-20		-70
+	10		-20		-70
+	30		0		-70;
+
+
+################  COCKPIT  ###################
+COLOR	120 0 240;
+SOLID METAL 0 RECTANGLE
+	-30		0		30
+	30		0		30
+	10		-10		70
+	-10		-10		70;
+SOLID METAL 0 TRIANGLE
+	-30		0		30
+	-10		-20		30
+	-10		-10		70;
+SOLID METAL 0 TRIANGLE
+	30		0		30
+	10		-20		30
+	10		-10		70;
+
+#Canopy 
+COLOR	0 0 120;
+METAL 250 RECTANGLE
+	-10		-20		30
+	10		-20		30
+	10		-10		70
+	-10		-10		70;
+
+#################  WINGS  ####################
+COLOR	200 170 0;
+SOLID METAL 20 RECTANGLE
+	-90		20		30
+	-30		0		-10
+	-30		0		-70
+	-90		20		-10;
+SOLID METAL 20 RECTANGLE
+	90		20		30
+	30		0		-10
+	30		0		-70
+	90		20		-10;
+
+#################  LASERS  ####################
+COLOR	120 0 255;
+VOLUME 2 LINE
+	-50		10		-20
+	-50		10		20;
+VOLUME 2 LINE
+	50		10		-20
+	50		10		20;
+	
+
+INCREASE_SCALE 2;

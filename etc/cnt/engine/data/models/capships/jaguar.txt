@@ -1,0 +1,361 @@
+MODEL
+#SHIP | FIGHTER | WEAPON | MISSILE | STATIC
+SHIP;
+NAME = "Jaguar";
+IDNAME = "JGR";
+IMAGE = "data/models/images/jaguar.gif";
+
+RADIUS = 1500;
+ENERGY = 3500;
+RECHARGE = 10;
+SHIELD = 2500;
+SHRECHARGE = 1;
+HULL = 10000;
+FUELTANK = 5000000;
+
+#Maneuring properties
+ACCELERATION = 1;
+FUEL_DEPLETION = 20;
+MAXSPEED = 55;
+CRUISESPEED = 45;
+MAXYAW = 90;
+YAW_ACCELERATION = 10;
+YAW_FUEL_DEPLETION = 10;
+MAXPITCH = 90;
+PITCH_ACCELERATION = 10;
+PITCH_FUEL_DEPLETION = 10;
+MAXROLL = 90;
+ROLL_ACCELERATION = 10;
+ROLL_FUEL_DEPLETION = 10;
+
+MARK = 9;
+
+#Mount some weapons
+
+MOUNT_LAUNCHER "Zero" CAPACITY 16 TO -1600  0 800;
+MOUNT_LAUNCHER "Infinity" CAPACITY 8 TO -1600  0 800;
+MOUNT_LAUNCHER "Indefinite" CAPACITY 8 TO -1600  0 800;
+MOUNT_LAUNCHER "Comet" CAPACITY 8 TO -1600  0 800;
+
+
+
+FRAGMENT "Fragment T2";
+FRAGMENTS_COUNT = 10;
+BLOW "Destruct";
+BLOWS_COUNT = 5;
+
+FRAMES_COUNT = 80;
+
+##################  HULL  #####################
+COLOR	140 140 140;
+
+#top panels
+SOLID METAL 10 RECTANGLE
+	-10		0		100
+	10		0		100
+	10		-15		0
+	-10		-15		0;
+SOLID METAL 10 RECTANGLE
+	-10		-15		0
+	10		-15		0
+	15		-5		-80
+	-15		-5		-80;
+
+
+SOLID METAL 10 TRIANGLE
+	-10		0		100
+	-10		-15		0
+	-30		0		-10;
+SOLID METAL 10 TRIANGLE
+	10		0		100
+	10		-15		0
+	30		0		-10;
+
+SOLID METAL 10 TRIANGLE
+	-10		-15		0
+	-15		-5		-80
+	-30		0		-10;
+SOLID METAL 10 TRIANGLE
+	10		-15		0
+	15		-5		-80
+	30		0		-10;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	-10		0		100
+	10		0		100
+	10		15		0
+	-10		15		0;
+SOLID METAL 10 RECTANGLE
+	-10		15		0
+	10		15		0
+	15		5		-80
+	-15		5		-80;
+
+SOLID METAL 10 TRIANGLE
+	-10		0		100
+	-10		15		0
+	-30		0		-10;
+SOLID METAL 10 TRIANGLE
+	10		0		100
+	10		15		0
+	30		0		-10;
+
+SOLID METAL 10 TRIANGLE
+	-10		15		0
+	-15		5		-80
+	-30		0		-10;
+SOLID METAL 10 TRIANGLE
+	10		15		0
+	15		5		-80
+	30		0		-10;
+
+############### ENGINE #################
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	-15		5		-80
+	-15     -5      -80
+	15		-5		-80
+	15		5		-80;
+
+SOLID ILLUMINATED RECTANGLE
+	-15		5		-80
+	-15     -5      -80
+	-45		-5		-70
+	-45		5		-70;
+SOLID ILLUMINATED RECTANGLE
+	15		5		-80
+	15     -5      -80
+	45		-5		-70
+	45		5		-70;
+
+
+########### SIDE HULL ###################
+COLOR	140 140 140;
+
+#left
+SOLID METAL 10 RECTANGLE
+	-60		-15		-20
+	-30		-15		-10
+	-15		-5		-80
+	-45		-5		-70;
+SOLID METAL 10 RECTANGLE
+	-60		15		-20
+	-30		15		-10
+	-15		5		-80
+	-45		5		-70;
+
+SOLID METAL 10 RECTANGLE
+	-60		-15		-20
+	-60		15		-20
+	-45		5		-70
+	-45		-5		-70;
+SOLID METAL 10 RECTANGLE
+	-30		-15		-10
+	-30		15		-10
+	-15		5		-80
+	-15		-5		-80;
+
+#right
+SOLID METAL 10 RECTANGLE
+	60		-15		-20
+	30		-15		-10
+	15		-5		-80
+	45		-5		-70;
+SOLID METAL 10 RECTANGLE
+	60		15		-20
+	30		15		-10
+	15		5		-80
+	45		5		-70;
+
+SOLID METAL 10 RECTANGLE
+	60		-15		-20
+	60		15		-20
+	45		5		-70
+	45		-5		-70;
+SOLID METAL 10 RECTANGLE
+	30		-15		-10
+	30		15		-10
+	15		5		-80
+	15		-5		-80;
+
+SOLID METAL 10 RECTANGLE
+	60		-15		-20
+	30		-15		-10
+	30		15		-10
+	60		15		-20;
+
+############### WINGS ###################
+COLOR	140 140 140;
+SOLID METAL 10 RECTANGLE
+	-45		0		-70
+	-70		0		-100
+	-80		0		-90
+	-55		0		-40;
+
+SOLID METAL 10 RECTANGLE
+	45		0		-70
+	70		0		-100
+	80		0		-90
+	55		0		-40;
+
+############# SMALL HULL ################
+COLOR	190 190 190;
+#top panels
+SOLID METAL 10 RECTANGLE
+	10		-35		-10
+	30		-35		-10
+	40		-40		-30
+	0		-40		-30;
+SOLID METAL 10 RECTANGLE
+	0		-40		-30
+	40		-40		-30
+	40		-40		-60
+	0		-40		-60;
+SOLID METAL 10 RECTANGLE
+	10		-35		-70
+	30		-35		-70
+	40		-40		-60
+	0		-40		-60;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	10		-35		-10
+	30		-35		-10
+	40		-30		-30
+	0		-30		-30;
+SOLID METAL 10 RECTANGLE
+	0		-30		-30
+	40		-30		-30
+	40		-30		-60
+	0		-30		-60;
+SOLID METAL 10 RECTANGLE
+	10		-35		-70
+	30		-35		-70
+	40		-30		-60
+	0		-30		-60;
+
+########## SMALL SIDES ##########
+SOLID METAL 10 TRIANGLE
+	10		-35		-10
+	0		-30		-30
+	0		-40		-30;
+SOLID METAL 10 RECTANGLE
+	0		-30		-30
+	0		-40		-30
+	0		-40		-60
+	0		-30		-60;
+SOLID METAL 10 TRIANGLE
+	10		-35		-70
+	0		-40		-60
+	0		-30		-60;
+
+SOLID METAL 10 TRIANGLE
+	30		-35		-10
+	40		-30		-30
+	40		-40		-30;
+SOLID METAL 10 RECTANGLE
+	40		-30		-30
+	40		-40		-30
+	40		-40		-60
+	40		-30		-60;
+SOLID METAL 10 TRIANGLE
+	30		-35		-70
+	40		-40		-60
+	40		-30		-60;
+
+############## BEARING ###################
+COLOR 120 120 120;
+LINE
+	15		-10		-40
+	15		-30		-40;
+LINE
+	25		-10		-40
+	25		-30		-40;
+LINE
+	15		-10		-50
+	15		-30		-50;
+LINE
+	25		-10		-50
+	25		-30		-50;
+
+##### TAKE-OFF AND LANDING STRIP #########
+
+#first segment
+COLOR 100 100 100;
+SOLID METAL 10 RECTANGLE
+	-60		15		-20
+	-65		15		-5
+	-52		15		-1
+	-47		15		-16;
+SOLID METAL 10 RECTANGLE
+	-47		15		1
+	-35		15		5
+	-30		15		-10
+	-42		15		-14;
+COLOR 	255 255 45;
+SOLID METAL 10 RECTANGLE
+	-52		15		-1
+	-47		15		1
+	-42		15		-14
+	-47		15		-16;
+
+#second segment
+COLOR 100 100 100;
+SOLID METAL 10 RECTANGLE
+	-68		15		3
+	-37		15		13
+	-35		15		5
+	-65		15		-5;
+
+#third segment
+COLOR 100 100 100;
+SOLID METAL 10 RECTANGLE
+	-73		15		18
+	-59		15		22
+	-54		15		7
+	-68		15		3;
+SOLID METAL 10 RECTANGLE
+	-54		15		24
+	-43		15		28
+	-37		15		13
+	-49		15		9;
+COLOR 	255 255 45;
+SOLID METAL 10 RECTANGLE
+	-59		15		22
+	-54		15		24
+	-49		15		9
+	-54		15		7;
+
+#last segment
+COLOR 100 100 100;
+SOLID METAL 10 RECTANGLE
+	-80		15		40
+	-46		15		40
+	-42		15		28
+	-73		15		18;
+
+#ropes
+COLOR	120 0 255;
+LINE
+	-80		15		40
+	-60		-15		-20;
+
+LINE
+	-46		15		40
+	-30		-15		-10;
+
+#lights
+COLOR	255	0	0;
+
+FRAMES 1 20 VOLUME 5 TRIXEL
+	-80		15		40;
+FRAMES 1 20 VOLUME 5 TRIXEL
+	-60		-15		-20;
+FRAMES 1 20 VOLUME 5 TRIXEL
+	-46		15		40;
+FRAMES 1 20 VOLUME 5 TRIXEL
+	-30		-15		-10;
+
+
+INCREASE_SCALE 20;

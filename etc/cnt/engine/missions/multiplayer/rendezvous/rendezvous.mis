@@ -1,0 +1,117 @@
+MISSION
+
+############################################
+# Dominion/Industrion/New Germany
+# Multiplayer mission
+# Created by Shock (Igor Khotin) 19.02.2006
+############################################
+
+#Sides declaration variables
+$Sides = 3;
+$SideName1 = "Dominion";
+$SideName2 = "Industrion";
+$SideName3 = "New Germany";
+
+$TurnBased = 1;
+$TurnSides = 3;
+$ActionTime = 60;
+$TurnTime = 60;
+
+
+CREATE "Satelite"
+CLASS "Moon"
+AT 40000000 -30000000 100000000;
+
+
+
+
+$DominionShip = "";
+$DBX = -10000;
+$DBY = 5000;
+$DBZ = -10000;
+$DShift = 200;
+$ZShift = -200;
+
+PROC SetForDominion;
+	SET $DominionShip SIDE = 1;
+	SET $DominionShip PLAYER_CONTROLLED = 1;
+END PROC;
+
+
+$IndustrionShip = "";
+$IBX = 10000;
+$IBY = -5000;
+$IBZ = -10000;
+$IShift = -200;
+
+
+PROC SetForIndustrion;
+	SET $IndustrionShip SIDE = 2;
+	SET $IndustrionShip PLAYER_CONTROLLED = 1;
+END PROC;
+
+$GermanyShip = "";
+$GBX = 0;
+$GBY = 0;
+$GBZ = 10000;
+$GShift = -200;
+
+
+PROC SetForGermany;
+	SET $GermanyShip SIDE = 3;
+	SET $GermanyShip PLAYER_CONTROLLED = 1;
+END PROC;
+
+
+PROC CONSTRUCTOR;
+
+	#CREATE DOMINION SHIPS
+	CREATE "Straighthate"
+		CLASS "Maradeur"
+		AT $DBX $DBY $DBZ;
+	$DominionShip = "Straighthate";
+	CALL SetForDominion;
+
+	CREATE ""
+		CLASS "Tornado"
+		AT $DBX ($DBY + $DShift) $DBZ;
+	$DominionShip = "Tornado 1";
+	CALL SetForDominion;
+
+	CREATE ""
+		CLASS "Tornado"
+		AT $DBX ($DBY + $ZShift) $DBZ;
+	$DominionShip = "Tornado 2";
+	CALL SetForDominion;
+
+	CREATE ""
+		CLASS "Raptor"
+		AT $DBX ($DBY + $DShift) ($DBZ + $DShift);
+	$DominionShip = "Raptor 1";
+	CALL SetForDominion;
+
+	CREATE ""
+		CLASS "Raptor"
+		AT $DBX ($DBY + $ZShift) ($DBZ + $ZShift);
+	$DominionShip = "Raptor 2";
+	CALL SetForDominion;
+
+
+
+	#CREATE INDUSTION SHIPS
+	CREATE "Aurora"
+		CLASS "Tiger"
+		AT $IBX $IBY $IBZ;
+	$IndustrionShip = "Aurora";
+	CALL SetForIndustrion;
+
+
+	#CREATE NEW GERMANY SHIPS
+	CREATE "Bismark"
+		CLASS "Jaguar"
+		AT $GBX $GBY $GBZ;
+	$GermanyShip = "Bismark";
+	CALL SetForGermany;
+
+	BIND_CAMERA_TO "Straighthate";
+END PROC;

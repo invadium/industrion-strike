@@ -1,0 +1,83 @@
+#models files
+
+####################################
+#		space object models
+####################################
+"data/models/space/map.txt"
+"data/models/space/planet.txt"
+"data/models/space/snaevar.txt"
+"data/models/space/moon.txt"
+"data/models/space/magdalena.txt"
+"data/models/space/steel_nebula.txt"
+"data/models/space/red_nebula.txt"
+"data/models/space/camsat.txt"
+
+#####################################
+#			misc models
+#####################################
+"data/models/misc/fragment_t1.txt"
+"data/models/misc/fragment_t2.txt"
+"data/models/misc/fragment_t3.txt"
+"data/models/misc/blow.txt"
+"data/models/misc/destruct.txt"
+
+#####################################
+#			static models
+#####################################
+"data/models/static/nav_point.txt"
+"data/models/static/buoy.txt"
+"data/models/static/container.txt"
+
+#####################################
+#		  weapons models
+#####################################
+"data/models/weapons/laser_5mw.txt"
+"data/models/weapons/laser_7mw.txt"
+"data/models/weapons/laser_10mw.txt"
+"data/models/weapons/laser_15mw.txt"
+"data/models/weapons/laser_25mw.txt"
+"data/models/weapons/laser_50mw.txt"
+"data/models/weapons/stinger.txt"
+"data/models/weapons/sparrow.txt"
+"data/models/weapons/avalanche.txt"
+"data/models/weapons/proton.txt"
+
+######################################
+#		   fighters models
+######################################
+"data/models/fighters/hornet.txt"
+"data/models/fighters/falcon.txt"
+"data/models/fighters/phantom.txt"
+"data/models/fighters/tornado.txt"
+"data/models/fighters/raptor.txt"
+"data/models/fighters/dragonfly.txt"
+"data/models/fighters/mirage.txt"
+"data/models/fighters/zero.txt"
+"data/models/fighters/infinity.txt"
+"data/models/fighters/indefinite.txt"
+"data/models/fighters/comet.txt"
+"data/models/fighters/orion.txt"
+"data/models/fighters/flak_turret.txt"
+"data/models/fighters/laser_turret.txt"
+"data/models/fighters/probe.txt"
+"data/models/fighters/drone.txt"
+"data/models/fighters/shuttle.txt"
+
+########################################
+#			capships models
+########################################
+"data/models/capships/constellation.txt"
+"data/models/capships/lynx.txt"
+"data/models/capships/panther.txt"
+"data/models/capships/leopard.txt"
+"data/models/capships/jaguar.txt"
+"data/models/capships/tiger.txt"
+"data/models/capships/wasp.txt"
+"data/models/capships/oscar.txt"
+"data/models/capships/maradeur.txt"
+"data/models/capships/tsunami.txt"
+
+########################################
+#			station models
+########################################
+"data/models/static/outpost.txt"

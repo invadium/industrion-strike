@@ -1,0 +1,19 @@
+#!/bin/sh
+
+MISSION=${1:-dbattle_1/b1m3/b1m3.mis}
+
+echo "=================="
+echo "Available Missions"
+echo "=================="
+./missions
+echo "----------------------------------------"
+
+echo ""
+echo "Mission: [$MISSION]"
+
+cat ./out/start.html | sed "s|{{mission-path}}|$MISSION|" > ./out/_start.html
+
+cat ./out/_start.html
+
+/usr/lib/jvm/java-8-openjdk/bin/appletviewer ./out/_start.html
+

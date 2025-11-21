@@ -1,0 +1,349 @@
+MISSION
+
+############################################
+# Dominion
+# Battle #1
+# Mission #2 "Pirites' answer"
+# Created by Shock (Igor Khotin) 10.06.2005
+# Revision by Shock 06.11.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Dominion";
+$SideInfo1 = "(you)";
+$SideName2 = "Pirates";
+
+
+#Creating far space objects
+
+CREATE "Magdalena"
+CLASS "Magdalena"
+AT 20000000 -10000000 100000000;
+
+
+#######################################
+#              NEUTRAL
+#######################################
+
+CREATE "Tor Anomaly"
+CLASS "Buoy"
+AT -10000	2000	4000;
+
+
+#######################################
+#             DOMINION
+#######################################
+
+CREATE "Superb"
+	CLASS "Wasp"
+	AT 0 0 400;
+SET "Superb" SIDE = 1;
+SET "Superb" PLAYER_PLACED = 1;
+SET "Superb" PLAYER_CONTROLLED = 0;
+SET "Superb" AGRESSION = 2;
+
+CREATE ""
+	CLASS "Hornet"
+	AT -800 0 300;
+SET "Hornet 1" SIDE = 1;
+SET "Hornet 1" PLAYER_PLACED = 1;
+SET "Hornet 1" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 500 0 500;
+SET "Hornet 2" SIDE = 1;
+SET "Hornet 2" PLAYER_PLACED = 1;
+SET "Hornet 2" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 200 -400 -400;
+SET "Hornet 3" SIDE = 1;
+SET "Hornet 3" PLAYER_PLACED = 1;
+SET "Hornet 3" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT 400 200 -1200;
+SET "Hornet 4" SIDE = 1;
+SET "Hornet 4" PLAYER_PLACED = 1;
+SET "Hornet 4" HUMAN_CONTROLLED = 1;
+SET "Hornet 4" SPEED = 150;
+SET "Hornet 4" PLAN = 1;
+
+CREATE ""
+	CLASS "Hornet"
+	AT -500 400 -700;
+SET "Hornet 5" SIDE = 1;
+SET "Hornet 5" PLAYER_PLACED = 1;
+SET "Hornet 5" HUMAN_CONTROLLED = 1;
+SET "Hornet 5" SPEED = 150;
+SET "Hornet 5" PLAN = 1;
+
+#Dominion flight plan: protecting corvete
+PLAN 1 SIDE 1
+FOLLOW "Superb"
+WITH AGRESSION 4;
+
+#Dominion flight plan for incoming corvette
+PLAN 2 SIDE 1
+FOLLOW "Superb"
+WITH AGRESSION 4;
+
+PLAN 2 SIDE 1
+FOLLOW "Tor Anomaly"
+WITH AGRESSION 4;
+
+BIND_CAMERA_TO "Hornet 4";
+
+##############################################
+#				    PIRATES
+##############################################
+
+######################################
+#            First wave
+######################################
+CREATE ""
+	CLASS "Mirage"
+	AT 0 0 20000;
+SET "Mirage 1" SIDE = 2;
+SET "Mirage 1" PLAYER_PLACED = 0;
+SET "Mirage 1" PLAN = 3;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -700 0 20000;
+SET "Mirage 2" SIDE = 2;
+SET "Mirage 2" PLAYER_PLACED = 0;
+SET "Mirage 2" PLAN = 3;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 700 0 20000;
+SET "Mirage 3" SIDE = 2;
+SET "Mirage 3" PLAYER_PLACED = 0;
+SET "Mirage 3" PLAN = 3;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 0 -700 20000;
+SET "Mirage 4" SIDE = 2;
+SET "Mirage 4" PLAYER_PLACED = 0;
+SET "Mirage 4" PLAN = 3;
+
+######################################
+#            Second wave
+######################################
+CREATE ""
+	CLASS "Mirage"
+	AT 0 0 30000;
+SET "Mirage 5" SIDE = 2;
+SET "Mirage 5" PLAYER_PLACED = 0;
+SET "Mirage 5" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -700 0 30000;
+SET "Mirage 6" SIDE = 2;
+SET "Mirage 6" PLAYER_PLACED = 0;
+SET "Mirage 6" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 700 0 30000;
+SET "Mirage 7" SIDE = 2;
+SET "Mirage 7" PLAYER_PLACED = 0;
+SET "Mirage 7" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 0 -700 30000;
+SET "Mirage 8" SIDE = 2;
+SET "Mirage 8" PLAYER_PLACED = 0;
+SET "Mirage 8" PLAN = 2;
+
+######################################
+#            Final wave
+######################################
+
+CREATE ""
+	CLASS "Mirage"
+	AT 700 0 50000;
+SET "Mirage 9" SIDE = 2;
+SET "Mirage 9" PLAYER_PLACED = 0;
+SET "Mirage 9" PLAN = 3;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -700 0 50500;
+SET "Mirage 10" SIDE = 2;
+SET "Mirage 10" PLAYER_PLACED = 0;
+SET "Mirage 10" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -1400 0 51000;
+SET "Mirage 11" SIDE = 2;
+SET "Mirage 11" PLAYER_PLACED = 0;
+SET "Mirage 11" PLAN = 1;
+
+CREATE ""
+	CLASS "Mirage"
+	AT -2100 0 51500;
+SET "Mirage 12" SIDE = 2;
+SET "Mirage 12" PLAYER_PLACED = 0;
+SET "Mirage 12" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 700 0 50500;
+SET "Mirage 13" SIDE = 2;
+SET "Mirage 13" PLAYER_PLACED = 0;
+SET "Mirage 13" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 1400 0 51000;
+SET "Mirage 14" SIDE = 2;
+SET "Mirage 14" PLAYER_PLACED = 0;
+SET "Mirage 14" PLAN = 2;
+
+CREATE ""
+	CLASS "Mirage"
+	AT 2100 0 51500;
+SET "Mirage 15" SIDE = 2;
+SET "Mirage 15" PLAYER_PLACED = 0;
+SET "Mirage 15" PLAN = 2;
+
+
+#######################################
+#Attack corvette
+PLAN 1 SIDE 2
+	FOLLOW "Superb"
+	WITH AGRESSION 2;
+PLAN 1 SIDE 2
+	ATTACK "Hornet 1" AND "Hornet 2"
+	WITH AGRESSION 3;
+PLAN 1 SIDE 2
+	ATTACK "Hornet 3" AND "Hornet 4"
+	WITH AGRESSION 3;
+PLAN 1 SIDE 2
+	ATTACK "Hercules"
+	WITH AGRESSION 3;
+
+
+#Attack second corvette
+PLAN 2 SIDE 2
+	FOLLOW "Tor Anomaly"
+	WITH AGRESSION 2;
+PLAN 2 SIDE 2
+	FOLLOW "Hercules"
+	WITH AGRESSION 2;
+PLAN 2 SIDE 2
+	ATTACK "Hornet 1" AND "Hornet 2"
+	WITH AGRESSION 3;
+PLAN 2 SIDE 2
+	ATTACK "Hornet 3" AND "Hornet 4"
+	WITH AGRESSION 3;
+PLAN 2 SIDE 2
+	ATTACK "Superb"
+	WITH AGRESSION 3;
+
+#Attack escort first
+PLAN 3 SIDE 2
+	ATTACK "Hornet 1" AND "Hornet 2"
+	WITH AGRESSION 3;
+PLAN 3 SIDE 2
+	ATTACK "Hornet 3" AND "Hornet 4"
+	WITH AGRESSION 3;
+PLAN 3 SIDE 2
+	ATTACK "Hercules" AND "Superb"
+	WITH AGRESSION 3;
+#########################################
+
+
+$Mission = -1;
+$Sc = 0;
+$Kill = 0;
+$MustKill = 15;
+$MustProvide = 0;
+
+PROC SUCCESS;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC MirageKill;
+	$Kill = $Kill + 1;
+	CALL CheckSuccess;
+END PROC;
+
+PROC WaspKill;
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC WaspReached;
+	IF ($ReachedObject == "Tor Anomaly") CALL AnomalyReached;
+END PROC;
+
+PROC AnomalyReached;
+	$MustProvide = 1;
+
+	$Hx = GET "Hercules".X;
+	$Hy = GET "Hercules".Y;
+	$Hz = GET "Hercules".Z;
+	SET "Hercules" LIFE = 0;
+
+	CREATE "Tunnel"
+	CLASS "Magdalena"
+	AT $Hx $Hy $Hz;
+	SET "Tunnel" LIFE_TIME = 40;
+
+	MESSAGE "Good Work, Commander!";	
+	MESSAGE "Corvette passed through anomaly" BEEP;	
+
+	CALL CheckSuccess;
+END PROC;
+
+PROC CheckSuccess;
+	IF (($Kill == $MustKill) & ($MustProvide == 1)) CALL SUCCESS;
+END PROC;
+
+
+PROC ON TIME 0.1;
+	SET "Superb" KILLPROC = "WaspKill";
+	SET "Mirage 1" KILLPROC = "MirageKill";
+	SET "Mirage 2" KILLPROC = "MirageKill";
+	SET "Mirage 3" KILLPROC = "MirageKill";
+	SET "Mirage 4" KILLPROC = "MirageKill";
+	SET "Mirage 5" KILLPROC = "MirageKill";
+	SET "Mirage 6" KILLPROC = "MirageKill";
+	SET "Mirage 7" KILLPROC = "MirageKill";
+	SET "Mirage 8" KILLPROC = "MirageKill";
+	SET "Mirage 9" KILLPROC = "MirageKill";
+	SET "Mirage 10" KILLPROC = "MirageKill";
+	SET "Mirage 11" KILLPROC = "MirageKill";
+	SET "Mirage 12" KILLPROC = "MirageKill";
+	SET "Mirage 13" KILLPROC = "MirageKill";
+	SET "Mirage 14" KILLPROC = "MirageKill";
+	SET "Mirage 15" KILLPROC = "MirageKill";
+END PROC;
+
+PROC ON TIME 0.15;
+	MESSAGE "WASP has been passed trough anomaly point";
+	MESSAGE "Protect her" BEEP;
+
+	CREATE "Hercules"
+	CLASS "Wasp"
+	AT -9500	1700	4000;
+	SET "Hercules" SIDE = 1;
+	SET "Hercules" SPEED = 20;
+	SET "Hercules" PLAYER_PLACED = 1;
+	SET "Hercules" PLAYER_CONTROLLED = 0;
+	SET "Hercules" PLAN = 2;
+	SET "Hercules" KILLPROC = "WaspKill";
+	SET "Hercules" REACHPROC = "WaspReached";
+END PROC;

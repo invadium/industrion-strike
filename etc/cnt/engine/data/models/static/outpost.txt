@@ -1,0 +1,125 @@
+MODEL
+#SHIP | FIGHTER | WEAPON
+SHIP;
+NAME = "Outpost";
+IDNAME = "OTP";
+IMAGE = "data/models/images/maradeur.gif";
+
+RADIUS = 1800;
+ENERGY = 2000;
+RECHARGE = 25;
+SHIELD = 2500;
+SHRECHARGE = 2;
+HULL = 10000;
+FUELTANK = 10000000;
+
+#Maneuring properties
+ACCELERATION = 0;
+FUEL_DEPLETION = 0;
+MAXSPEED = 0;
+CRUISESPEED = 0;
+MAXYAW = 0;
+YAW_ACCELERATION = 0;
+YAW_FUEL_DEPLETION = 0;
+MAXPITCH = 0;
+PITCH_ACCELERATION = 0;
+PITCH_FUEL_DEPLETION = 0;
+MAXROLL = 0;
+ROLL_ACCELERATION = 0;
+ROLL_FUEL_DEPLETION = 0;
+
+MARK = 11;
+
+#Mount some weapons
+
+MOUNT_TURRET "laser 15MW" TO 0		-20	    21
+		WITH SECTOR 1 1 1 1 0 0 0 0;
+MOUNT_TURRET "laser 15MW" TO 0		-20	    -21
+		WITH SECTOR 0 0 0 0 1 1 1 1;
+MOUNT_TURRET "laser 15MW" TO -21	-20	    0
+		WITH SECTOR 1 0 1 0 1 0 1 0;
+MOUNT_TURRET "laser 15MW" TO 21	-20	    0
+		WITH SECTOR 0 1 0 1 0 1 0 1;
+        
+MOUNT_TURRET "laser 15MW" TO 0     -41	    0
+		WITH SECTOR 1 1 1 1 0 0 0 0;
+MOUNT_TURRET "laser 15MW" TO 0	    41	    0
+		WITH SECTOR 0 0 0 0 1 1 1 1;
+
+
+
+FRAGMENT "Fragment T2";
+FRAGMENTS_COUNT = 20;
+BLOW "Destruct";
+BLOWS_COUNT = 5;
+
+
+
+#Models primitives
+FRAMES_COUNT = 160;
+
+
+##################  TOP HULL  #####################
+COLOR	100 0 255;
+SOLID TRIANGLE
+	0	    -40		0
+	-20		-20		0
+	0		-20		20;
+SOLID TRIANGLE
+	0	    -40		0
+	20		-20		0
+	0		-20		20;
+SOLID TRIANGLE
+	0	    -40		0
+	20		-20		0
+	0		-20		-20;
+SOLID TRIANGLE
+	0	    -40		0
+	-20		-20		0
+	0		-20		-20;
+
+##################  BOTTOM HULL  #####################
+COLOR	50 0 255;
+SOLID TRIANGLE
+	0	    40		0
+	-20		-20		0
+	0		-20		20;
+SOLID TRIANGLE
+	0	    40		0
+	20		-20		0
+	0		-20		20;
+SOLID TRIANGLE
+	0	    40		0
+	20		-20		0
+	0		-20		-20;
+SOLID TRIANGLE
+	0	    40		0
+	-20		-20		0
+	0		-20		-20;     
+    
+    
+    
+    
+COLOR	255 0 0;
+FRAMES 1 40 VOLUME 8 TRIXEL
+	0		-41		0;
+COLOR	255 0 0;
+FRAMES 1 40 VOLUME 8 TRIXEL
+	0		41		0;
+
+COLOR 	200 200 45;
+FRAMES 81 120 VOLUME 8 TRIXEL
+	0		-20	    21;
+COLOR 	200 200 45;
+FRAMES 81 120 VOLUME 8 TRIXEL
+	0		-20	    -21;
+COLOR 	200 200 45;
+FRAMES 81 120 VOLUME 8 TRIXEL
+	-21		-20	    0;
+COLOR 	200 200 45;
+FRAMES 81 120 VOLUME 8 TRIXEL
+	21		-20	    0;
+
+
+
+INCREASE_SCALE 120;

@@ -1,0 +1,136 @@
+MODEL
+#SHIP | FIGHTER | WEAPON
+FIGHTER;
+NAME = "Hornet";
+IDNAME = "HRNT";
+IMAGE = "data/models/images/hornet.gif";
+SOUND = 3;
+
+RADIUS = 120;
+ENERGY = 120;
+RECHARGE = 3;
+SHIELD = 15;
+SHRECHARGE = 1;
+HULL = 40;
+FUELTANK = 45000;
+
+#Chain properties
+RANGE = 250000;
+RECHARGETIME = 1200;
+
+#Maneuring properties
+ACCELERATION = 2;
+FUEL_DEPLETION = 2;
+STARTSPEED = 400;
+MAXSPEED = 520;
+CRUISESPEED = 450;
+MAXYAW = 150;
+YAW_ACCELERATION = 20;
+YAW_FUEL_DEPLETION = 1;
+MAXPITCH = 150;
+PITCH_ACCELERATION = 20;
+PITCH_FUEL_DEPLETION = 1;
+MAXROLL = 150;
+ROLL_ACCELERATION = 20;
+ROLL_FUEL_DEPLETION = 1;
+
+MARK = 3;
+
+#Mount some weapons
+MOUNT "laser 10MW" TO -30 10 20;
+MOUNT "laser 10MW" TO  30 10 20;
+MOUNT_LAUNCHER "stinger" CAPACITY 2 TO 0 200 0;
+
+FRAGMENT "Fragment T1";
+FRAGMENTS_COUNT = 10;
+BLOW "Blow";
+BLOWS_COUNT = 5;
+
+
+#Models primitives
+FRAMES_COUNT = 40;
+
+COLOR	0 100 240;
+
+##################  HULL  #####################
+COLOR	140 0 0;
+SOLID METAL 10 TRIANGLE
+	-20		10		30
+	20		10		30
+	0		10		-60;
+
+SOLID METAL 10 TRIANGLE
+	-20		10		30
+	-10		-10		30
+	0		10		-60;
+SOLID METAL 10 TRIANGLE
+	20		10		30
+	10		-10		30
+	0		10		-60;
+
+COLOR	180 0 0;
+SOLID METAL 10 TRIANGLE
+	-10		-10		30
+	10		-10		30
+	0		10		-60;
+
+
+################  COCKPIT  ###################
+COLOR	120 0 240;
+SOLID METAL 0 RECTANGLE
+	-20		10		30
+	20		10		30
+	10		10		60
+	-10		10		60;
+SOLID METAL 0 TRIANGLE
+	-20		10		30
+	-10		-10		30
+	-10		10		60;
+SOLID METAL 0 TRIANGLE
+	20		10		30
+	10		-10		30
+	10		10		60;
+
+#Canopy 
+COLOR	0 0 120;
+METAL 250 RECTANGLE
+	-10		-10		30
+	10		-10		30
+	10		10		60
+	-10		10		60;
+
+#################  WINGS  ####################
+COLOR	200 170 0;
+SOLID METAL 20 RECTANGLE
+	-20		10		30
+	-50		10		10
+	-50		10		-10
+	-10		10		-10;
+SOLID METAL 20 RECTANGLE
+	20		10		30
+	50		10		10
+	50		10		-10
+	10		10		-10;
+
+#################  FLAPS  ####################
+COLOR	200 170 0;
+SOLID METAL 20 TRIANGLE
+	-10		10		-10
+	-20		10		-70
+	0		10		-60;
+SOLID METAL 20 TRIANGLE
+	10		10		-10
+	20		10		-70
+	0		10		-60;
+
+#################  LASERS  ####################
+COLOR	120 0 255;
+VOLUME 2 LINE
+	-30		10		20
+	-30		10		40;
+VOLUME 2 LINE
+	30		10		20
+	30		10		40;
+	
+
+INCREASE_SCALE 3;

@@ -1,0 +1,129 @@
+MISSION
+
+#Sides declaration variables
+$Sides = 4;
+$SideName1 = "Dominion";
+$SideName2 = "Industrion";
+
+CREATE "Proxima"
+CLASS "Terra Planet"
+AT 0 0 100000000;
+
+CREATE "Satelite"
+CLASS "Moon"
+AT 40000000 -30000000 100000000;
+
+#BUOYS
+CREATE "Buoy B0"
+CLASS "Buoy"
+AT	0	0	0;
+
+CREATE "Buoy B1"
+CLASS "Buoy"
+AT	0	0	7000;
+
+CREATE "Buoy B2"
+CLASS "Buoy"
+AT	0	0	-7000;
+
+CREATE "Buoy B3"
+CLASS "Buoy"
+AT	-4000	0	-7000;
+
+
+#DOMINION
+CREATE "Dragonfly 1"
+	CLASS "Dragonfly"
+	AT 0 2500 -8000;
+SET "Dragonfly 1" SIDE = 1;
+SET "Dragonfly 1" HUMAN_CONTROLLED = 0;
+
+CREATE "Dragonfly 2"
+	CLASS "Dragonfly"
+	AT 0 -2500 -8000;
+SET "Dragonfly 2" SIDE = 1;
+
+CREATE "Carrier"
+	CLASS "Tsunami"
+	AT 0 0 -11000;
+SET "Carrier" SIDE = 1;
+
+CREATE "Turrent 1"
+	CLASS "Flak Turrent"
+	AT -1500 0 -10700;
+SET "Turrent 1" SIDE = 1;
+
+CREATE "Turrent 2"
+	CLASS "Flak Turrent"
+	AT 250 0 -10700;
+SET "Turrent 2" SIDE = 1;
+
+#INDUSTRION
+CREATE "Mirage 1"
+	CLASS "Mirage"
+	AT -200 0 6000;
+SET "Mirage 1" SIDE = 2;
+
+CREATE "Mirage 2"
+	CLASS "Mirage"
+	AT 200 0 6000;
+SET "Mirage 2" SIDE = 2;
+
+CREATE "Mirage 3"
+	CLASS "Mirage"
+	AT 0 -300 6000;
+SET "Mirage 3" SIDE = 2;
+
+CREATE "Mirage 4"
+	CLASS "Mirage"
+	AT 0 300 6000;
+SET "Mirage 4" SIDE = 2;
+
+CREATE "Zero 1"
+	CLASS "Zero"
+	AT 0 -50 8000;
+SET "Zero 1" SIDE = 2;
+
+CREATE "Zero 2"
+	CLASS "Zero"
+	AT 0 50 8000;
+SET "Zero 2" SIDE = 2;
+
+CREATE "Infinity 1"
+	CLASS "Infinity"
+	AT 0 -300 8000;
+SET "Infinity 1" SIDE = 2;
+
+CREATE "Infinity 2"
+	CLASS "Infinity"
+	AT 0 600 8000;
+SET "Infinity 2" SIDE = 2;
+
+CREATE "Indefinite 1"
+	CLASS "Indefinite"
+	AT 0 -600 8000;
+SET "Indefinite 1" SIDE = 2;
+
+CREATE "Indefinite 2"
+	CLASS "Indefinite"
+	AT 0 300 8000;
+SET "Indefinite 2" SIDE = 2;
+
+CREATE "Super Comet"
+	CLASS "Comet"
+	AT 0 0 10000;
+SET "Super Comet" SIDE = 2;
+
+
+BIND_CAMERA_TO "Dragonfly 2";
+
+$Mission = -1;
+
+PROC ON TIME 0.2;
+	MESSAGE "Sides = " + Sides;
+END PROC;
+
+PROC ON TIME 0.15;
+	MESSAGE "Mission Succesfull !!!";
+	$Mission = 1;
+END PROC;

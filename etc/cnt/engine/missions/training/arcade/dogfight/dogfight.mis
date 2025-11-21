@@ -1,0 +1,69 @@
+MISSION
+
+############################################
+# Training mission "Dogfight"
+# Created by Shock (Igor Khotin) 08.06.2005
+############################################
+
+#Sides declaration variables
+$Sides = 2;
+$SideName1 = "Interseptor";
+$SideInfo1 = "(you)";
+$SideName2 = "Enemy";
+
+
+############################
+#Creating far space objects
+############################
+CREATE "Proxima"
+CLASS "Moon"
+AT 20000000 -10000000 100000000;
+
+
+######################################
+# Interseptor side
+######################################
+CREATE "Interseptor"
+	CLASS "Mirage"
+	AT 0 0 0;
+SET "Interseptor" SIDE = 1;
+SET "Interseptor" HUMAN_CONTROLLED = 1;
+
+######################################
+# Enemy side
+######################################
+CREATE "Foe"
+	CLASS "Mirage"
+	AT 0 0 7500;
+SET "Foe" SIDE = 2;
+SET "Foe" PLAYER_PLACED = 0;
+SET "Foe" PLAN = 1;
+
+#flight plan
+PLAN 1 SIDE 2
+ATTACK "Interseptor"
+WITH AGRESSION 3;
+#############################################
+
+
+BIND_CAMERA_TO "Interseptor";
+
+$Mission = -1;
+
+PROC Successful;
+	IF ($Mission < -1) EXIT;
+	$Mission = 1;
+	SHOW_FINISH;
+END PROC;
+
+PROC Failed;
+	$Mission = -2;
+	SHOW_FINISH;
+END PROC;
+
+PROC ON TIME 0.1;
+	MESSAGE "Engage the enemy!" BEEP;
+
+	SET "Foe" KILLPROC = "Successful";
+	SET "Interseptor" KILLPROC = "Failed";
+END PROC;

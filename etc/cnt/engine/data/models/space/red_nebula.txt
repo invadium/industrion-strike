@@ -1,0 +1,9 @@
+MODEL
+SPACE;
+NAME = "Red Nebula";
+
+MARK = 0;
+
+IMAGE = "data/models/images/red_nebula.jpg";
+BITMAPPED TRIXEL
+	0		0		0;

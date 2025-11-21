@@ -1,0 +1,134 @@
+MODEL
+#SHIP | FIGHTER | WEAPON | MISSILE | STATIC
+SHIP;
+NAME = "Leopard";
+IDNAME = "LPR";
+IMAGE = "data/models/images/leopard.gif";
+
+RADIUS = 120;
+ENERGY = 120;
+RECHARGE = 2;
+SHIELD = 10;
+SHRECHARGE = 1;
+HULL = 20;
+FUELTANK = 50000;
+
+#Maneuring properties
+ACCELERATION = 1;
+FUEL_DEPLETION = 2;
+MAXSPEED = 450;
+CRUISESPEED = 350;
+MAXYAW = 90;
+YAW_ACCELERATION = 10;
+YAW_FUEL_DEPLETION = 1;
+MAXPITCH = 90;
+PITCH_ACCELERATION = 10;
+PITCH_FUEL_DEPLETION = 1;
+MAXROLL = 90;
+ROLL_ACCELERATION = 10;
+ROLL_FUEL_DEPLETION = 1;
+
+MARK = 5;
+
+#Mount some weapons
+
+FRAGMENT "Fragment T2";
+FRAGMENTS_COUNT = 10;
+BLOW "Destruct";
+BLOWS_COUNT = 5;
+
+##################  HULL  #####################
+COLOR	140 140 140;
+
+#top panels
+SOLID METAL 10 RECTANGLE
+	-10		0		80
+	10		0		80
+	20		-10		-20
+	-20		-10		-20;
+SOLID METAL 10 RECTANGLE
+	-20		-10		-20
+	20		-10		-20
+	20		-5		-60
+	-20		-5		-60;
+
+SOLID METAL 10 TRIANGLE
+	-10		0		80
+	-20		-10		-20
+	-40		0		-20;
+SOLID METAL 10 TRIANGLE
+	10		0		80
+	20		-10		-20
+	40		0		-20;
+SOLID METAL 10 TRIANGLE
+	-20		-10		-20
+	-20		-5		-60
+	-40		0		-20;
+SOLID METAL 10 TRIANGLE
+	20		-10		-20
+	20		-5		-60
+	40		0		-20;
+
+#bottom line
+SOLID METAL 10 RECTANGLE
+	-10		0		80
+	10		0		80
+	20		10		-20
+	-20		10		-20;
+SOLID METAL 10 RECTANGLE
+	-20		10		-20
+	20		10		-20
+	20		5		-60
+	-20		5		-60;
+
+SOLID METAL 10 TRIANGLE
+	-10		0		80
+	-20		10		-20
+	-40		0		-20;
+SOLID METAL 10 TRIANGLE
+	10		0		80
+	20		10		-20
+	40		0		-20;
+SOLID METAL 10 TRIANGLE
+	-20		10		-20
+	-20		5		-60
+	-40		0		-20;
+SOLID METAL 10 TRIANGLE
+	20		10		-20
+	20		5		-60
+	40		0		-20;
+
+
+############### ENGINE #################
+COLOR	255 70 50;
+SOLID ILLUMINATED RECTANGLE
+	-20		5		-60
+	-20		-5		-60
+	20		-5		-60
+	20		5		-60;
+
+COLOR	160 0 0;
+SOLID ILLUMINATED TRIANGLE
+	-20		5		-60
+	-20		-5		-60
+	-40		0		-20;
+SOLID ILLUMINATED TRIANGLE
+	20		5		-60
+	20		-5		-60
+	40		0		-20;
+
+############### WINGS ###################
+COLOR	140 140 140;
+
+SOLID METAL 10 RECTANGLE
+	-40		0		-20
+	-20		0		-60
+	-70		0		-90
+	-70		0		-70;
+SOLID METAL 10 RECTANGLE
+	40		0		-20
+	20		0		-60
+	70		0		-90
+	70		0		-70;
+
+INCREASE_SCALE 20;
