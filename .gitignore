@@ -4,3 +4,7 @@ bin
 doc
 out
 
+# jeddy
+.jeddy
+.stat
+
