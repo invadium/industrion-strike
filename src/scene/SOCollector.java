@@ -7,15 +7,15 @@ import control.Metric;
 import math.Vector;
 
 public class SOCollector {
-	Camera theCamera;
+	Camera camera;
 	final int maxSpaceObjects = 128;
 	public int cntSpaceObjects;
 	public SpaceObject Objects[];
 	public int curIndex, secIndex;
 	public int idCounter = 0;
 	
-	public SOCollector(Camera theCamera) {
-		this.theCamera = theCamera;
+	public SOCollector(Camera camera) {
+		this.camera = camera;
 		Objects = new SpaceObject[maxSpaceObjects];
 		cntSpaceObjects = 0;
 	}
@@ -29,14 +29,14 @@ public class SOCollector {
 
 	public boolean isPlaced(int i) {
 		//check condition on binding camera to object
-		if (theCamera.freeBind && Objects[i].isLive &&
-			(Objects[i].theModel.isShip || Objects[i].theModel.isFighter
-			|| Objects[i].theModel.isMissile))
+		if (camera.freeBind && Objects[i].isLive &&
+			(Objects[i].model.isShip || Objects[i].model.isFighter
+			|| Objects[i].model.isMissile))
 			return true;
 		if ( Objects[i].isLive
-			   && (Objects[i].theModel.isShip || Objects[i].theModel.isFighter)
+			   && (Objects[i].model.isShip || Objects[i].model.isFighter)
 		 	   && Objects[i].PlayerPlaced
-			   && (Objects[i].Side == theCamera.Side || theCamera.Side == 0))
+			   && (Objects[i].Side == camera.Side || camera.Side == 0))
 			return true;
 		return false;
 	}
@@ -64,11 +64,11 @@ public class SOCollector {
 	public int getNavTarget(int startIndex) {
 		startIndex++;
 		while (startIndex < cntSpaceObjects && (Objects[startIndex].isLive == false
-				|| Objects[startIndex].theModel.isStatic == false)) startIndex++;
+				|| Objects[startIndex].model.isStatic == false)) startIndex++;
 		if (startIndex < cntSpaceObjects) return startIndex;
 		startIndex = 0;
 		while (startIndex < cntSpaceObjects && (Objects[startIndex].isLive == false
-				|| Objects[startIndex].theModel.isStatic == false)) startIndex++;
+				|| Objects[startIndex].model.isStatic == false)) startIndex++;
 		if (startIndex < cntSpaceObjects) return startIndex;
 		return -1;
 	}
@@ -78,21 +78,21 @@ public class SOCollector {
 		while (startIndex < cntSpaceObjects && (Objects[startIndex].isLive == false
 				|| Objects[startIndex].Side == side
 				|| Objects[startIndex].Side == 0
-				|| (Objects[startIndex].theModel.isFighter == false
-				&& Objects[startIndex].theModel.isShip == false
-				&& Objects[startIndex].theModel.isMissile == false
-				&& Objects[startIndex].theModel.isStatic == false)
-				|| startIndex == theCamera.iRelatedObject)) startIndex++;
+				|| (Objects[startIndex].model.isFighter == false
+				&& Objects[startIndex].model.isShip == false
+				&& Objects[startIndex].model.isMissile == false
+				&& Objects[startIndex].model.isStatic == false)
+				|| startIndex == camera.iRelatedObject)) startIndex++;
 		if (startIndex < cntSpaceObjects) return startIndex;
 		startIndex = 0;
 		while (startIndex < cntSpaceObjects && (Objects[startIndex].isLive == false
 				|| Objects[startIndex].Side == side
 				|| Objects[startIndex].Side == 0
-				|| (Objects[startIndex].theModel.isFighter == false
-				&& Objects[startIndex].theModel.isShip == false
-				&& Objects[startIndex].theModel.isMissile == false
-				&& Objects[startIndex].theModel.isStatic == false)
-				|| startIndex == theCamera.iRelatedObject)) startIndex++;
+				|| (Objects[startIndex].model.isFighter == false
+				&& Objects[startIndex].model.isShip == false
+				&& Objects[startIndex].model.isMissile == false
+				&& Objects[startIndex].model.isStatic == false)
+				|| startIndex == camera.iRelatedObject)) startIndex++;
 		if (startIndex < cntSpaceObjects) return startIndex;
 		return -1;
 	}
@@ -101,20 +101,20 @@ public class SOCollector {
 		startIndex++;
 		while (startIndex < cntSpaceObjects && (Objects[startIndex].isLive == false
 				|| Objects[startIndex].Side != side
-				|| (Objects[startIndex].theModel.isFighter == false
-				&& Objects[startIndex].theModel.isShip == false
-				&& Objects[startIndex].theModel.isMissile == false
-				&& Objects[startIndex].theModel.isStatic == false)
-				|| startIndex == theCamera.iRelatedObject)) startIndex++;
+				|| (Objects[startIndex].model.isFighter == false
+				&& Objects[startIndex].model.isShip == false
+				&& Objects[startIndex].model.isMissile == false
+				&& Objects[startIndex].model.isStatic == false)
+				|| startIndex == camera.iRelatedObject)) startIndex++;
 		if (startIndex < cntSpaceObjects) return startIndex;
 		startIndex = 0;
 		while (startIndex < cntSpaceObjects && (Objects[startIndex].isLive == false
 				|| Objects[startIndex].Side != side
-				|| (Objects[startIndex].theModel.isFighter == false
-				&& Objects[startIndex].theModel.isShip == false
-				&& Objects[startIndex].theModel.isMissile == false
-				&& Objects[startIndex].theModel.isStatic == false)
-				|| startIndex == theCamera.iRelatedObject)) startIndex++;
+				|| (Objects[startIndex].model.isFighter == false
+				&& Objects[startIndex].model.isShip == false
+				&& Objects[startIndex].model.isMissile == false
+				&& Objects[startIndex].model.isStatic == false)
+				|| startIndex == camera.iRelatedObject)) startIndex++;
 		if (startIndex < cntSpaceObjects) return startIndex;
 		return -1;
 	}
@@ -124,19 +124,19 @@ public class SOCollector {
 	public int getNextTarget(int startIndex) {
 		startIndex++;
 		while (startIndex < cntSpaceObjects && (Objects[startIndex].isLive == false
-				|| (Objects[startIndex].theModel.isFighter == false
-				&& Objects[startIndex].theModel.isShip == false
-				&& Objects[startIndex].theModel.isMissile == false
-				&& Objects[startIndex].theModel.isStatic == false)
-				|| startIndex == theCamera.iRelatedObject)) startIndex++;
+				|| (Objects[startIndex].model.isFighter == false
+				&& Objects[startIndex].model.isShip == false
+				&& Objects[startIndex].model.isMissile == false
+				&& Objects[startIndex].model.isStatic == false)
+				|| startIndex == camera.iRelatedObject)) startIndex++;
 		if (startIndex < cntSpaceObjects) return startIndex;
 		startIndex = 0;
 		while (startIndex < cntSpaceObjects && (Objects[startIndex].isLive == false
-				|| (Objects[startIndex].theModel.isFighter == false
-				&& Objects[startIndex].theModel.isShip == false
-				&& Objects[startIndex].theModel.isMissile == false
-				&& Objects[startIndex].theModel.isStatic == false)
-				|| startIndex == theCamera.iRelatedObject)) startIndex++;
+				|| (Objects[startIndex].model.isFighter == false
+				&& Objects[startIndex].model.isShip == false
+				&& Objects[startIndex].model.isMissile == false
+				&& Objects[startIndex].model.isStatic == false)
+				|| startIndex == camera.iRelatedObject)) startIndex++;
 		if (startIndex < cntSpaceObjects) return startIndex;
 		return -1;
 	}
@@ -144,19 +144,19 @@ public class SOCollector {
 	public int getPrevTarget(int startIndex) {
 		startIndex--;
 		while (startIndex >= 0 && (Objects[startIndex].isLive == false
-				|| (Objects[startIndex].theModel.isFighter == false
-				&& Objects[startIndex].theModel.isShip == false
-				&& Objects[startIndex].theModel.isMissile == false
-				&& Objects[startIndex].theModel.isStatic == false)
-				|| startIndex == theCamera.iRelatedObject)) startIndex--;
+				|| (Objects[startIndex].model.isFighter == false
+				&& Objects[startIndex].model.isShip == false
+				&& Objects[startIndex].model.isMissile == false
+				&& Objects[startIndex].model.isStatic == false)
+				|| startIndex == camera.iRelatedObject)) startIndex--;
 		if (startIndex >= 0) return startIndex;
 		startIndex = cntSpaceObjects - 1;
 		while (startIndex >= 0 && (Objects[startIndex].isLive == false
-				|| (Objects[startIndex].theModel.isFighter == false
-				&& Objects[startIndex].theModel.isShip == false
-				&& Objects[startIndex].theModel.isMissile == false
-				&& Objects[startIndex].theModel.isStatic == false)
-				|| startIndex == theCamera.iRelatedObject)) startIndex--;
+				|| (Objects[startIndex].model.isFighter == false
+				&& Objects[startIndex].model.isShip == false
+				&& Objects[startIndex].model.isMissile == false
+				&& Objects[startIndex].model.isStatic == false)
+				|| startIndex == camera.iRelatedObject)) startIndex--;
 		if (startIndex >= 0) return startIndex;
 		return -1;
 	}
@@ -185,9 +185,9 @@ public class SOCollector {
 	public boolean add(SpaceObject obj) {
 
 		if (cntSpaceObjects < maxSpaceObjects) {
-			obj.theModel.createdObjects++;
+			obj.model.createdObjects++;
 			if (obj.strObjectName.equals(""))
-				obj.strObjectName = obj.theModel.strModelName + " " + obj.theModel.createdObjects;
+				obj.strObjectName = obj.model.strModelName + " " + obj.model.createdObjects;
 			obj.Index = cntSpaceObjects;
 			obj.id = idCounter;
 			idCounter++;
@@ -201,9 +201,9 @@ public class SOCollector {
 		while (i < cntSpaceObjects && Objects[i].isLive == true) i++;
 		if (i < cntSpaceObjects) {
 			//Ok. We've find it
-			obj.theModel.createdObjects++;
+			obj.model.createdObjects++;
 			if (obj.strObjectName.equals(""))
-				obj.strObjectName = obj.theModel.strModelName + " " + obj.theModel.createdObjects;
+				obj.strObjectName = obj.model.strModelName + " " + obj.model.createdObjects;
 			obj.Index = i;
 			obj.id = idCounter;
 			idCounter++;
@@ -230,7 +230,7 @@ public class SOCollector {
 		double ndist;
 		double nearestEnemyDistance = 1000000000;
 		for (int i = 0; i<cntSpaceObjects; i++) {
-			if (Objects[i].theModel.isFighter
+			if (Objects[i].model.isFighter
 				&& Objects[i].currentTarget == idx
 				&& (Objects[i].targetType == Task.Attack 
 					|| Objects[i].targetType == Task.SupportAttack)
@@ -251,7 +251,7 @@ public class SOCollector {
 		double ndist;
 		nearestEnemyDistance = 1000000000;
 		for (int i = 0; i<cntSpaceObjects; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].Side != 0
 				&& Objects[i].isLive) {
@@ -271,8 +271,8 @@ public class SOCollector {
 		double ndist;
 		nearestEnemyDistance = 1000000000;
 		for (int i = 0; i<cntSpaceObjects; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].Side != 0
 				&& Objects[i].isLive) {
@@ -294,8 +294,8 @@ public class SOCollector {
 
 		if (tidx >= 0 && tidx <cntSpaceObjects)
 		for (int i = tidx; i<cntSpaceObjects; i++) {
-			if (Objects[i].isLive && (Objects[i].theModel.isFighter
-				  || Objects[i].theModel.isShip || Objects[i].theModel.isMissile)
+			if (Objects[i].isLive && (Objects[i].model.isFighter
+				  || Objects[i].model.isShip || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].Side != 0) {
 				  ndist = Objects[i].getDistance(Objects[idx]);
@@ -308,8 +308,8 @@ public class SOCollector {
 		}
 
 		for (int i = 0; i<cntSpaceObjects; i++) {
-			if (Objects[i].isLive &&  (Objects[i].theModel.isFighter
-				  || Objects[i].theModel.isShip || Objects[i].theModel.isMissile)
+			if (Objects[i].isLive &&  (Objects[i].model.isFighter
+				  || Objects[i].model.isShip || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].Side != 0) {
 				  ndist = Objects[i].getDistance(Objects[idx]);
@@ -346,8 +346,8 @@ public class SOCollector {
 		if (rdx >= this.cntSpaceObjects) rdx = 0;		
 		//find action enemy
 		for (int i = rdx; i<cntSpaceObjects; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].actionPoints != 0
 				&& Objects[i].isLive) {				
@@ -355,8 +355,8 @@ public class SOCollector {
 			}
 		}		
 		for (int i = 0; i < rdx; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].actionPoints != 0
 				&& Objects[i].isLive) {				
@@ -366,16 +366,16 @@ public class SOCollector {
 				
 		//find action ship
 		for (int i = rdx; i<cntSpaceObjects; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].actionPoints != 0
 				&& Objects[i].isLive) {				
 					return i;
 			}
 		}		
 		for (int i = 0; i < rdx; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].actionPoints != 0
 				&& Objects[i].isLive) {				
 					return i;
@@ -384,8 +384,8 @@ public class SOCollector {
 		
 		//find enemy
 		for (int i = rdx; i<cntSpaceObjects; i++) {			
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].Side != 0
 				&& Objects[i].isLive) {
@@ -393,8 +393,8 @@ public class SOCollector {
 			}
 		}		
 		for (int i = 0; i < rdx; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].Side != 0
 				&& Objects[i].isLive) {				
@@ -406,16 +406,16 @@ public class SOCollector {
 
 		//find any	
 		for (int i = dx; i<cntSpaceObjects; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].Side != 0
 				&& Objects[i].isLive) {	
 				return i;
 			}
 		}
 		for (int i = 0; i < dx; i++) {
-			if ((Objects[i].theModel.isFighter || Objects[i].theModel.isShip
-				 || Objects[i].theModel.isMissile)
+			if ((Objects[i].model.isFighter || Objects[i].model.isShip
+				 || Objects[i].model.isMissile)
 				&& Objects[i].Side != 0
 				&& Objects[i].isLive) {
 					return i;
@@ -431,9 +431,9 @@ public class SOCollector {
 			//System.out.println(T.strObjectName + " class " + T.theModel.strModelName);
 			Vector dir = new Vector(T.x - B.x, T.y - B.y, T.z - B.z);
 			dir.mul(B.matRotate);
-			dir.x -= B.theModel.rackCoord[weapon].x;
-			dir.y -= B.theModel.rackCoord[weapon].y;
-			dir.z -= B.theModel.rackCoord[weapon].z;	
+			dir.x -= B.model.rackCoord[weapon].x;
+			dir.y -= B.model.rackCoord[weapon].y;
+			dir.z -= B.model.rackCoord[weapon].z;	
 			return dir.getSector();
 		} catch (Exception ex) {
 			return 0;
@@ -448,8 +448,8 @@ public class SOCollector {
 
 		if (tidx >= 0)
 		for (int i = tidx; i<cntSpaceObjects; i++) {
-			if (Objects[i].isLive && (Objects[i].theModel.isFighter
-				  || Objects[i].theModel.isShip || Objects[i].theModel.isMissile)
+			if (Objects[i].isLive && (Objects[i].model.isFighter
+				  || Objects[i].model.isShip || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].Side != 0) {
 				  ndist = Objects[i].getDistance(Objects[idx]);
@@ -463,8 +463,8 @@ public class SOCollector {
 		}
 
 		for (int i = 0; i<cntSpaceObjects; i++) {
-			if (Objects[i].isLive &&  (Objects[i].theModel.isFighter
-				  || Objects[i].theModel.isShip || Objects[i].theModel.isMissile)
+			if (Objects[i].isLive &&  (Objects[i].model.isFighter
+				  || Objects[i].model.isShip || Objects[i].model.isMissile)
 				&& Objects[i].Side != Objects[idx].Side
 				&& Objects[i].Side != 0) {
 				  ndist = Objects[i].getDistance(Objects[idx]);

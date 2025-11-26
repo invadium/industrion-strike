@@ -8,9 +8,9 @@ import scene.Camera;
 
 public class Stars {
 	Random R;
-	Applet theApplet;
-	Graphics theCanvas;
-	Camera theCamera;
+	Applet applet;
+	Graphics canvas;
+	Camera camera;
 	final int maxStars = 50;
 	final int maxColors = 4;
 	int cntStars;
@@ -20,10 +20,10 @@ public class Stars {
 	double ShiftX, ShiftY;
 	Color SC0, SC1, SC2, SC3;
 
-	public Stars(Applet theApplet, Graphics theCanvas, Camera theCamera) {
-		this.theApplet = theApplet;
-		this.theCanvas = theCanvas;
-		this.theCamera = theCamera;
+	public Stars(Applet applet, Graphics canvas, Camera camera) {
+		this.applet = applet;
+		this.canvas = canvas;
+		this.camera = camera;
 	}
     
     public void create() {
@@ -34,17 +34,17 @@ public class Stars {
 		R = new Random();
 
 		for (int i=0; i<maxStars; i++) {
-			StarsX[i] = (int)(R.nextFloat() * theCamera.ScreenWidth);
-			StarsY[i] = (int)(R.nextFloat() * theCamera.ScreenHeight);
+			StarsX[i] = (int)(R.nextFloat() * camera.ScreenWidth);
+			StarsY[i] = (int)(R.nextFloat() * camera.ScreenHeight);
 			StarsC[i] = (int)(R.nextFloat() * maxColors);
 		}
 		cntStars = maxStars;
 
 		//calculate shifts
-		int alpha = (int)(CMath.M.atan2(theCamera.ScreenShiftY, theCamera.d) / CMath.dFactor);
-		ShiftY =  (double)theCamera.ScreenShiftY / (double)alpha;
-		int beta = (int)(CMath.M.atan2(theCamera.ScreenShiftX, theCamera.d) / CMath.dFactor);
-		ShiftX =  (double)theCamera.ScreenShiftX / (double)beta;
+		int alpha = (int)(CMath.M.atan2(camera.ScreenShiftY, camera.d) / CMath.dFactor);
+		ShiftY =  (double)camera.ScreenShiftY / (double)alpha;
+		int beta = (int)(CMath.M.atan2(camera.ScreenShiftX, camera.d) / CMath.dFactor);
+		ShiftX =  (double)camera.ScreenShiftX / (double)beta;
 
 		//create colors
 		SC0 = new Color(255, 255, 255);
@@ -54,23 +54,23 @@ public class Stars {
     }
 	
 	public void updateCanvas(Graphics theCanvas) {
-		this.theCanvas = theCanvas;
+		this.canvas = theCanvas;
 	}
 	
 	public void draw() {
 		for(int i=0; i<cntStars; i++) {
 			switch(StarsC[i]) {
-			case 0:	theCanvas.setColor(SC0);
+			case 0:	canvas.setColor(SC0);
 					break;
-			case 1: theCanvas.setColor(SC1);
+			case 1: canvas.setColor(SC1);
 					break;
-			case 2: theCanvas.setColor(SC2);
+			case 2: canvas.setColor(SC2);
 					break;
-			case 3: theCanvas.setColor(SC3);
+			case 3: canvas.setColor(SC3);
 					break;
 			}
 			//theCanvas.setColor(Color.white);
-			theCanvas.drawLine(StarsX[i], StarsY[i], StarsX[i], StarsY[i]);
+			canvas.drawLine(StarsX[i], StarsY[i], StarsX[i], StarsY[i]);
 		}
 	}
 
@@ -78,11 +78,11 @@ public class Stars {
 		int c = (int)((double)val * ShiftX);
 		for (int i=0; i<cntStars; i++) {
 			StarsX[i] += c;
-			if (StarsX[i]<0 || StarsX[i]>theCamera.ScreenWidth) {
+			if (StarsX[i]<0 || StarsX[i]>camera.ScreenWidth) {
 				//regenerate point
-				if (c < 0) StarsX[i] = theCamera.ScreenWidth - (int)(R.nextFloat() * c);
+				if (c < 0) StarsX[i] = camera.ScreenWidth - (int)(R.nextFloat() * c);
 					else StarsX[i] = (int)(R.nextFloat() * c);
-				StarsY[i] = (int)(R.nextFloat() * theCamera.ScreenHeight);
+				StarsY[i] = (int)(R.nextFloat() * camera.ScreenHeight);
 				StarsC[i] = (int)(R.nextFloat() * maxColors);
 			}
 		}
@@ -92,10 +92,10 @@ public class Stars {
 		int c = (int)((double)val * ShiftY);
 		for (int i=0; i<cntStars; i++) {
 			StarsY[i] += c;
-			if (StarsY[i]<0 || StarsY[i]>theCamera.ScreenHeight) {
+			if (StarsY[i]<0 || StarsY[i]>camera.ScreenHeight) {
 				//regenerate point
-				StarsX[i] = (int)(R.nextFloat() * theCamera.ScreenWidth);
-				if (c < 0) StarsY[i] = theCamera.ScreenHeight - (int)(R.nextFloat() * c);
+				StarsX[i] = (int)(R.nextFloat() * camera.ScreenWidth);
+				if (c < 0) StarsY[i] = camera.ScreenHeight - (int)(R.nextFloat() * c);
 					else StarsY[i] = (int)(R.nextFloat() * c);
 				StarsC[i] = (int)(R.nextFloat() * maxColors);
 			}

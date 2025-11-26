@@ -14,15 +14,15 @@ import media.Media;
 
 public class SpaceObject {
 	static public SOCollector Objects;
-	static public Scene theScene;
-	static public Media theMedia;
-	static public Camera theCamera;
-	static public Stars theStars;
+	static public Scene scene;
+	static public Media media;
+	static public Camera camera;
+	static public Stars stars;
 	public boolean starsRotation = true;
 	public int Index = -1;
 	public int id = -1;
 	public String strObjectName;
-	public Model theModel;
+	public Model model;
 	public int Platform = -1; //object
 	public int Source = -1; //object
 	public int frame = 0;
@@ -102,7 +102,7 @@ public class SpaceObject {
 						double x, double y, double z) {
 		this.colorExtension = false;
 		this.strObjectName = strName;
-		this.theModel = theModel;
+		this.model = theModel;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -114,7 +114,7 @@ public class SpaceObject {
 		this.Hull = theModel.Hull;
 		this.lifeTime = theModel.lifeTime;
 		//load launchers
-		for (int i = 0; i < this.theModel.cntLaunchers; i++) {
+		for (int i = 0; i < this.model.cntLaunchers; i++) {
 			this.missilesLoad[i] = theModel.missileCapacity[i];
 		}
 
@@ -122,20 +122,20 @@ public class SpaceObject {
 		this.setRotate(this.Dirrection);
 	}
 
-	public SpaceObject(String strName, Model theModel,
+	public SpaceObject(String strName, Model model,
 						Color ownColor, double x, double y, double z) {
 		this.colorExtension = true;
 		this.ownColor = new RColor(ownColor);
 		this.strObjectName = strName;
-		this.theModel = theModel;
+		this.model = model;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.currentFuel = theModel.FuelTank;
-		this.Energy = theModel.Energy;
-		this.Shield = theModel.Shield;
-		this.Hull = theModel.Hull;
-		this.lifeTime = theModel.lifeTime;
+		this.currentFuel = model.FuelTank;
+		this.Energy = model.Energy;
+		this.Shield = model.Shield;
+		this.Hull = model.Hull;
+		this.lifeTime = model.lifeTime;
 
 		this.Dirrection = new Vector(0, 0, 1);
 		this.setRotate(this.Dirrection);
@@ -201,10 +201,10 @@ public class SpaceObject {
 		int da = currentYaw + base;
 		while (da != 0) {
 			if (da < 0) {
-				da += theModel.yawAcceleration;
+				da += model.yawAcceleration;
 				if (da < 0) da = 0;
 			} else {
-				da -= theModel.yawAcceleration;
+				da -= model.yawAcceleration;
 				if (da < 0) da = 0;				
 			}
 			cr += da;
@@ -217,10 +217,10 @@ public class SpaceObject {
 		int da = currentPitch + base;
 		while (da != 0) {
 			if (da < 0) {
-				da += theModel.pitchAcceleration;
+				da += model.pitchAcceleration;
 				if (da < 0) da = 0;
 			} else {
-				da -= theModel.pitchAcceleration;
+				da -= model.pitchAcceleration;
 				if (da < 0) da = 0;				
 			}
 			cr += da;
@@ -232,18 +232,18 @@ public class SpaceObject {
 	public void addPitch() {
 		oldRotate.copy(matRotate);
 		oldPitch = currentPitch;
-		if (currentPitch < theModel.maxPitch)
-			if (currentFuel < theModel.pitchFuelDepletion) return;
-			else currentFuel -= theModel.pitchFuelDepletion;
+		if (currentPitch < model.maxPitch)
+			if (currentFuel < model.pitchFuelDepletion) return;
+			else currentFuel -= model.pitchFuelDepletion;
 		
-		currentPitch += theModel.pitchAcceleration;
-		if (currentPitch > theModel.maxPitch) currentPitch = theModel.maxPitch;
+		currentPitch += model.pitchAcceleration;
+		if (currentPitch > model.maxPitch) currentPitch = model.maxPitch;
 		
 		Matrix43 mat = new Matrix43();
 		mat.setRotateOX(currentPitch);
 		matRotate.mul(mat);
-		if (theCamera.iRelatedObject == this.Index && starsRotation)
-				theStars.shiftY(currentPitch);
+		if (camera.iRelatedObject == this.Index && starsRotation)
+				stars.shiftY(currentPitch);
 		pitchDrive = 1;
 
 		objRotate.copy(matRotate);
@@ -252,17 +252,17 @@ public class SpaceObject {
 	public void decPitch() {
 		oldRotate.copy(matRotate);
 		oldPitch = currentPitch;
-		if (currentPitch > -theModel.maxPitch)
-			if (currentFuel < theModel.pitchFuelDepletion) return;
-			else currentFuel -= theModel.pitchFuelDepletion;
-		currentPitch -= theModel.pitchAcceleration;
-		if (currentPitch < -theModel.maxPitch) currentPitch = -theModel.maxPitch;
+		if (currentPitch > -model.maxPitch)
+			if (currentFuel < model.pitchFuelDepletion) return;
+			else currentFuel -= model.pitchFuelDepletion;
+		currentPitch -= model.pitchAcceleration;
+		if (currentPitch < -model.maxPitch) currentPitch = -model.maxPitch;
 		
 		Matrix43 mat = new Matrix43();
 		mat.setRotateOX(currentPitch);
 		matRotate.mul(mat);
-		if (theCamera.iRelatedObject == this.Index && starsRotation)
-				theStars.shiftY(currentPitch);
+		if (camera.iRelatedObject == this.Index && starsRotation)
+				stars.shiftY(currentPitch);
 		pitchDrive = 1;
 
 		objRotate.copy(matRotate);
@@ -271,17 +271,17 @@ public class SpaceObject {
 	public void addYaw() {
 		oldRotate.copy(matRotate);
 		oldYaw = currentYaw;
-		if (currentYaw < theModel.maxYaw)
-			if (currentFuel < theModel.yawFuelDepletion) return;
-			else currentFuel -= theModel.yawFuelDepletion;
-		currentYaw += theModel.yawAcceleration;
-		if (currentYaw > theModel.maxYaw) currentYaw = theModel.maxYaw;
+		if (currentYaw < model.maxYaw)
+			if (currentFuel < model.yawFuelDepletion) return;
+			else currentFuel -= model.yawFuelDepletion;
+		currentYaw += model.yawAcceleration;
+		if (currentYaw > model.maxYaw) currentYaw = model.maxYaw;
 		
 		Matrix43 mat = new Matrix43();
 		mat.setRotateOY(currentYaw);
 		matRotate.mul(mat);
-		if (theCamera.iRelatedObject == this.Index && starsRotation)
-				theStars.shiftX(currentYaw);
+		if (camera.iRelatedObject == this.Index && starsRotation)
+				stars.shiftX(currentYaw);
 		yawDrive = 1;
 
 		objRotate.copy(matRotate);
@@ -290,17 +290,17 @@ public class SpaceObject {
 	public void decYaw() {
 		oldRotate.copy(matRotate);
 		oldYaw = currentYaw;
-		if (currentYaw > -theModel.maxYaw)
-			if (currentFuel < theModel.yawFuelDepletion) return;
-			else currentFuel -= theModel.yawFuelDepletion;
-		currentYaw -= theModel.yawAcceleration;
-		if (currentYaw < -theModel.maxYaw) currentYaw = -theModel.maxYaw;
+		if (currentYaw > -model.maxYaw)
+			if (currentFuel < model.yawFuelDepletion) return;
+			else currentFuel -= model.yawFuelDepletion;
+		currentYaw -= model.yawAcceleration;
+		if (currentYaw < -model.maxYaw) currentYaw = -model.maxYaw;
 		
 		Matrix43 mat = new Matrix43();
 		mat.setRotateOY(currentYaw);
 		matRotate.mul(mat);
-		if (theCamera.iRelatedObject == this.Index && starsRotation)
-				theStars.shiftX(currentYaw);
+		if (camera.iRelatedObject == this.Index && starsRotation)
+				stars.shiftX(currentYaw);
 		yawDrive = 1;
 
 		objRotate.copy(matRotate);
@@ -314,8 +314,8 @@ public class SpaceObject {
 		Matrix43 mat = new Matrix43();
 		mat.setRotateOX(delta);
 		matRotate.mul(mat);
-		if (theCamera.iRelatedObject == this.Index && starsRotation)
-				theStars.shiftY(delta);
+		if (camera.iRelatedObject == this.Index && starsRotation)
+				stars.shiftY(delta);
 
 		objRotate.copy(matRotate);
 		objRotate.affineInverse();
@@ -327,8 +327,8 @@ public class SpaceObject {
 		Matrix43 mat = new Matrix43();
 		mat.setRotateOY(-delta);
 		matRotate.mul(mat);
-		if (theCamera.iRelatedObject == this.Index && starsRotation)
-					theStars.shiftX(-delta);
+		if (camera.iRelatedObject == this.Index && starsRotation)
+					stars.shiftX(-delta);
 
 		objRotate.copy(matRotate);
 		objRotate.affineInverse();
@@ -413,54 +413,54 @@ public class SpaceObject {
 
 	private void Fire(int i) {
 		SpaceObject laser = new SpaceObject("", 
-			theModel.weaponRack[i], this.x, this.y, this.z);
+			model.weaponRack[i], this.x, this.y, this.z);
 		laser.matRotate.copy(this.matRotate);
 		laser.objRotate.copy(this.objRotate);
-		laser.moveStrafe(theModel.rackCoord[i].x);
-		laser.moveUp(theModel.rackCoord[i].y);
-		laser.moveForward(theModel.rackCoord[i].z);
+		laser.moveStrafe(model.rackCoord[i].x);
+		laser.moveUp(model.rackCoord[i].y);
+		laser.moveForward(model.rackCoord[i].z);
 		laser.Source = this.Index;
 		laser.Side = this.Side;
-		laser.currentSpeed = laser.theModel.maxSpeed;
+		laser.currentSpeed = laser.model.maxSpeed;
 		laser.AIControlled = false;
-		this.Energy -= laser.theModel.Shield; //decrease laser energy bank level
-		this.weaponRecharge[i] = laser.theModel.rechargeTime;
+		this.Energy -= laser.model.Shield; //decrease laser energy bank level
+		this.weaponRecharge[i] = laser.model.rechargeTime;
 		Objects.add(laser);
 		this.actionPoints = 20;
-		theMedia.auWeapon[laser.theModel.fx].play();
+		media.auWeapon[laser.model.fx].play();
 	}
 
 	public void tryToFire() {
-		if (this.theModel.cntWeapons == 0) return;
-	    if (this.Energy >= this.theModel.weaponRack[0].Shield
-		&& this.Energy >= this.theModel.weaponRack[theModel.cntWeapons - 1].Shield)
+		if (this.model.cntWeapons == 0) return;
+	    if (this.Energy >= this.model.weaponRack[0].Shield
+		&& this.Energy >= this.model.weaponRack[model.cntWeapons - 1].Shield)
 		if (weaponLoad) {
 			weaponLoad = false;
-			for (int i=0; i<theModel.cntWeapons; i++) 
-				if (this.Energy >= this.theModel.weaponRack[i].Shield
+			for (int i=0; i<model.cntWeapons; i++) 
+				if (this.Energy >= this.model.weaponRack[i].Shield
 				    && this.weaponRecharge[i] == 0) Fire(i);
 		} else {
 			weaponLoad = true;
-			for (int i=theModel.cntWeapons-1; i>=0; i--) 
-				if (this.Energy >= this.theModel.weaponRack[i].Shield
+			for (int i=model.cntWeapons-1; i>=0; i--) 
+				if (this.Energy >= this.model.weaponRack[i].Shield
 				    && this.weaponRecharge[i] == 0) Fire(i);
 		}
 	}
 
 	private void Launch(boolean isBindCamera) {
 		SpaceObject missile = new SpaceObject("", 
-			theModel.missilesRack[this.currentLauncher], this.x, this.y, this.z);
+			model.missilesRack[this.currentLauncher], this.x, this.y, this.z);
 		missile.matRotate.copy(this.matRotate);
 		missile.objRotate.copy(this.objRotate);
-		missile.moveStrafe(theModel.launchersCoord[this.currentLauncher].x);
-		missile.moveUp(theModel.launchersCoord[this.currentLauncher].y);
-		missile.moveForward(theModel.launchersCoord[this.currentLauncher].z);
+		missile.moveStrafe(model.launchersCoord[this.currentLauncher].x);
+		missile.moveUp(model.launchersCoord[this.currentLauncher].y);
+		missile.moveForward(model.launchersCoord[this.currentLauncher].z);
 		missile.Source = this.Index;
 		missile.Side = this.Side;
 		missile.currentSpeed += this.currentSpeed;
-		if (missile.currentSpeed > missile.theModel.maxSpeed) missile.currentSpeed = missile.theModel.maxSpeed;
+		if (missile.currentSpeed > missile.model.maxSpeed) missile.currentSpeed = missile.model.maxSpeed;
 		missile.AIControlled = true;
-		if (missile.theModel.isFighter) {
+		if (missile.model.isFighter) {
 			missile.currentTask.iType = Task.Defend;
 			missile.currentTask.iTarget = this.Index;
 			missile.currentTask.id = this.id;
@@ -472,15 +472,15 @@ public class SpaceObject {
 			missile.taskScreen = this.taskScreen;
 		}
 		this.missilesLoad[currentLauncher]--;
-		this.missileRecharge[this.currentLauncher] = missile.theModel.rechargeTime;
+		this.missileRecharge[this.currentLauncher] = missile.model.rechargeTime;
 		Objects.add(missile);
-		if (isBindCamera) theCamera.iRelatedObject = missile.Index;
+		if (isBindCamera) camera.iRelatedObject = missile.Index;
 		this.actionPoints = 20;
-		theMedia.auWeapon[missile.theModel.fx].play();
+		media.auWeapon[missile.model.fx].play();
 	}
 
 	public void tryToLaunch(boolean isBindCamera) {
-		if (this.theModel.cntLaunchers == 0) return;
+		if (this.model.cntLaunchers == 0) return;
 		if (this.missilesLoad[currentLauncher] > 0 && this.missileRecharge[currentLauncher] == 0) {
 			if (this.taskScreen != -1) Launch(isBindCamera);
 		}
@@ -488,49 +488,49 @@ public class SpaceObject {
 
 	private void TurrentFire(int i, int alpha, int beta) {
 		SpaceObject laser = new SpaceObject("", 
-			theModel.weaponRack[i], this.x, this.y, this.z);
+			model.weaponRack[i], this.x, this.y, this.z);
 		laser.matRotate.copy(this.matRotate);
 		laser.objRotate.copy(this.objRotate);
-		laser.moveStrafe(theModel.rackCoord[i].x);
-		laser.moveUp(theModel.rackCoord[i].y);
-		laser.moveForward(theModel.rackCoord[i].z);
+		laser.moveStrafe(model.rackCoord[i].x);
+		laser.moveUp(model.rackCoord[i].y);
+		laser.moveForward(model.rackCoord[i].z);
 		laser.starsRotation = false;
 		laser.changeYaw(beta);
 		laser.changePitch(-alpha);
 		laser.Source = this.Index;
 		laser.Side = this.Side;
-		laser.currentSpeed = laser.theModel.maxSpeed;
+		laser.currentSpeed = laser.model.maxSpeed;
 		laser.AIControlled = false;
-		this.Energy -= laser.theModel.Shield; //decrease laser energy bank level
-		this.weaponRecharge[i] = laser.theModel.rechargeTime;
+		this.Energy -= laser.model.Shield; //decrease laser energy bank level
+		this.weaponRecharge[i] = laser.model.rechargeTime;
 		Objects.add(laser);
 		this.actionPoints = 40;
-		theMedia.auWeapon[laser.theModel.fx].play();
+		media.auWeapon[laser.model.fx].play();
 	}
 
 
 	public void tryToCapFire() {
-		if (this.theModel.cntWeapons == 0) return;
+		if (this.model.cntWeapons == 0) return;
 	int cTarget = -1;
-	for (int i = 0; i < this.theModel.cntWeapons; i++) {
+	for (int i = 0; i < this.model.cntWeapons; i++) {
 		if (weaponRecharge[i] != 0) continue;
 		//find enemy object in vicinity 5000 meters
 		cTarget = Objects.getNextInSector(this.Index, cTarget, 50000, 
-								i, theModel.weaponSector[i]);
+								i, model.weaponSector[i]);
 		if (cTarget == -1) continue;
-		if (this.Energy < theModel.weaponRack[i].Shield) break;
+		if (this.Energy < model.weaponRack[i].Shield) break;
 		//find dirrection vector
 		SpaceObject T = Objects.Objects[cTarget];
-		int estimatedTime = (int)this.getDistance(T) / this.theModel.weaponRack[i].targetFactor << 1;
+		int estimatedTime = (int)this.getDistance(T) / this.model.weaponRack[i].targetFactor << 1;
 		T.futureMove(estimatedTime * T.currentSpeed / 2);
 		Vector dir = new Vector(
 			T.fx - (this.x),
 			T.fy - (this.y),
 			T.fz - (this.z));
 		dir.mul(matRotate);
-		dir.x -= theModel.rackCoord[i].x;
-		dir.y -= theModel.rackCoord[i].y;
-		dir.z -= theModel.rackCoord[i].z;
+		dir.x -= model.rackCoord[i].x;
+		dir.y -= model.rackCoord[i].y;
+		dir.z -= model.rackCoord[i].z;
 		int beta = dir.getBeta();
 		dir.rotateOY(-beta);
 		int alpha = dir.getAlpha();
@@ -538,28 +538,28 @@ public class SpaceObject {
 	}}
 
 	public void increaseSpeed() {
-		if (currentFuel < theModel.fuelDepletion) return;
-		currentSpeed += theModel.acceleration;
-		if (currentSpeed > theModel.maxSpeed) currentSpeed = theModel.maxSpeed;
-		else currentFuel -= theModel.fuelDepletion;
+		if (currentFuel < model.fuelDepletion) return;
+		currentSpeed += model.acceleration;
+		if (currentSpeed > model.maxSpeed) currentSpeed = model.maxSpeed;
+		else currentFuel -= model.fuelDepletion;
 	}
 
 	public void decreaseSpeed() {
-		if (currentFuel < theModel.fuelDepletion) return;
-		currentSpeed -= theModel.acceleration;
-		if (currentSpeed < -theModel.maxSpeed) currentSpeed = -theModel.maxSpeed;
-		else currentFuel -= theModel.fuelDepletion;
+		if (currentFuel < model.fuelDepletion) return;
+		currentSpeed -= model.acceleration;
+		if (currentSpeed < -model.maxSpeed) currentSpeed = -model.maxSpeed;
+		else currentFuel -= model.fuelDepletion;
 	}
 
 	public void inertYaw() {
 	  if (this.AIControlled || this.HumanControlled)
 		if (currentYaw != 0) {
-			if (currentFuel >= theModel.yawFuelDepletion) currentFuel -= theModel.yawFuelDepletion;
+			if (currentFuel >= model.yawFuelDepletion) currentFuel -= model.yawFuelDepletion;
 			if (currentYaw > 0) {
-				currentYaw -= theModel.yawAcceleration;
+				currentYaw -= model.yawAcceleration;
 				if (currentYaw < 0) currentYaw = 0;
 			} else {
-				currentYaw += theModel.yawAcceleration;
+				currentYaw += model.yawAcceleration;
 				if (currentYaw > 0) currentYaw = 0;
 			}			
 		}
@@ -568,12 +568,12 @@ public class SpaceObject {
 	public void inertPitch() {
 	  if (this.AIControlled || this.HumanControlled)
 		if (currentPitch != 0) {
-			if (currentFuel >= theModel.pitchFuelDepletion) currentFuel -= theModel.pitchFuelDepletion;
+			if (currentFuel >= model.pitchFuelDepletion) currentFuel -= model.pitchFuelDepletion;
 			if (currentPitch > 0) {
-				currentPitch -= theModel.pitchAcceleration;
+				currentPitch -= model.pitchAcceleration;
 				if (currentPitch < 0) currentPitch = 0;
 			} else {
-				currentPitch += theModel.pitchAcceleration;
+				currentPitch += model.pitchAcceleration;
 				if (currentPitch > 0) currentPitch = 0;
 			}
 		}
@@ -595,18 +595,18 @@ public class SpaceObject {
 			}
 
 		//change current frame
-		if (this.theModel.cntFrames > 0) {
+		if (this.model.cntFrames > 0) {
 			this.frame++;
-			if (this.frame>this.theModel.cntFrames) this.frame = 1;
+			if (this.frame>this.model.cntFrames) this.frame = 1;
 		}
 		//action points counter
 		if (this.actionPoints > 0) this.actionPoints--;
 		//recharge weapon
-		for (int i=0; i<this.theModel.cntWeapons; i++) {
+		for (int i=0; i<this.model.cntWeapons; i++) {
 			if (this.weaponRecharge[i] > 0) this.weaponRecharge[i]--;
 		}
 		//recharge missile
-		for (int i=0; i<this.theModel.cntLaunchers; i++) {
+		for (int i=0; i<this.model.cntLaunchers; i++) {
 			if (this.missileRecharge[i] > 0) this.missileRecharge[i]--;
 		}
 		//inert rotate
@@ -625,21 +625,21 @@ public class SpaceObject {
 	}
 
 	public void energyControl() {
-		if (this.theModel.isFighter || this.theModel.isShip) {
+		if (this.model.isFighter || this.model.isShip) {
 			//energy control
-			if (this.Energy < this.theModel.Energy) {
-				this.Energy += this.theModel.energyRecharge;
-				if (this.Energy > this.theModel.Energy) this.Energy = this.theModel.Energy;
+			if (this.Energy < this.model.Energy) {
+				this.Energy += this.model.energyRecharge;
+				if (this.Energy > this.model.Energy) this.Energy = this.model.Energy;
 			}
  			//shield control
-			if (this.Shield < this.theModel.Shield && this.Energy >= this.theModel.shieldRecharge) {
-				this.eBuffer += this.theModel.shieldRecharge;
-				this.Energy -= this.theModel.shieldRecharge;
+			if (this.Shield < this.model.Shield && this.Energy >= this.model.shieldRecharge) {
+				this.eBuffer += this.model.shieldRecharge;
+				this.Energy -= this.model.shieldRecharge;
 				this.Shield += this.eBuffer / 20;
 				this.eBuffer = this.eBuffer % 20;
-				if (this.Shield > this.theModel.Shield)  this.Shield = this.theModel.Shield;
+				if (this.Shield > this.model.Shield)  this.Shield = this.model.Shield;
 			}
-			if (this.Shield == this.theModel.Shield) this.hits = 0;
+			if (this.Shield == this.model.Shield) this.hits = 0;
 		}
 	}
 
@@ -696,25 +696,25 @@ public class SpaceObject {
 
 	public void switchToNextLauncher() {
 		this.currentLauncher++;
-		if (this.currentLauncher >= this.theModel.cntLaunchers) this.currentLauncher = 0;
+		if (this.currentLauncher >= this.model.cntLaunchers) this.currentLauncher = 0;
 	}
 
 	public void switchLauncher() {
 		int i = this.currentLauncher;
-		while (i < this.theModel.cntLaunchers
+		while (i < this.model.cntLaunchers
 		       && this.missilesLoad[i] == 0) i++;
-		if (i == this.theModel.cntLaunchers) {
+		if (i == this.model.cntLaunchers) {
 			int j = 0;
-			while (j < this.theModel.cntLaunchers
+			while (j < this.model.cntLaunchers
 			       && this.missilesLoad[j] == 0) j++;
-			if (j < this.theModel.cntLaunchers) this.currentLauncher = j;
+			if (j < this.model.cntLaunchers) this.currentLauncher = j;
 		} else this.currentLauncher = i;
 	}
 
 	public void createFragments() {
-		for (int i = 0; i < this.theModel.fragments; i++) {
+		for (int i = 0; i < this.model.fragments; i++) {
 			SpaceObject fragment = new SpaceObject("fragment",
-			this.theModel.theFragment, this.x, this.y, this.z);
+			this.model.theFragment, this.x, this.y, this.z);
 			fragment.dirRotate = new Matrix43();
 			fragment.dirRotate.copy(this.matRotate);
 
@@ -740,9 +740,9 @@ public class SpaceObject {
 	}
 
 	public void createBlows() {
-		for (int i = 0; i < this.theModel.blows; i++) {
+		for (int i = 0; i < this.model.blows; i++) {
 			SpaceObject blow = new SpaceObject("blow",
-			this.theModel.theBlow, this.x, this.y, this.z);
+			this.model.theBlow, this.x, this.y, this.z);
 
 			int yawSpeed = (int)(CMath.R.nextFloat() * 10) * 200 + 100;
 			int pitchSpeed = (int)(CMath.R.nextFloat() * 10) * 200 + 100;    
@@ -761,9 +761,9 @@ public class SpaceObject {
 	public void reachTarget() {
 		//proc control
 		if (this.reachProcedure != -1) {
-			theScene.Interpreter.setVariable("ReachedObject", Objects.Objects[this.currentTarget].strObjectName);
-			theScene.Interpreter.setVariable("ActionObject", this.strObjectName);
-			theScene.Interpreter.runProc(this.reachProcedure);
+			scene.Interpreter.setVariable("ReachedObject", Objects.Objects[this.currentTarget].strObjectName);
+			scene.Interpreter.setVariable("ActionObject", this.strObjectName);
+			scene.Interpreter.runProc(this.reachProcedure);
 		}
 	}
 
@@ -771,57 +771,57 @@ public class SpaceObject {
 		this.isLive = false;
 		
 		//fragments control
-		if ((this.theModel.isShip || this.theModel.isFighter
-			|| this.theModel.isStatic) && this.theModel.theFragment != null)
+		if ((this.model.isShip || this.model.isFighter
+			|| this.model.isStatic) && this.model.theFragment != null)
 				createFragments();
 
 		//blows control
-		if ((this.theModel.isShip || this.theModel.isFighter
-			|| this.theModel.isStatic) && this.theModel.theBlow != null)
+		if ((this.model.isShip || this.model.isFighter
+			|| this.model.isStatic) && this.model.theBlow != null)
 				createBlows();
 
 		//score control
-		if (this.theModel.isShip || this.theModel.isFighter 
-			|| this.theModel.isStatic || this.theModel.isMissile) {
+		if (this.model.isShip || this.model.isFighter 
+			|| this.model.isStatic || this.model.isMissile) {
 			//reduce score from own side
-			int iScore = theScene.Interpreter.getiVariable("Score" + this.Side);
-			iScore -= this.theModel.Cost;
-			theScene.Interpreter.setVariable("Score" + this.Side, iScore);
+			int iScore = scene.Interpreter.getiVariable("Score" + this.Side);
+			iScore -= this.model.Cost;
+			scene.Interpreter.setVariable("Score" + this.Side, iScore);
 			//add score to foe
 			if (bySide != -1 && bySide != this.Side) {
-				iScore = theScene.Interpreter.getiVariable("Score" + bySide);
-				iScore += this.theModel.Cost;
-				theScene.Interpreter.setVariable("Score" + bySide, iScore);
+				iScore = scene.Interpreter.getiVariable("Score" + bySide);
+				iScore += this.model.Cost;
+				scene.Interpreter.setVariable("Score" + bySide, iScore);
 			}
 	
-			if (this.theModel.isShip) {
-				int iCount = theScene.Interpreter.getiVariable("ShipsLost" + this.Side);
-				iCount ++; theScene.Interpreter.setVariable("ShipsLost" + this.Side, iCount);
+			if (this.model.isShip) {
+				int iCount = scene.Interpreter.getiVariable("ShipsLost" + this.Side);
+				iCount ++; scene.Interpreter.setVariable("ShipsLost" + this.Side, iCount);
 				if (bySide != -1 && bySide != this.Side) {
-					iCount = theScene.Interpreter.getiVariable("ShipsDestroy" + bySide);
-					iCount ++; theScene.Interpreter.setVariable("ShipsDestroy" + bySide, iCount);
+					iCount = scene.Interpreter.getiVariable("ShipsDestroy" + bySide);
+					iCount ++; scene.Interpreter.setVariable("ShipsDestroy" + bySide, iCount);
 				}
 			}
-			if (this.theModel.isFighter) {
-				int iCount = theScene.Interpreter.getiVariable("FightersLost" + this.Side);
-				iCount ++; theScene.Interpreter.setVariable("FightersLost" + this.Side, iCount);
+			if (this.model.isFighter) {
+				int iCount = scene.Interpreter.getiVariable("FightersLost" + this.Side);
+				iCount ++; scene.Interpreter.setVariable("FightersLost" + this.Side, iCount);
 				if (bySide != -1 && bySide != this.Side) {
-					iCount = theScene.Interpreter.getiVariable("FightersDestroy" + bySide);
-					iCount ++; theScene.Interpreter.setVariable("FightersDestroy" + bySide, iCount);
+					iCount = scene.Interpreter.getiVariable("FightersDestroy" + bySide);
+					iCount ++; scene.Interpreter.setVariable("FightersDestroy" + bySide, iCount);
 				}
 			}
-			if (this.theModel.isStatic) {
-				int iCount = theScene.Interpreter.getiVariable("StaticLost" + this.Side);
-				iCount ++; theScene.Interpreter.setVariable("StaticLost" + this.Side, iCount);
+			if (this.model.isStatic) {
+				int iCount = scene.Interpreter.getiVariable("StaticLost" + this.Side);
+				iCount ++; scene.Interpreter.setVariable("StaticLost" + this.Side, iCount);
 				if (bySide != -1 && bySide != this.Side) {
-					iCount = theScene.Interpreter.getiVariable("StaticDestroy" + bySide);
-					iCount ++; theScene.Interpreter.setVariable("StaticDestroy" + bySide, iCount);
+					iCount = scene.Interpreter.getiVariable("StaticDestroy" + bySide);
+					iCount ++; scene.Interpreter.setVariable("StaticDestroy" + bySide, iCount);
 				}
 			}
 		}
 
 		//proc control
-		if (this.killProcedure != -1) theScene.Interpreter.runProc(this.killProcedure);
+		if (this.killProcedure != -1) scene.Interpreter.runProc(this.killProcedure);
 	}
 
 	public void takeTarget(SpaceObject W) {

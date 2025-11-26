@@ -113,8 +113,8 @@ public class KeyController {
 			else if (theObject.currentSpeed < 0) theObject.increaseSpeed();
 		}
 		if (CruiseSpeed) {
-			if (theObject.currentSpeed > theObject.theModel.cruiseSpeed) theObject.decreaseSpeed();
-			else if (theObject.currentSpeed < theObject.theModel.cruiseSpeed) theObject.increaseSpeed();
+			if (theObject.currentSpeed > theObject.model.cruiseSpeed) theObject.decreaseSpeed();
+			else if (theObject.currentSpeed < theObject.model.cruiseSpeed) theObject.increaseSpeed();
 		}
 		if (MatchSpeed) {
 			int target = theObject.taskScreen;

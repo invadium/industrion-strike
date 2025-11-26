@@ -17,13 +17,13 @@ public class IndicatorScreen implements AreaListener {
 	private final static String AUTOPILOT = "Autopilot";
 	private final static String TIMER = "Timer";
 	
-	Strike theApplet;
-	Graphics theCanvas;
+	Strike applet;
+	Graphics canvas;
 	Helper helper = Helper.getInstance();
-	Scene theScene;
-	Camera theCamera;
-	SpaceObject theObject;
-	Media theMedia;
+	Scene scene;
+	Camera camera;
+	SpaceObject spaceObject;
+	Media media;
 	Font screenFont = new Font("Courier", Font.PLAIN, 9);
 	Font screenFontL = new Font("Courier", Font.BOLD, 16);
 	int x = 370;
@@ -40,25 +40,25 @@ public class IndicatorScreen implements AreaListener {
 	int mTime = 0;
 	int sTime = 0;
 
-	public IndicatorScreen(Strike theApplet, Graphics theCanvas, Scene theScene,
-						Camera theCamera, Media theMedia) {
-		this.theApplet = theApplet;
-		this.theCanvas = theCanvas;
-		this.theScene = theScene;
-		this.theCamera = theCamera;
-		this.theMedia = theMedia;
+	public IndicatorScreen(Strike applet, Graphics canvas, Scene scene,
+						Camera camera, Media media) {
+		this.applet = applet;
+		this.canvas = canvas;
+		this.scene = scene;
+		this.camera = camera;
+		this.media = media;
 		
 		// create active zones
 		// coordinates dont matter here - will be updated later
-		this.theApplet.areaControl.addArea(
+		this.applet.areaControl.addArea(
 				this, AUTOPILOT, AreaControl.AUTOPILOT, x, y, w, 25);
-		this.theApplet.areaControl.addArea(
+		this.applet.areaControl.addArea(
 				this, TIMER, AreaControl.TIMER, x, y + 50, w, 25);
 	}
 
 	private void clearAll() {           
-		theCanvas.setColor(Color.black);
-		theCanvas.fillRect(x, y, w, h);		
+		canvas.setColor(Color.black);
+		canvas.fillRect(x, y, w, h);		
 	}
 
 	public void expaired() {
@@ -78,74 +78,74 @@ public class IndicatorScreen implements AreaListener {
 		helper.theCanvas.setColor(color);
 		helper.drawArea(x, y + sy, w, 25);
 		
-		FontMetrics FM = theCanvas.getFontMetrics();
+		FontMetrics FM = canvas.getFontMetrics();
 		String strValue = "";
 		if (Value) {
-			theCanvas.setColor(trueColor);
+			canvas.setColor(trueColor);
 			strValue = trueValue;
 		} else {
-			theCanvas.setColor(falseColor);
+			canvas.setColor(falseColor);
 			strValue = falseValue;
 		}
 		int sx = (this.w - FM.stringWidth(strValue)) / 2;
-		theCanvas.drawString(strValue, x + sx, y+sy+17);
+		canvas.drawString(strValue, x + sx, y+sy+17);
 	}
 
 	public void drawValue(String strValue, int sy, Color valColor) {
 		//theCanvas.setColor(Color.black);
 		//theCanvas.fillRect(x, y + sy, w, 25);
 		Color color;
-		if (theScene.statis) color = new Color(100, 100, 200);
+		if (scene.statis) color = new Color(100, 100, 200);
 		else color = new Color(40, 0, 100);
 		helper.theCanvas.setColor(color);
 		helper.drawArea(x, y + sy, w, 25);
 		
-		theCanvas.setColor(valColor);
-		FontMetrics FM = theCanvas.getFontMetrics();
+		canvas.setColor(valColor);
+		FontMetrics FM = canvas.getFontMetrics();
 		int sx = (this.w - FM.stringWidth(strValue)) / 2;
-		theCanvas.drawString(strValue, x + sx, y+sy+17);
+		canvas.drawString(strValue, x + sx, y+sy+17);
 	}
 
 	public void drawEmpty(int sy) {
-		theCanvas.setColor(Color.black);
-		theCanvas.fillRect(x, y + sy, w, h - sy);
+		canvas.setColor(Color.black);
+		canvas.fillRect(x, y + sy, w, h - sy);
 	}
 
 	public void draw() {
         try {
- 		theCanvas.setFont(screenFontL);
+ 		canvas.setFont(screenFontL);
 
-		if (theCamera.iRelatedObject != -1) {
+		if (camera.iRelatedObject != -1) {
 			if (Camera == true) {
 				Camera = false;
 				Expaired = true;				
 			}
 			// Auto/Manual indicator
-			if (Expaired || HumanControl != theScene.Objects.Objects[theCamera.iRelatedObject].HumanControlled) {
-				HumanControl = theScene.Objects.Objects[theCamera.iRelatedObject].HumanControlled;
+			if (Expaired || HumanControl != scene.Objects.Objects[camera.iRelatedObject].HumanControlled) {
+				HumanControl = scene.Objects.Objects[camera.iRelatedObject].HumanControlled;
 				drawIndicator(HumanControl, 0, "MANUAL", "AUTO", Color.red, Color.blue);
 			}
 			//Collision indicator
 			boolean collise = false;
-			if (theScene.Objects.Objects[theCamera.iRelatedObject].currentTarget == Action.AvoidCollision)
+			if (scene.Objects.Objects[camera.iRelatedObject].currentTarget == Action.AvoidCollision)
 				collise = true;
-			else theMedia.auAlarm.stop();
+			else media.auAlarm.stop();
 
 			if (Expaired || CollisionMenace != collise) {
 				CollisionMenace = collise;
                 
-				if (theScene.Objects.Objects[theCamera.iRelatedObject].HumanControlled)
-					if (CollisionMenace == false) theMedia.auAlarm.stop();
-						else theMedia.auAlarm.play();
+				if (scene.Objects.Objects[camera.iRelatedObject].HumanControlled)
+					if (CollisionMenace == false) media.auAlarm.stop();
+						else media.auAlarm.play();
                 
 
 				Color nc = new Color(120, 0, 0);
 				drawIndicator(collise, 25, "COLLISION", "COLLISION", Color.red, nc);
 			}
 
-			if (Expaired || mTime != theScene.minTime || sTime != theScene.secTime) {
-				mTime = theScene.minTime;
-				sTime = theScene.secTime;
+			if (Expaired || mTime != scene.minTime || sTime != scene.secTime) {
+				mTime = scene.minTime;
+				sTime = scene.secTime;
 				drawValue("Time " + mTime + ":" + sTime, 50, Color.green);
 			}
 
@@ -155,14 +155,14 @@ public class IndicatorScreen implements AreaListener {
 			Expaired = false;	
 		} else {
 			if (Expaired || !Camera
-					 || mTime != theScene.minTime
-					 || sTime != theScene.secTime) {
-				theMedia.auAlarm.stop();
+					 || mTime != scene.minTime
+					 || sTime != scene.secTime) {
+				media.auAlarm.stop();
 				clearAll();
 				
-				if (Expaired || !Camera || mTime != theScene.minTime || sTime != theScene.secTime) {
-					mTime = theScene.minTime;
-					sTime = theScene.secTime;
+				if (Expaired || !Camera || mTime != scene.minTime || sTime != scene.secTime) {
+					mTime = scene.minTime;
+					sTime = scene.secTime;
 					drawValue("Time " + mTime + ":" + sTime, 50, Color.green);
 				}
 					
@@ -180,14 +180,14 @@ public class IndicatorScreen implements AreaListener {
 	
 	public void areaClick(Area area, int cx, int cy, int clicks) {
 		if (area.getType() == AreaControl.AUTOPILOT
-				&& theCamera.iRelatedObject != -1) {
-			theScene.Objects.Objects[theCamera.iRelatedObject].takeControl();
+				&& camera.iRelatedObject != -1) {
+			scene.Objects.Objects[camera.iRelatedObject].takeControl();
 		} else if (area.getType() == AreaControl.TIMER) {
-			if (theScene.turnBased) {
-				theScene.nextParty();
+			if (scene.turnBased) {
+				scene.nextParty();
 			} else {
-				if (theScene.statis) theScene.statis = false;
-					else theScene.statis = true;
+				if (scene.statis) scene.statis = false;
+					else scene.statis = true;
 			}
 			this.expaired();
 		}
@@ -195,20 +195,20 @@ public class IndicatorScreen implements AreaListener {
 	
 	public void areaRightClick(Area area, int cx, int cy, int clicks) {
 		if (area.getType() == AreaControl.TIMER) {
-			theScene.changeTiming();
+			scene.changeTiming();
 		}
 	}
 	
 	public void areaWheel(Area area, int value) {}
 	
 	public void clearifyPosition(int w, int h) {
-		this.x = w - theApplet.theTaskScreen.w - this.w - 20;
+		this.x = w - applet.taskScreen.w - this.w - 20;
 		this.y = h - this.h - 10;
 		
 		// update active areas
-		theApplet.areaControl.updateAreaCoords(
+		applet.areaControl.updateAreaCoords(
 				AUTOPILOT, x, y, this.w, 25);
-		theApplet.areaControl.updateAreaCoords(
+		applet.areaControl.updateAreaCoords(
 				TIMER, x, y + 50, this.w, 25);
 	}
 }

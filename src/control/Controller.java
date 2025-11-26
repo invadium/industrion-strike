@@ -76,12 +76,12 @@ public class Controller {
 					int yawFi_0 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
 
-					nYaw = C.getYawCorrection(C.theModel.yawAcceleration);
+					nYaw = C.getYawCorrection(C.model.yawAcceleration);
 					C.changeYaw(-nYaw);
 					int yawFi_1 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
 
-					nYaw = C.getYawCorrection(-C.theModel.yawAcceleration);
+					nYaw = C.getYawCorrection(-C.model.yawAcceleration);
 					C.changeYaw(-nYaw);
 					int yawFi_2 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
@@ -100,12 +100,12 @@ public class Controller {
 					int pitchFi_0 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
 
-					nPitch = C.getPitchCorrection(C.theModel.pitchAcceleration);
+					nPitch = C.getPitchCorrection(C.model.pitchAcceleration);
 					C.changePitch(nPitch);
 					int pitchFi_1 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
 
-					nPitch = C.getPitchCorrection(-C.theModel.pitchAcceleration);
+					nPitch = C.getPitchCorrection(-C.model.pitchAcceleration);
 					C.changePitch(nPitch);
 					int pitchFi_2 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
@@ -124,8 +124,8 @@ public class Controller {
 				if (C.currentSpeed < C.adjustedSpeed) C.increaseSpeed();
 				else if (C.currentSpeed > C.adjustedSpeed) C.decreaseSpeed();
 			} else {
-				if (C.currentSpeed < C.theModel.cruiseSpeed) C.increaseSpeed();
-				else if (C.currentSpeed > C.theModel.cruiseSpeed) C.decreaseSpeed();
+				if (C.currentSpeed < C.model.cruiseSpeed) C.increaseSpeed();
+				else if (C.currentSpeed > C.model.cruiseSpeed) C.decreaseSpeed();
 			}
 
 			double dist = C.getDistance(theScene.Objects.Objects[C.currentTarget]);
@@ -155,12 +155,12 @@ public class Controller {
 					int yawFi_0 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
 
-					nYaw = C.getYawCorrection(C.theModel.yawAcceleration);
+					nYaw = C.getYawCorrection(C.model.yawAcceleration);
 					C.changeYaw(-nYaw);
 					int yawFi_1 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
 
-					nYaw = C.getYawCorrection(-C.theModel.yawAcceleration);
+					nYaw = C.getYawCorrection(-C.model.yawAcceleration);
 					C.changeYaw(-nYaw);
 					int yawFi_2 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
@@ -179,12 +179,12 @@ public class Controller {
 					int pitchFi_0 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
 
-					nPitch = C.getPitchCorrection(C.theModel.pitchAcceleration);
+					nPitch = C.getPitchCorrection(C.model.pitchAcceleration);
 					C.changePitch(nPitch);
 					int pitchFi_1 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
 
-					nPitch = C.getPitchCorrection(-C.theModel.pitchAcceleration);
+					nPitch = C.getPitchCorrection(-C.model.pitchAcceleration);
 					C.changePitch(nPitch);
 					int pitchFi_2 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
@@ -199,11 +199,11 @@ public class Controller {
 			//*****************
 			//  speed control
 			//*****************
-			if (C.currentSpeed < C.theModel.maxSpeed) C.increaseSpeed();
+			if (C.currentSpeed < C.model.maxSpeed) C.increaseSpeed();
 
 			double dist = C.getDistance(theScene.Objects.Objects[C.currentTarget]);
 			if (dist > Metric.turnBackRange) C.currentTarget = Action.None;
-			if (dist > Metric.missileTurnBack && C.theModel.isMissile) C.currentTarget = Action.None;
+			if (dist > Metric.missileTurnBack && C.model.isMissile) C.currentTarget = Action.None;
 	}
 
 	private void FollowVector (SpaceObject C) {			
@@ -217,10 +217,10 @@ public class Controller {
 			//******************
 			//find vector
 			Vector dir = new Vector(T.x - C.x, T.y - C.y, T.z - C.z);
-			if (dist < Metric.fighterLaserRange && C.theModel.cntWeapons > 0)
+			if (dist < Metric.fighterLaserRange && C.model.cntWeapons > 0)
 			if (C.targetType == Task.Attack || C.targetType == Task.SupportAttack) {
 				//find future object coordinates
-				int fireTime = (int)C.getDistance(T) / C.theModel.targetFactor << 1;
+				int fireTime = (int)C.getDistance(T) / C.model.targetFactor << 1;
 				T.futureMove(fireTime * T.currentSpeed / 2);
 				dir = new Vector(T.fx - C.x, T.fy - C.y, T.fz - C.z);
 			}
@@ -233,12 +233,12 @@ public class Controller {
 					int yawFi_0 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
 
-					nYaw = C.getYawCorrection(C.theModel.yawAcceleration);
+					nYaw = C.getYawCorrection(C.model.yawAcceleration);
 					C.changeYaw(-nYaw);
 					int yawFi_1 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
 
-					nYaw = C.getYawCorrection(-C.theModel.yawAcceleration);
+					nYaw = C.getYawCorrection(-C.model.yawAcceleration);
 					C.changeYaw(-nYaw);
 					int yawFi_2 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoYaw();
@@ -257,12 +257,12 @@ public class Controller {
 					int pitchFi_0 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
 
-					nPitch = C.getPitchCorrection(C.theModel.pitchAcceleration);
+					nPitch = C.getPitchCorrection(C.model.pitchAcceleration);
 					C.changePitch(nPitch);
 					int pitchFi_1 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
 
-					nPitch = C.getPitchCorrection(-C.theModel.pitchAcceleration);
+					nPitch = C.getPitchCorrection(-C.model.pitchAcceleration);
 					C.changePitch(nPitch);
 					int pitchFi_2 = theScene.Objects.getFiOnTarget(C, dir);
 					C.undoPitch();
@@ -277,16 +277,16 @@ public class Controller {
 			//****************
 			//  fire control
 			//****************
-			if (C.targetType == Task.Attack && C.theModel.isFighter && C.theModel.cntWeapons > 0)
+			if (C.targetType == Task.Attack && C.model.isFighter && C.model.cntWeapons > 0)
 			if (baseFi > 356*60 || baseFi < 4*60) {
 				//here we are!!! target in our sight... shoot it!!!
-				if (C.theModel.isMissile) C.actionPoints += 10;
+				if (C.model.isMissile) C.actionPoints += 10;
 				if (dist < Metric.fighterLaserRange && (C.agressionLevel == 1 || C.agressionLevel == 3 
 					|| C.agressionLevel == 4 || (C.agressionLevel == 2 && C.missilesLoad[C.currentLauncher] == 0))) {					
 					C.tryToFire();
 				}
-				if (C.theModel.cntLaunchers > 0)
-				if (dist < C.theModel.missilesRack[C.currentLauncher].range
+				if (C.model.cntLaunchers > 0)
+				if (dist < C.model.missilesRack[C.currentLauncher].range
 				   && (C.agressionLevel == 2 || C.agressionLevel == 3 || C.agressionLevel == 4)) {
 					if (C.missilesLoad[C.currentLauncher] == 0) C.switchLauncher();
 					if (C.missilesLoad[C.currentLauncher] > 0
@@ -296,12 +296,12 @@ public class Controller {
 					}
 				}
 			}
-			if (C.targetType == Task.SupportAttack && C.theModel.isFighter)
+			if (C.targetType == Task.SupportAttack && C.model.isFighter)
 			if (baseFi > 356*60 || baseFi < 4*60) {
 				//here we are!!! target in our sight... shoot it!!!
-				if (C.theModel.cntLaunchers > 0) {
+				if (C.model.cntLaunchers > 0) {
 				  if (C.missilesLoad[C.currentLauncher] == 0) C.switchLauncher();
-				  if (dist < C.theModel.missilesRack[C.currentLauncher].range
+				  if (dist < C.model.missilesRack[C.currentLauncher].range
 				        && C.missilesLoad[C.currentLauncher] > 0
 					&& C.missileRecharge[C.currentLauncher] == 0) {
 						C.setTaskScreen(C.currentTarget);
@@ -316,23 +316,23 @@ public class Controller {
 			//*****************
 			//  speed control
 			//*****************
-			if (C.theModel.isShip || C.theModel.isFighter) {
+			if (C.model.isShip || C.model.isFighter) {
 				if (C.adjustedSpeed != 0) {
 					if (C.currentSpeed > C.adjustedSpeed) C.decreaseSpeed();
 					else if (C.currentSpeed < C.adjustedSpeed) C.increaseSpeed();
 				} else {
-					if (dist > Metric.cruiseRange && C.currentSpeed < C.theModel.maxSpeed) C.increaseSpeed();
-					else if (dist < Metric.cruiseRange && C.currentSpeed > C.theModel.cruiseSpeed) C.decreaseSpeed();
-					else if (dist < Metric.cruiseRange && C.currentSpeed < C.theModel.cruiseSpeed) C.increaseSpeed();
+					if (dist > Metric.cruiseRange && C.currentSpeed < C.model.maxSpeed) C.increaseSpeed();
+					else if (dist < Metric.cruiseRange && C.currentSpeed > C.model.cruiseSpeed) C.decreaseSpeed();
+					else if (dist < Metric.cruiseRange && C.currentSpeed < C.model.cruiseSpeed) C.increaseSpeed();
 				}
-			} else if (C.theModel.isMissile) {
+			} else if (C.model.isMissile) {
 				if (baseFi > 356*60 || baseFi < 4*60) {
-					if (C.currentSpeed < C.theModel.maxSpeed) C.increaseSpeed();
+					if (C.currentSpeed < C.model.maxSpeed) C.increaseSpeed();
 				} if (baseFi > 280*60 || baseFi < 80*60) {
-					if (C.currentSpeed > C.theModel.cruiseSpeed) C.decreaseSpeed();
-					if (C.currentSpeed < C.theModel.cruiseSpeed) C.increaseSpeed();
+					if (C.currentSpeed > C.model.cruiseSpeed) C.decreaseSpeed();
+					if (C.currentSpeed < C.model.cruiseSpeed) C.increaseSpeed();
 				} else {
-					if (C.currentSpeed < C.theModel.maxSpeed) C.increaseSpeed();
+					if (C.currentSpeed < C.model.maxSpeed) C.increaseSpeed();
 				}
 				if (baseFi > 60*60 && baseFi < 300*60 && dist < Metric.oppositeRange)
 					C.typeManoeuvre = Action.OppositeTarget;
@@ -341,10 +341,10 @@ public class Controller {
 			//*****************
 			//  task control
 			//*****************
-			if (dist <  (C.theModel.reachRange + C.theModel.radius
-				 + theScene.Objects.Objects[C.currentTarget].theModel.radius)
-				  && C.targetType == Task.Defend && C.theModel.isFighter) {
-				if (theScene.Objects.Objects[C.currentTarget].theModel.isFighter) {
+			if (dist <  (C.model.reachRange + C.model.radius
+				 + theScene.Objects.Objects[C.currentTarget].model.radius)
+				  && C.targetType == Task.Defend && C.model.isFighter) {
+				if (theScene.Objects.Objects[C.currentTarget].model.isFighter) {
 					//... code for a wingman
 				} else {
 					if (C.agressionLevel == 1 || C.agressionLevel == 2) {
@@ -364,9 +364,9 @@ public class Controller {
 			}
 
 			if (C.currentTarget != -1)
-			if (dist < (C.theModel.reachRange + C.theModel.radius
-				 + theScene.Objects.Objects[C.currentTarget].theModel.radius)
-				 && C.theModel.isShip) {
+			if (dist < (C.model.reachRange + C.model.radius
+				 + theScene.Objects.Objects[C.currentTarget].model.radius)
+				 && C.model.isShip) {
 				C.reachTarget();
 				C.resetTarget();
 				if (C.isPrimary) C.currentTask.setPrimaryNotActual();
@@ -385,9 +385,9 @@ public class Controller {
 				double dist = C.getDistance(theScene.Objects.Objects[C.currentTarget]);
 				if (dist < Metric.oppositeRange && C.currentTask.iType == Task.Attack
 					&& theScene.Objects.Objects[C.currentTarget].currentSpeed < 35) C.typeManoeuvre = Action.OppositeTarget;
-				else if (dist < (C.theModel.reachRange + C.theModel.radius
-							+ theScene.Objects.Objects[C.currentTarget].theModel.radius)
-						 && C.theModel.isShip == true) C.resetTarget();
+				else if (dist < (C.model.reachRange + C.model.radius
+							+ theScene.Objects.Objects[C.currentTarget].model.radius)
+						 && C.model.isShip == true) C.resetTarget();
 				else C.typeManoeuvre = Action.Follow;
 			} else if (C.currentTask.iSecondaryTarget > 0 && C.currentTask.isSecondaryActual) {
 				C.currentTarget = C.currentTask.iSecondaryTarget;
@@ -398,9 +398,9 @@ public class Controller {
 				double dist = C.getDistance(theScene.Objects.Objects[C.currentTarget]);
 				if (dist < Metric.oppositeRange && C.currentTask.iType == Task.Attack
 					&& theScene.Objects.Objects[C.currentTarget].currentSpeed < 35) C.typeManoeuvre = Action.OppositeTarget;
-				else if (dist < (C.theModel.reachRange + C.theModel.radius
-							  + theScene.Objects.Objects[C.currentTarget].theModel.radius)
-						 && C.theModel.isShip == true) C.resetTarget();
+				else if (dist < (C.model.reachRange + C.model.radius
+							  + theScene.Objects.Objects[C.currentTarget].model.radius)
+						 && C.model.isShip == true) C.resetTarget();
 				else C.typeManoeuvre = Action.Follow;
 			}
 		}
@@ -408,7 +408,7 @@ public class Controller {
 
 	private void followWingman(SpaceObject C, SpaceObject W) {
 		int newTarget = -1;
-		if (C.theModel.cntWeapons == 0) return;
+		if (C.model.cntWeapons == 0) return;
 
 		if (C.agressionLevel == 1) {
 			if ((W.targetType == Task.Attack || W.targetType == Task.SupportAttack
@@ -445,7 +445,7 @@ public class Controller {
 
 	private void FindNewTarget(SpaceObject C) {
 		//usualy works for following fighters
-		if (C.theModel.cntWeapons == 0) return;
+		if (C.model.cntWeapons == 0) return;
 		int newTarget = -1;
 		if (C.agressionLevel == 1) newTarget = theScene.Objects.getNearestAttacker(C.Index);
 		if (C.agressionLevel == 2) newTarget = theScene.Objects.getNearestEnemy(C.Index);
@@ -467,7 +467,7 @@ public class Controller {
 	}
 
 	private int FindNearestTarget(SpaceObject C) {
-		if (C.theModel.cntWeapons == 0) return -1;
+		if (C.model.cntWeapons == 0) return -1;
 		if (C.flightPlan != -1) return -1;
 
 		int newTarget = -1;
@@ -520,8 +520,8 @@ public class Controller {
 
 	private void checkOnFire(SpaceObject C) {
 		if (!(C.targetType == Task.Attack && C.agressionLevel == 4)
-			&& C.theModel.isFighter && C.theModel.maxSpeed != 0)
-		if ((C.Shield < C.theModel.Shield/2 && C.hits > 0) || (C.hits > 2)) C.avoidFire();
+			&& C.model.isFighter && C.model.maxSpeed != 0)
+		if ((C.Shield < C.model.Shield/2 && C.hits > 0) || (C.hits > 2)) C.avoidFire();
 	}
 
 	private void FollowFlightPlan(SpaceObject C) {
@@ -534,7 +534,7 @@ public class Controller {
 		//star fighter
 		if (C.currentTarget == Action.AvoidCollision) {
 			if (C.priManoeuvre > 0) {
-				if (C.currentSpeed < C.theModel.cruiseSpeed) C.increaseSpeed();
+				if (C.currentSpeed < C.model.cruiseSpeed) C.increaseSpeed();
 				C.priManoeuvre--;
 				switch(C.typeAManoeuvre) {
 					case 0: C.addPitch(); break;
@@ -548,7 +548,7 @@ public class Controller {
 				}
 			}
 			else if (C.secManoeuvre > 0) {
-				if (C.currentSpeed < C.theModel.cruiseSpeed) C.increaseSpeed();
+				if (C.currentSpeed < C.model.cruiseSpeed) C.increaseSpeed();
 				C.secManoeuvre--;
 			}
 			else {
@@ -557,7 +557,7 @@ public class Controller {
 			}
 		} else if (C.currentTarget == Action.AvoidFire) {
 			if (C.priManoeuvre > 0) {
-				if (C.currentSpeed < C.theModel.maxSpeed) C.increaseSpeed();
+				if (C.currentSpeed < C.model.maxSpeed) C.increaseSpeed();
 				C.priManoeuvre--;
 				C.hits = 0;
 				switch(C.typeAManoeuvre) {
@@ -572,7 +572,7 @@ public class Controller {
 				}
 			}
 			else if (C.secManoeuvre > 0) {
-				if (C.currentSpeed < C.theModel.cruiseSpeed) C.increaseSpeed();
+				if (C.currentSpeed < C.model.cruiseSpeed) C.increaseSpeed();
 				C.secManoeuvre--;
 				if (C.secManoeuvre == 0 && C.hits > 0) C.avoidFire();				
 				switch(C.typeBManoeuvre) {
@@ -593,17 +593,17 @@ public class Controller {
 			}
 		} else if (C.currentTarget >= 0) {
 			if (C.typeManoeuvre == Action.OppositeTarget) OppositeVector(C);
-			else if (C.typeManoeuvre == Action.RoundTarget && C.theModel.isFighter) PerpendicularVector(C);
+			else if (C.typeManoeuvre == Action.RoundTarget && C.model.isFighter) PerpendicularVector(C);
 			else FollowVector(C);
 			checkActuality(C);
 			if (C.priManoeuvre > 0) C.priManoeuvre--;
 			else {
 				if (C.currentTarget >= 0)
-				if (C.theModel.isFighter && C.targetType == Task.Defend) {
-					if (!theScene.Objects.Objects[C.currentTarget].theModel.isFighter)
+				if (C.model.isFighter && C.targetType == Task.Defend) {
+					if (!theScene.Objects.Objects[C.currentTarget].model.isFighter)
 							FindNewTarget(C);
 					else {
-						if (theScene.Objects.Objects[C.currentTarget].theModel.isFighter)
+						if (theScene.Objects.Objects[C.currentTarget].model.isFighter)
 							followWingman(C, theScene.Objects.Objects[C.currentTarget]);
 					}
 				}
@@ -613,7 +613,7 @@ public class Controller {
 		} else if (C.currentTarget == Action.None) {
 			FindNewJob(C);
 			if (C.currentTarget == Action.None) {
-				if (C.theModel.isFighter) {
+				if (C.model.isFighter) {
 					//we find neares enemy and attack it
 					if (FindNearestTarget(C) == -1) {
 						//there is no job for us - the ship stops and waits for orders
@@ -635,17 +635,17 @@ public class Controller {
 			checkOnFire(C);
 		}
 		//capital ship
-		if (C.theModel.isShip && C.theModel.cntLaunchers > 0)
+		if (C.model.isShip && C.model.cntLaunchers > 0)
 		if ((C.agressionLevel == 3 || C.agressionLevel == 4)
 			&& C.missilesLoad[C.currentLauncher] > 0 && C.missileRecharge[C.currentLauncher] == 0) {
 			int trg = theScene.Objects.getNextInVicinity(C.Index,
-				C.taskScreen, C.theModel.missilesRack[C.currentLauncher].range);
+				C.taskScreen, C.model.missilesRack[C.currentLauncher].range);
 			if (trg>=0) {
 				C.setTaskScreen(trg);
 				C.tryToLaunch(false);
 			}
 		}
-		if (C.theModel.isShip && (C.agressionLevel == 2 || C.agressionLevel == 4)) {
+		if (C.model.isShip && (C.agressionLevel == 2 || C.agressionLevel == 4)) {
 			C.tryToCapFire();
 		}
 	}
@@ -662,7 +662,7 @@ public class Controller {
 	}
 	
 	private boolean isCollise(SpaceObject obj, SpaceObject cobj) {
-		double R = obj.theModel.radius + cobj.theModel.radius; R *= R;
+		double R = obj.model.radius + cobj.model.radius; R *= R;
 		double x = obj.x - cobj.x; x *= x;
 		double y = obj.y - cobj.y; y *= y;
 		double z = obj.z - cobj.z; z *= z;
@@ -671,7 +671,7 @@ public class Controller {
 	}
 
 	private boolean isFutureCollise(SpaceObject obj, SpaceObject cobj) {
-		double R = obj.theModel.radius + cobj.theModel.radius; 
+		double R = obj.model.radius + cobj.model.radius; 
 		R = R + R/2; R *= R;
 		double x = obj.fx - cobj.fx; x *= x;
 		double y = obj.fy - cobj.fy; y *= y;
@@ -681,17 +681,17 @@ public class Controller {
 	}
 
 	private void consolationMessage(SpaceObject obj, SpaceObject byObj) {
-	if (obj.theModel.isFighter || obj.theModel.isShip) {
-		if (byObj.theModel.isFighter || byObj.theModel.isShip || byObj.theModel.isStatic) {
-			theScene.theMessageScreen.push(obj.theModel.strIDName + ": " + obj.strObjectName
+	if (obj.model.isFighter || obj.model.isShip) {
+		if (byObj.model.isFighter || byObj.model.isShip || byObj.model.isStatic) {
+			theScene.theMessageScreen.push(obj.model.strIDName + ": " + obj.strObjectName
 			    + " has been destroyed", Color.yellow);
 			theScene.theMessageScreen.push("in collision with "
-			    + byObj.theModel.strIDName + ": " + byObj.strObjectName, Color.yellow);
-		} else if ((byObj.theModel.isWeapon || byObj.theModel.isMissile) && byObj.Source > 0) {
-			theScene.theMessageScreen.push(obj.theModel.strIDName + ": " + obj.strObjectName
+			    + byObj.model.strIDName + ": " + byObj.strObjectName, Color.yellow);
+		} else if ((byObj.model.isWeapon || byObj.model.isMissile) && byObj.Source > 0) {
+			theScene.theMessageScreen.push(obj.model.strIDName + ": " + obj.strObjectName
 			    //+ " has been destroyed by "
 				+ " destroyed by "
-			    + theScene.Objects.Objects[byObj.Source].theModel.strIDName + ": "
+			    + theScene.Objects.Objects[byObj.Source].model.strIDName + ": "
 			    + theScene.Objects.Objects[byObj.Source].strObjectName, Color.yellow);
 		}
 	}}
@@ -703,28 +703,28 @@ public class Controller {
 		if (cobj.Index != obj.Index 
 			&& cobj.Source != obj.Index && obj.Source != cobj.Index
 			&& (cobj.Source != obj.Source || cobj.Source == -1)
-			&& cobj.theModel.radius != 0 && obj.theModel.radius != 0
-			&& !(cobj.theModel.isWeapon && obj.theModel.isWeapon)) {
+			&& cobj.model.radius != 0 && obj.model.radius != 0
+			&& !(cobj.model.isWeapon && obj.model.isWeapon)) {
 			//check for collision
-			if (!(cobj.theModel.isFighter && obj.theModel.isFighter) && isCollise(obj, cobj)) {
+			if (!(cobj.model.isFighter && obj.model.isFighter) && isCollise(obj, cobj)) {
 				//System.out.println("Collision between " + obj.strObjectName 
 				//					+ " and " + cobj.strObjectName);
 
 				//collision occured;
 				int Eobj = obj.Shield + obj.Hull;
 				int Ecobj = cobj.Shield + cobj.Hull;
-				if (obj.theModel.isMissile) Eobj = obj.theModel.Hull * Metric.missileExplossion;
-				if (cobj.theModel.isMissile) Eobj = cobj.theModel.Hull * Metric.missileExplossion;
+				if (obj.model.isMissile) Eobj = obj.model.Hull * Metric.missileExplossion;
+				if (cobj.model.isMissile) Eobj = cobj.model.Hull * Metric.missileExplossion;
 
-				if (obj.theModel.isWeapon && !cobj.theModel.isWeapon) cobj.hits++;
-				if (cobj.theModel.isWeapon && !obj.theModel.isWeapon) obj.hits++;
+				if (obj.model.isWeapon && !cobj.model.isWeapon) cobj.hits++;
+				if (cobj.model.isWeapon && !obj.model.isWeapon) obj.hits++;
 
 				if (Eobj == Ecobj) {
 					obj.kill(cobj.Side);
 					cobj.kill(obj.Side);
 					//make sound
-					if (obj.theModel.isFighter || cobj.theModel.isFighter) theMedia.auBlow.play();
-					if (obj.theModel.isShip || cobj.theModel.isShip) theMedia.auExplosion.play();
+					if (obj.model.isFighter || cobj.model.isFighter) theMedia.auBlow.play();
+					if (obj.model.isShip || cobj.model.isShip) theMedia.auExplosion.play();
 
 					//push message to the log
 					consolationMessage(obj, cobj);
@@ -738,7 +738,7 @@ public class Controller {
 						else theCamera.iRelatedObject = cobj.Source;
 				} else if (Eobj > Ecobj) {
 					cobj.kill(obj.Side);
-					if (obj.theModel.isWeapon || obj.theModel.isMissile) {
+					if (obj.model.isWeapon || obj.model.isMissile) {
 						obj.isLive = false;
 						if (theCamera.iRelatedObject == obj.Index && obj.Source != -1)
 							theCamera.iRelatedObject = obj.Source;
@@ -750,9 +750,9 @@ public class Controller {
 						if (cobj.Source == -1) theCamera.leaveObject();
 						else theCamera.iRelatedObject = cobj.Source;
 					//make sound
-					if (cobj.theModel.isShip) theMedia.auExplosion.play();
-					if (cobj.theModel.isFighter) theMedia.auBlow.play();
-					if (obj.theModel.isMissile) theMedia.auHit.play();
+					if (cobj.model.isShip) theMedia.auExplosion.play();
+					if (cobj.model.isFighter) theMedia.auBlow.play();
+					if (obj.model.isMissile) theMedia.auHit.play();
 					obj.Shield -= Ecobj;
 					if (obj.Shield < 0) {
 						obj.Hull += obj.Shield;
@@ -760,7 +760,7 @@ public class Controller {
 					}
 				} else {
 					obj.kill(cobj.Side);
-					if (cobj.theModel.isWeapon || cobj.theModel.isMissile) {
+					if (cobj.model.isWeapon || cobj.model.isMissile) {
 						cobj.isLive = false;
 						if (theCamera.iRelatedObject == cobj.Index && cobj.Source != -1)
 							theCamera.iRelatedObject = cobj.Source;
@@ -772,9 +772,9 @@ public class Controller {
 						if (obj.Source == -1) theCamera.leaveObject();
 						else theCamera.iRelatedObject = obj.Source;
 					//make sound
-					if (obj.theModel.isShip) theMedia.auExplosion.play();
-					if (obj.theModel.isFighter) theMedia.auBlow.play();
-					if (obj.theModel.isMissile) theMedia.auHit.play();
+					if (obj.model.isShip) theMedia.auExplosion.play();
+					if (obj.model.isFighter) theMedia.auBlow.play();
+					if (obj.model.isMissile) theMedia.auHit.play();
 
 					cobj.Shield -= Eobj;
 					if (cobj.Shield < 0) {
@@ -784,10 +784,10 @@ public class Controller {
 				}
 			} else {
 				//check for future collisions
-				if (obj.theModel.maxSpeed != 0)
-				if ((obj.theModel.isFighter)
-				 && (cobj.theModel.isShip || cobj.theModel.isMissile
-					 || cobj.theModel.isStatic || cobj.theModel.isFighter)) {
+				if (obj.model.maxSpeed != 0)
+				if ((obj.model.isFighter)
+				 && (cobj.model.isShip || cobj.model.isMissile
+					 || cobj.model.isStatic || cobj.model.isFighter)) {
 					for (int i = 1; i < 20; i++) {
 						obj.futureMove((double)(i * obj.currentSpeed));
 						cobj.futureMove((double)(i * cobj.currentSpeed));
@@ -795,7 +795,7 @@ public class Controller {
 					}
 					if (obj.currentTarget == Action.preAvoidCollision) {
 						obj.currentTarget = Action.AvoidCollision;
-						if (cobj.theModel.isFighter) {
+						if (cobj.model.isFighter) {
 							//light manouvre
 							if (obj.typeAManoeuvre == Action.None)
 								obj.typeAManoeuvre = (int)(CMath.R.nextFloat()*2);
@@ -808,13 +808,13 @@ public class Controller {
 								obj.typeAManoeuvre = (int)(CMath.R.nextFloat()*8);
 							if (obj.currentTask.iType == Task.Defend) obj.priManoeuvre = 20;
 							else obj.priManoeuvre = (int)(CMath.R.nextFloat()*4) * 20 + 40;
-							if (cobj.theModel.isShip) obj.secManoeuvre = 200;
+							if (cobj.model.isShip) obj.secManoeuvre = 200;
 							else obj.secManoeuvre = 100;
 						}
 					}
 				}
-				else if ((obj.theModel.isShip)
-				 && (cobj.theModel.isShip || cobj.theModel.isStatic)) {
+				else if ((obj.model.isShip)
+				 && (cobj.model.isShip || cobj.model.isStatic)) {
 					for (int i = 1; i < 50; i++) {
 						obj.futureMove((double)(i * obj.currentSpeed));
 						cobj.futureMove((double)(i * cobj.currentSpeed));
@@ -854,7 +854,7 @@ public class Controller {
 			//manual ship control
 			Keys.applyKeys(theScene.Objects.Objects[theCamera.iRelatedObject]);
 		
- 			if (theScene.Objects.Objects[theCamera.iRelatedObject].theModel.isShip
+ 			if (theScene.Objects.Objects[theCamera.iRelatedObject].model.isShip
 			    && (theScene.Objects.Objects[theCamera.iRelatedObject].agressionLevel == 2
 					|| theScene.Objects.Objects[theCamera.iRelatedObject].agressionLevel == 4)) {
 				theScene.Objects.Objects[theCamera.iRelatedObject].tryToCapFire();

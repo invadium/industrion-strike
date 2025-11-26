@@ -86,7 +86,7 @@ public class TaskScreen {
 					theCanvas.drawString("---- empty ----", x + 45, y + 10);
 				} else {
 					theCanvas.drawString(
-						theScene.Objects.Objects[theObject.currentTask.iTarget].theModel.strIDName + ": " +
+						theScene.Objects.Objects[theObject.currentTask.iTarget].model.strIDName + ": " +
 						theScene.Objects.Objects[theObject.currentTask.iTarget].strObjectName,
 						x + 45, y + 10);
 				}
@@ -96,7 +96,7 @@ public class TaskScreen {
 					theCanvas.drawString("---- empty ----", x + 45, y + 22);
 				} else {
 					theCanvas.drawString(
-						theScene.Objects.Objects[theObject.currentTask.iSecondaryTarget].theModel.strIDName + ": " +
+						theScene.Objects.Objects[theObject.currentTask.iSecondaryTarget].model.strIDName + ": " +
 						theScene.Objects.Objects[theObject.currentTask.iSecondaryTarget].strObjectName,
 						x + 45, y + 22);
 				}
@@ -157,8 +157,8 @@ public class TaskScreen {
 			if (theObject.taskScreen != -1 && theScene.Objects.Objects[theObject.taskScreen].isLive) {
 				//model image
 				if (iTarget != theObject.taskScreen) {
-					if (theScene.Objects.Objects[theObject.taskScreen].theModel.imgModel != null) {
-						theCanvas.drawImage(theScene.Objects.Objects[theObject.taskScreen].theModel.imgModel,
+					if (theScene.Objects.Objects[theObject.taskScreen].model.imgModel != null) {
+						theCanvas.drawImage(theScene.Objects.Objects[theObject.taskScreen].model.imgModel,
 									x, y + 40, theApplet);
 					} else {
 						theCanvas.setColor(Color.black);
@@ -191,19 +191,19 @@ public class TaskScreen {
 					if (obj.currentTarget > 0) {						
 						if (obj.typeManoeuvre == Action.OppositeTarget)
 							strType = "O "
-							+ theScene.Objects.Objects[obj.currentTarget].theModel.strIDName
+							+ theScene.Objects.Objects[obj.currentTarget].model.strIDName
 							+ ": " + theScene.Objects.Objects[obj.currentTarget].strObjectName;
 
 						else if (obj.targetType == Task.Attack) strType 
-							  = "A " + theScene.Objects.Objects[obj.currentTarget].theModel.strIDName
+							  = "A " + theScene.Objects.Objects[obj.currentTarget].model.strIDName
 							+ ": " + theScene.Objects.Objects[obj.currentTarget].strObjectName;
 
 						else if (theObject.targetType == Task.SupportAttack) strType 
-						  = "A " + theScene.Objects.Objects[obj.currentTarget].theModel.strIDName
+						  = "A " + theScene.Objects.Objects[obj.currentTarget].model.strIDName
 							+ ": " + theScene.Objects.Objects[obj.currentTarget].strObjectName;
 
 						else if (obj.targetType == Task.Defend) strType = "F "
-							+ theScene.Objects.Objects[obj.currentTarget].theModel.strIDName + ": "
+							+ theScene.Objects.Objects[obj.currentTarget].model.strIDName + ": "
 							+ theScene.Objects.Objects[obj.currentTarget].strObjectName;
 						else if (obj.targetType == Task.None) strType = "none";
 
@@ -228,7 +228,7 @@ public class TaskScreen {
 						default: theCanvas.setColor(Color.white);				 //white - unknown
 					}
 					theCanvas.drawString(
-						theScene.Objects.Objects[theObject.taskScreen].theModel.strIDName + ": " +
+						theScene.Objects.Objects[theObject.taskScreen].model.strIDName + ": " +
 						theScene.Objects.Objects[theObject.taskScreen].strObjectName,
 						x, y + 124);
 
@@ -386,7 +386,7 @@ public class TaskScreen {
 			if (theScene.Objects.Objects[obj.currentTask.iTarget].Side == obj.Side)
 				setDefend();
 			else {
-				if (theScene.Objects.Objects[theCamera.iRelatedObject].theModel.isFighter) 
+				if (theScene.Objects.Objects[theCamera.iRelatedObject].model.isFighter) 
 					setAttack();
 				else
 					setDefend();
@@ -408,7 +408,7 @@ public class TaskScreen {
 			if (theScene.Objects.Objects[obj.currentTask.iSecondaryTarget].Side == obj.Side)
 				setDefend();
 			else {
-				if (theScene.Objects.Objects[theCamera.iRelatedObject].theModel.isFighter) 
+				if (theScene.Objects.Objects[theCamera.iRelatedObject].model.isFighter) 
 					setAttack();
 				else
 					setDefend();
@@ -418,8 +418,8 @@ public class TaskScreen {
 	
 	public void setDefend() {
 		if (theCamera.iRelatedObject != -1
-			&& (theScene.Objects.Objects[theCamera.iRelatedObject].theModel.isFighter
-				|| theScene.Objects.Objects[theCamera.iRelatedObject].theModel.isShip)) {
+			&& (theScene.Objects.Objects[theCamera.iRelatedObject].model.isFighter
+				|| theScene.Objects.Objects[theCamera.iRelatedObject].model.isShip)) {
 			theMedia.auPing.play();
 			theScene.Objects.Objects[theCamera.iRelatedObject].resetTarget();
 			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iType = Task.Defend;
@@ -427,7 +427,7 @@ public class TaskScreen {
 	}
 
 	public void setAttack() {
-		if (theCamera.iRelatedObject != -1 && theScene.Objects.Objects[theCamera.iRelatedObject].theModel.isFighter) {
+		if (theCamera.iRelatedObject != -1 && theScene.Objects.Objects[theCamera.iRelatedObject].model.isFighter) {
 			theMedia.auPing.play();
 			theScene.Objects.Objects[theCamera.iRelatedObject].resetTarget();
 			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iType = Task.Attack;

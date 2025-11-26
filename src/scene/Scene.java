@@ -39,29 +39,29 @@ public class Scene {
 	public RSun theSun;
 	public MissionInterpreter Interpreter;
 	public MCmdCollector MissionCommands;
-	private Strike theApplet;
+	private Strike applet;
 	private ModelsCollector Models;
-	private Media theMedia;
-	private Camera theCamera;
-	private Stars theStars;
+	private Media media;
+	private Camera camera;
+	private Stars stars;
 	private Parser prs;
 	public MessageScreen theMessageScreen;
 	public IndicatorScreen theIndicatorScreen;
 
-	public Scene (Strike theApplet, ModelsCollector Models,
-			Camera theCamera, Stars theStars,
-			Media theMedia, String strMissionFileName)
+	public Scene (Strike applet, ModelsCollector Models,
+			Camera camera, Stars stars,
+			Media media, String strMissionFileName)
 			throws SceneException, ParserException, InterpreterException {
-		this.theApplet = theApplet;
+		this.applet = applet;
 		this.Models = Models;
-		this.theMedia = theMedia;
-		this.theCamera = theCamera;
-		this.theStars = theStars;
+		this.media = media;
+		this.camera = camera;
+		this.stars = stars;
 		setEnvironment();
-		this.Interpreter = new MissionInterpreter(theCamera, Models, this, Objects);
+		this.Interpreter = new MissionInterpreter(camera, Models, this, Objects);
 		this.MissionCommands = new MCmdCollector();
-		this.theMessageScreen = new MessageScreen(theApplet, theApplet.getGraphics(), theMedia);
-		this.theIndicatorScreen = new IndicatorScreen(theApplet, theApplet.getGraphics(), this, theCamera, theMedia);
+		this.theMessageScreen = new MessageScreen(applet, applet.getGraphics(), media);
+		this.theIndicatorScreen = new IndicatorScreen(applet, applet.getGraphics(), this, camera, media);
 
 		loadScene(strMissionFileName);
 		createLights();
@@ -79,7 +79,7 @@ public class Scene {
 			this.turnSides = this.Interpreter.getiVariable("TurnSides");
 			
 			this.statis = true;
-			this.theCamera.Side = 1;
+			this.camera.Side = 1;
 			this.theMessageScreen.push("Turn based on");
 			this.showSideControl();
 		}
@@ -87,17 +87,17 @@ public class Scene {
 
 	private void setEnvironment() {
 		thePlan = new FlightPlan(this);
-		Objects = new SOCollector(theCamera);
+		Objects = new SOCollector(camera);
 		SpaceObject.Objects = Objects;
-		SpaceObject.theMedia = theMedia;
-		SpaceObject.theStars = theStars;
-		SpaceObject.theCamera = theCamera;
-		SpaceObject.theScene = this;
+		SpaceObject.media = media;
+		SpaceObject.stars = stars;
+		SpaceObject.camera = camera;
+		SpaceObject.scene = this;
 	}
 
 	private void loadScene(String strMissionFileName)
 			throws SceneException, ParserException, InterpreterException {
-		prs = new Parser(theApplet);		
+		prs = new Parser(applet);		
 		MissionCommand cmd;
 		Token tok;
 
@@ -761,29 +761,29 @@ public class Scene {
 	}
 	
 	public void showSideControl() {
-		theMessageScreen.spush(Interpreter.getsVariable("SideName" + theCamera.Side)
+		theMessageScreen.spush(Interpreter.getsVariable("SideName" + camera.Side)
 			+ " takes control");
 	}
 	
 	public void switchCamera() {
-		if (theCamera.iRelatedObject != -1)
-			this.Objects.Objects[theCamera.iRelatedObject].HumanControlled = false;
-		theCamera.leaveObject();
+		if (camera.iRelatedObject != -1)
+			this.Objects.Objects[camera.iRelatedObject].HumanControlled = false;
+		camera.leaveObject();
 		int nindex = this.Objects.getNextIndex(-1);
 		if (nindex != -1) {
-			theCamera.iRelatedObject = nindex;
+			camera.iRelatedObject = nindex;
 		}
 	}
 	
 	public void nextParty() {
 		//give control to the next party
-		if (this.theCamera.Side == 0) this.statis = true;
+		if (this.camera.Side == 0) this.statis = true;
 		
 		this.turnCounter = 0;
-		this.theCamera.Side++;
-		if (this.theCamera.Side > this.sides
-		|| this.theCamera.Side > this.turnSides) {
-			this.theCamera.Side = 0;
+		this.camera.Side++;
+		if (this.camera.Side > this.sides
+		|| this.camera.Side > this.turnSides) {
+			this.camera.Side = 0;
 			this.statis = false;
 			this.actionCounter = 0;
 			return;

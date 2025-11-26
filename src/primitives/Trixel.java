@@ -64,7 +64,7 @@ public class Trixel extends Primitive {
 		theElement.d1 = P1.z_buffer;
 		theElement.calcAverageDistance();
 		theElement.isBitmapped = this.isBitmapped;
-		if (this.isBitmapped) theElement.imgElement = theSpaceObject.theModel.imgModel;
+		if (this.isBitmapped) theElement.imgElement = theSpaceObject.model.imgModel;
 		int vdist = (int)(theElement.distance / 4000);
 		theElement.volume = this.volume - vdist;
 		if (theElement.volume < 1) theElement.volume = 1;

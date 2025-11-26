@@ -130,11 +130,11 @@ public class Radar implements AreaListener {
              }
          }
             
-         if (index != -1 && mark_index[index] != theApplet.theCamera.iRelatedObject) {    
+         if (index != -1 && mark_index[index] != theApplet.camera.iRelatedObject) {    
             if (clicks == 1) theApplet.selectTarget(mark_index[index]);
             else {
                 theApplet.selectTarget(mark_index[index]);
-                theApplet.theTaskScreen.setPrimary();
+                theApplet.taskScreen.setPrimary();
             }
 		 }
 	}
@@ -154,17 +154,17 @@ public class Radar implements AreaListener {
             }
         }
             
-        if (index != -1 && mark_index[index] != theApplet.theCamera.iRelatedObject) {
+        if (index != -1 && mark_index[index] != theApplet.camera.iRelatedObject) {
             if (clicks == 1) {
                 theApplet.selectTarget(mark_index[index]);
-                if (theApplet.theScene.Objects.isPlaced(mark_index[index])) {
-                    theApplet.theCamera.iRelatedObject =
+                if (theApplet.scene.Objects.isPlaced(mark_index[index])) {
+                    theApplet.camera.iRelatedObject =
 					    mark_index[index];
                         theApplet.theMedia.auTeleport.play();
                 }
             } else {
                 theApplet.selectTarget(mark_index[index]);
-                theApplet.theTaskScreen.setSecondary();
+                theApplet.taskScreen.setSecondary();
             }
 		}
 	}

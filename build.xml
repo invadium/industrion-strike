@@ -17,6 +17,8 @@
 	
 	<property name="app.properties" value="${etc.dir}/app.properties"/>
 
+    <property name="main.class" value="collidium.ColliderFrame"/>
+
 	<target name="help">	
 		<echo message=""/>
 		<echo message="Industrion build script"/>
@@ -48,6 +50,9 @@
 	<target name="jar">
 		<mkdir dir="${jar.dir}"/>
 		<jar jarfile="${jar.dir}/${name}.jar" compress="true" basedir="${bin.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
 		</jar>
 		
 		<!-- Copy static web content -->
@@ -107,11 +112,13 @@
 		<echo message="date: ${date}"/>
 	</target>
 	
-	<target name="run" description="Runs the application">
-        <java dir="${out.dir}" jar="${out.dir}/${name}.jar" args="startup" fork="true"/>
-	</target>
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${name}.jar" fork="true"/>
+    </target>
 
 	<target name="probe" depends="clean,make,doc,jar,version" description="probe build"/>
 	<target name="build" depends="clean,make,doc,bver,jar,version" description="regular build of the application"/>
 	<target name="revision" depends="clean,make,doc,bver,sver,jar,version" description="Next revision of the application"/>
+
+	<target name="collide" depends="clean,make,doc,jar,version,run" description="collider build"/>
 </project>

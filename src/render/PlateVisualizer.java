@@ -9,43 +9,43 @@ import media.Media;
 
 public class PlateVisualizer extends Visualizer {
 
-	public PlateVisualizer(Applet theApplet, Graphics theCanvas, Media theMedia) {
-		this.theApplet = theApplet;
-		this.theCanvas = theCanvas;
-		this.theCanvas2D = (Graphics2D) theCanvas;
-		this.theMedia =  theMedia;
+	public PlateVisualizer(Applet applet, Graphics canvas, Media media) {
+		this.applet = applet;
+		this.canvas = canvas;
+		this.canvas2D = (Graphics2D) canvas;
+		this.media =  media;
 	}
 	
-	public void updateCanvas(Graphics theCanvas) {
-		this.theCanvas = theCanvas;
-		this.theCanvas2D = (Graphics2D) theCanvas;
+	public void updateCanvas(Graphics canvas) {
+		this.canvas = canvas;
+		this.canvas2D = (Graphics2D) canvas;
 	}
 
 	public void drawRenderedElement(RenderedElement theElement) {
-		theCanvas.setColor(theElement.PrimitiveColor.getColor());
+		canvas.setColor(theElement.PrimitiveColor.getColor());
 		switch(theElement.cntPoints) {
 			case -13:
 					Font cFnt = new Font("Courier", Font.PLAIN, theElement.volume);
-					theCanvas.setFont(cFnt);
-					theCanvas.drawString(theElement.txtNote, theElement.ix1, theElement.iy1);
+					canvas.setFont(cFnt);
+					canvas.drawString(theElement.txtNote, theElement.ix1, theElement.iy1);
 					break;
 			case 1: if (theElement.isBitmapped && theElement.imgElement != null) {
-						theCanvas.drawImage(theElement.imgElement,
-								theElement.ix1 - (theElement.imgElement.getWidth(theApplet) >> 1),
-								theElement.iy1 - (theElement.imgElement.getHeight(theApplet) >> 1),
-								theApplet);
+						canvas.drawImage(theElement.imgElement,
+								theElement.ix1 - (theElement.imgElement.getWidth(applet) >> 1),
+								theElement.iy1 - (theElement.imgElement.getHeight(applet) >> 1),
+								applet);
 					} else if (theElement.volume > 1) {
-						theCanvas.fillOval(theElement.ix1-theElement.volume/2, theElement.iy1-theElement.volume/2,
+						canvas.fillOval(theElement.ix1-theElement.volume/2, theElement.iy1-theElement.volume/2,
 							(theElement.volume), (theElement.volume));
-					} else theCanvas.drawLine(theElement.ix1, theElement.iy1, theElement.ix1, theElement.iy1);
+					} else canvas.drawLine(theElement.ix1, theElement.iy1, theElement.ix1, theElement.iy1);
 					break;
 			case 2: if (theElement.volume > 1) {
-						theCanvas2D.setStroke(new BasicStroke((float)theElement.volume));
-						theCanvas2D.setColor(theElement.PrimitiveColor.getColor());
-						theCanvas2D.draw(new Line2D.Double(theElement.ix1, theElement.iy1, theElement.ix2, theElement.iy2));
-						theCanvas2D.setStroke(new BasicStroke(1.0f));
+						canvas2D.setStroke(new BasicStroke((float)theElement.volume));
+						canvas2D.setColor(theElement.PrimitiveColor.getColor());
+						canvas2D.draw(new Line2D.Double(theElement.ix1, theElement.iy1, theElement.ix2, theElement.iy2));
+						canvas2D.setStroke(new BasicStroke(1.0f));
 					} else
-						theCanvas.drawLine(theElement.ix1, theElement.iy1, theElement.ix2, theElement.iy2);
+						canvas.drawLine(theElement.ix1, theElement.iy1, theElement.ix2, theElement.iy2);
 					break;
 			case 3: int xpoints[] = new int[3];
 					int ypoints[] = new int[3];
@@ -56,7 +56,7 @@ public class PlateVisualizer extends Visualizer {
 					ypoints[1] = theElement.iy2;
 					ypoints[2] = theElement.iy3;
 					//theCanvas.drawPolyline(xpoints, ypoints, 3);
-					theCanvas.fillPolygon(xpoints, ypoints, 3);
+					canvas.fillPolygon(xpoints, ypoints, 3);
 					break;
 			case 4:	int xpoints4[] = new int[4];
 					int ypoints4[] = new int[4];
@@ -69,8 +69,8 @@ public class PlateVisualizer extends Visualizer {
 					ypoints4[2] = theElement.iy3;
 					ypoints4[3] = theElement.iy4;
 					//theCanvas.drawPolyline(xpoints4, ypoints4, 4);
-					if (theElement.isWareframed) theCanvas.drawPolygon(xpoints4, ypoints4, 4);
-					else theCanvas.fillPolygon(xpoints4, ypoints4, 4);
+					if (theElement.isWareframed) canvas.drawPolygon(xpoints4, ypoints4, 4);
+					else canvas.fillPolygon(xpoints4, ypoints4, 4);
 					break;
 		}
 	}

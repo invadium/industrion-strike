@@ -18,9 +18,7 @@ import java.util.*;
 import javax.swing.Timer;
 import java.net.*;
 
-import math.*;
 import parser.*;
-import primitives.*;
 import mission.*;
 import scene.*;
 import render.*;
@@ -54,14 +52,14 @@ public class Strike extends Applet implements ActionListener,
 	public Media theMedia;
 	Controller AI;
 	ModelsCollector Models;
-	public Scene theScene;
-	public Camera theCamera;
+	public Scene scene;
+	public Camera camera;
 	Stars theStars;
-	public Radar theRadar;
-	public StatusScreen theStatusScreen;
-	public TaskScreen theTaskScreen;
+	public Radar radar;
+	public StatusScreen statusScreen;
+	public TaskScreen taskScreen;
 	public TacticalScreen tacticalFriendly;
-	ResultScreen theResult;
+	ResultScreen result;
 	public Render theRender;
 	public Helper theHelper;
 	
@@ -74,9 +72,9 @@ public void init() {
 }
 
 public void run() {
-	theCamera = new Camera(this, -1, 0.0, 0.0, -6000.0, 0, 0, 0);
+	camera = new Camera(this, -1, 0.0, 0.0, -6000.0, 0, 0, 0);
 	//create screen buffer
-	imgBuffer = createImage(theCamera.ScreenWidth, theCamera.ScreenHeight);
+	imgBuffer = createImage(camera.ScreenWidth, camera.ScreenHeight);
 	iBufferWidth = getSize().width;
 	iBufferHeight = getSize().height;
 
@@ -87,22 +85,22 @@ public void run() {
 
 	try {
 		theHelper = new Helper(appCanvas);
-        theStars = new Stars(this, bufCanvas, theCamera);
+        theStars = new Stars(this, bufCanvas, camera);
 		theLoader.increase(20); repaint();
 		theLoader.increase(10); repaint();
 		Models = new scene.ModelsCollector(this, bufCanvas, "data/models/" + this.getParameter("models"));
 		theLoader.increase(20); repaint();
 		String strMissionName = "missions/" + this.getParameter("mission");
-		theScene = new Scene(this, Models, theCamera, theStars, theMedia,
+		scene = new Scene(this, Models, camera, theStars, theMedia,
 								strMissionName);
 		theLoader.increase(40); repaint();
-		theRadar = new Radar(this, appCanvas);
-		theStatusScreen = new StatusScreen(this, appCanvas, theScene, theCamera);
-		theTaskScreen = new TaskScreen(this, appCanvas, theScene, theCamera, theMedia);
-		tacticalFriendly = new TacticalScreen(this, appCanvas, theScene, theCamera);
-		theResult = new ResultScreen(this, appCanvas, theScene, theMedia);
-		theRender = new Render(this, bufCanvas, theMedia, theScene, theCamera, theRadar);
-		AI = new Controller(theScene, theCamera, Models, theMedia, theStars, theRender);
+		radar = new Radar(this, appCanvas);
+		statusScreen = new StatusScreen(this, appCanvas, scene, camera);
+		taskScreen = new TaskScreen(this, appCanvas, scene, camera, theMedia);
+		tacticalFriendly = new TacticalScreen(this, appCanvas, scene, camera);
+		result = new ResultScreen(this, appCanvas, scene, theMedia);
+		theRender = new Render(this, bufCanvas, theMedia, scene, camera, radar);
+		AI = new Controller(scene, camera, Models, theMedia, theStars, theRender);
 		theLoader.increase(20); repaint();				
 	} catch(ModelsException e) {
 		System.out.println(e.toString());
@@ -127,17 +125,17 @@ public void run() {
 	}
 
 	//start construction procedure
-	int iProc = theScene.Interpreter.theCommands.findProc("CONSTRUCTOR");
-	if (iProc != -1) theScene.Interpreter.runProc(iProc);
+	int iProc = scene.Interpreter.theCommands.findProc("CONSTRUCTOR");
+	if (iProc != -1) scene.Interpreter.runProc(iProc);
 	
 	this.clearifyPositions();
     theStars.create();
 	
-	theStatusScreen.expaired();
-	theTaskScreen.expaired();
-	theResult.expaired();
-	theScene.theMessageScreen.expaired();
-	theScene.theIndicatorScreen.expaired();
+	statusScreen.expaired();
+	taskScreen.expaired();
+	result.expaired();
+	scene.theMessageScreen.expaired();
+	scene.theIndicatorScreen.expaired();
 	preparation = false;	
 	//set timer
 	ticker = new Timer(50, this);
@@ -190,16 +188,16 @@ public void drawCrossHair() {
 		case 2: bufCanvas.setColor(Color.red); break;
 	}
 
-	bufCanvas.drawLine(theCamera.ScreenShiftX - 20, theCamera.ScreenShiftY, theCamera.ScreenShiftX - 10, theCamera.ScreenShiftY);
-	bufCanvas.drawLine(theCamera.ScreenShiftX + 10, theCamera.ScreenShiftY, theCamera.ScreenShiftX + 20, theCamera.ScreenShiftY);
+	bufCanvas.drawLine(camera.ScreenShiftX - 20, camera.ScreenShiftY, camera.ScreenShiftX - 10, camera.ScreenShiftY);
+	bufCanvas.drawLine(camera.ScreenShiftX + 10, camera.ScreenShiftY, camera.ScreenShiftX + 20, camera.ScreenShiftY);
 
-	bufCanvas.drawLine(theCamera.ScreenShiftX, theCamera.ScreenShiftY - 20, theCamera.ScreenShiftX, theCamera.ScreenShiftY -10);
-	bufCanvas.drawLine(theCamera.ScreenShiftX, theCamera.ScreenShiftY + 10, theCamera.ScreenShiftX, theCamera.ScreenShiftY + 20);
+	bufCanvas.drawLine(camera.ScreenShiftX, camera.ScreenShiftY - 20, camera.ScreenShiftX, camera.ScreenShiftY -10);
+	bufCanvas.drawLine(camera.ScreenShiftX, camera.ScreenShiftY + 10, camera.ScreenShiftX, camera.ScreenShiftY + 20);
 }
 
 public void drawFrame() {
 	bufCanvas.setColor(Color.green);
-	bufCanvas.drawRect(theCamera.ScreenShiftX - 36, theCamera.ScreenShiftY - 36,
+	bufCanvas.drawRect(camera.ScreenShiftX - 36, camera.ScreenShiftY - 36,
 		71, 71);
 }
 
@@ -215,11 +213,11 @@ public void drawPauseInfo() {
 }
 
 public void drawEndMissionInfo() {
-	theScene.cntEnd++;
-	if (theScene.cntEnd > 20) theScene.cntEnd = 0;
+	scene.cntEnd++;
+	if (scene.cntEnd > 20) scene.cntEnd = 0;
 
-	if (theScene.cntEnd < 11) {
-		int mission = theScene.Interpreter.getiVariable("Mission");
+	if (scene.cntEnd < 11) {
+		int mission = scene.Interpreter.getiVariable("Mission");
 		Font F2 = new Font("Courier", Font.BOLD, FINAL_FONT_SIZE);
 		bufCanvas.setFont(F2);
 		bufCanvas.setColor(Color.yellow);
@@ -230,18 +228,18 @@ public void drawEndMissionInfo() {
 
 		if (mission > 0) {
 			strMsg = "Mission is successful";
-			sx = (theCamera.ScreenWidth - FM.stringWidth(strMsg))/2;
+			sx = (camera.ScreenWidth - FM.stringWidth(strMsg))/2;
 			bufCanvas.drawString(strMsg, sx, 335);
 		} else if (mission < -1) {
 			strMsg = "Mission failed";
-			sx = (theCamera.ScreenWidth - FM.stringWidth(strMsg))/2;
+			sx = (camera.ScreenWidth - FM.stringWidth(strMsg))/2;
 			bufCanvas.drawString(strMsg, sx, 335);
 		}
 
 		strMsg = "Press spacebar to fihish the mission";
-		sx = (theCamera.ScreenWidth + 20 - FM.stringWidth(strMsg))/2;
+		sx = (camera.ScreenWidth + 20 - FM.stringWidth(strMsg))/2;
 		bufCanvas.drawString(strMsg, sx, 360);
-		if (theScene.cntEnd == 1) theMedia.auSignal.play();
+		if (scene.cntEnd == 1) theMedia.auSignal.play();
 	}
 }
 
@@ -262,11 +260,11 @@ public void paint (Graphics g) {
 	}
 	if (eRunTime != null) { drawException(eRunTime); return; }
 
-	theStatusScreen.expaired();
-	theTaskScreen.expaired();
-	theResult.expaired();
-	theScene.theMessageScreen.expaired();
-	theScene.theIndicatorScreen.expaired();
+	statusScreen.expaired();
+	taskScreen.expaired();
+	result.expaired();
+	scene.theMessageScreen.expaired();
+	scene.theIndicatorScreen.expaired();
 	update();
 }
 
@@ -275,8 +273,8 @@ public void repaint(){
 }
 
 public void update() {
-	if (theScene. result) {
-		theResult.draw();
+	if (scene. result) {
+		result.draw();
 		return;
 	}
 	bufCanvas.setColor(Color.black);
@@ -284,20 +282,20 @@ public void update() {
 	if (theRender.drawStars) theStars.draw();
 	theRender.drawRender();
 	//drawDebugInfo();
-	if (theRender.drawCross && (theCamera.iRelatedObject == -1 || theCamera.iRelationType == 0))
+	if (theRender.drawCross && (camera.iRelatedObject == -1 || camera.iRelationType == 0))
 		drawCrossHair();
 	if (theRender.drawFrame) drawFrame();
 
-	if (theScene.pause) drawPauseInfo();
-	if (theScene.end) drawEndMissionInfo();
-	appCanvas.drawImage(imgBuffer, theCamera.ScreenX, theCamera.ScreenY, this);
+	if (scene.pause) drawPauseInfo();
+	if (scene.end) drawEndMissionInfo();
+	appCanvas.drawImage(imgBuffer, camera.ScreenX, camera.ScreenY, this);
     
-	theRadar.drawRadar();
-	theStatusScreen.drawStatusScreen();
-	theTaskScreen.drawTaskScreen();
+	radar.drawRadar();
+	statusScreen.drawStatusScreen();
+	taskScreen.drawTaskScreen();
 	tacticalFriendly.drawTacticalScreen();
-	theScene.theMessageScreen.draw();
-	theScene.theIndicatorScreen.draw();
+	scene.theMessageScreen.draw();
+	scene.theIndicatorScreen.draw();
 }
 
 public void repaint(int time) {
@@ -310,7 +308,7 @@ public void repaint(int time, int x, int y, int w, int h) {
 }
 
 private void followSuccess() {
-	int res = theScene.Interpreter.getiVariable("Mission");
+	int res = scene.Interpreter.getiVariable("Mission");
 	String strDestination;
 	if (res > 0) strDestination = this.getParameter("success");
 	else strDestination = this.getParameter("failure");
@@ -346,44 +344,44 @@ private void showObjectives() {
 
 			URL helpURL = new URL(strPath + strObjectives);
 
-			theScene.pause = true;
+			scene.pause = true;
 			this.getAppletContext().showDocument(helpURL, "Mission Objectives");	
 		} catch (MalformedURLException e) {
 		}
 }
 
 private void storeTarget(int index) {
-	if (theCamera.iRelatedObject < 0) return;
-	if (theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen < 0) return;
+	if (camera.iRelatedObject < 0) return;
+	if (scene.Objects.Objects[camera.iRelatedObject].taskScreen < 0) return;
 
 	AI.Keys.FType[index] = false;
 	AI.Keys.Functional[index] = 
-		theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen;
-	AI.Keys.Id[index] = theScene.Objects.Objects[theCamera.iRelatedObject].taskScreenID;
-	System.out.println("Store " + theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen
-		+ " id: " + theScene.Objects.Objects[theCamera.iRelatedObject].taskScreenID);
+		scene.Objects.Objects[camera.iRelatedObject].taskScreen;
+	AI.Keys.Id[index] = scene.Objects.Objects[camera.iRelatedObject].taskScreenID;
+	System.out.println("Store " + scene.Objects.Objects[camera.iRelatedObject].taskScreen
+		+ " id: " + scene.Objects.Objects[camera.iRelatedObject].taskScreenID);
 }
 
 private void storeCamera(int index) {
-	if (theCamera.iRelatedObject < 0) return;
+	if (camera.iRelatedObject < 0) return;
 
 	AI.Keys.FType[index] = true;
-	AI.Keys.Functional[index] = theCamera.iRelatedObject;
-	AI.Keys.Id[index] = theScene.Objects.Objects[theCamera.iRelatedObject].id;
+	AI.Keys.Functional[index] = camera.iRelatedObject;
+	AI.Keys.Id[index] = scene.Objects.Objects[camera.iRelatedObject].id;
 }
 
 private void restorePosition(int binding) {
 	if (AI.Keys.Functional[binding] < 0) return;
-	if (AI.Keys.Id[binding] != theScene.Objects.Objects[AI.Keys.Functional[binding]].id) return;
+	if (AI.Keys.Id[binding] != scene.Objects.Objects[AI.Keys.Functional[binding]].id) return;
 
 	if (AI.Keys.FType[binding])
-		theCamera.iRelatedObject = AI.Keys.Functional[binding];
+		camera.iRelatedObject = AI.Keys.Functional[binding];
 	else {
 		System.out.println("ReStore " + AI.Keys.Functional[binding]
 		+ " id: " + AI.Keys.Id[binding]);
 
-		theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen = AI.Keys.Functional[binding];
-		theScene.Objects.Objects[theCamera.iRelatedObject].taskScreenID = AI.Keys.Id[binding];
+		scene.Objects.Objects[camera.iRelatedObject].taskScreen = AI.Keys.Functional[binding];
+		scene.Objects.Objects[camera.iRelatedObject].taskScreenID = AI.Keys.Id[binding];
 	}
 }
 
@@ -432,22 +430,22 @@ public void keyPressed(KeyEvent e) {
 	int key = e.getKeyCode();
 	
 	//check for pause
-	if (theScene.pause) {
-		theScene.pause = false;
+	if (scene.pause) {
+		scene.pause = false;
 		return;
 	}
-	if (theScene.end) {
+	if (scene.end) {
 		if (key == 32) {
 			//end the mission
-			theScene.end = false;
-			theScene.result = true;
+			scene.end = false;
+			scene.result = true;
 			return;
 		} else if (key == 27) {
-			theScene.end = false;
+			scene.end = false;
 			return;
 		}
 	}
-	if (theScene.result) {
+	if (scene.result) {
 		if (key == 10) followSuccess();
 		return;
 	}
@@ -455,9 +453,9 @@ public void keyPressed(KeyEvent e) {
 	//check Shift
 	if (e.isShiftDown()) {		
 		if (key == KeyEvent.VK_Q)
-			if (theCamera.iRelatedObject != -1) {
-				theCamera.iRelationType++;
-				if (theCamera.iRelationType > theCamera.cntRelationTypes) theCamera.iRelationType = 0;
+			if (camera.iRelatedObject != -1) {
+				camera.iRelationType++;
+				if (camera.iRelationType > camera.cntRelationTypes) camera.iRelationType = 0;
 			}
 
 		//Functional
@@ -471,16 +469,16 @@ public void keyPressed(KeyEvent e) {
 		if (key == KeyEvent.VK_F12) this.storeTarget(12);
 
 		//Shift + 1-8
-		if (theCamera.iRelatedObject != -1) {
-			if (key == KeyEvent.VK_1) theCamera.iRelationType = 0;
-			if (key == KeyEvent.VK_2) theCamera.iRelationType = 1;
-			if (key == KeyEvent.VK_3) theCamera.iRelationType = 2;
-			if (key == KeyEvent.VK_4) theCamera.iRelationType = 3;
-			if (key == KeyEvent.VK_5) theCamera.iRelationType = 4;
-			if (key == KeyEvent.VK_6) theCamera.iRelationType = 5;
-			if (key == KeyEvent.VK_7) theCamera.iRelationType = 6;
-			if (key == KeyEvent.VK_8) theCamera.iRelationType = 7;
-			if (key == KeyEvent.VK_9) theCamera.iRelationType = 8;
+		if (camera.iRelatedObject != -1) {
+			if (key == KeyEvent.VK_1) camera.iRelationType = 0;
+			if (key == KeyEvent.VK_2) camera.iRelationType = 1;
+			if (key == KeyEvent.VK_3) camera.iRelationType = 2;
+			if (key == KeyEvent.VK_4) camera.iRelationType = 3;
+			if (key == KeyEvent.VK_5) camera.iRelationType = 4;
+			if (key == KeyEvent.VK_6) camera.iRelationType = 5;
+			if (key == KeyEvent.VK_7) camera.iRelationType = 6;
+			if (key == KeyEvent.VK_8) camera.iRelationType = 7;
+			if (key == KeyEvent.VK_9) camera.iRelationType = 8;
 		}
 
 		return;
@@ -491,16 +489,16 @@ public void keyPressed(KeyEvent e) {
         System.out.println("key is " + key);
 		//Ctrl + Z smart camera binding
 		if (key == 90) {
-			if (theCamera.smartBind) theCamera.smartBind = false;
+			if (camera.smartBind) camera.smartBind = false;
 			else {
-				theCamera.smartBind = true;
-				theCamera.smartTime = 20;
+				camera.smartBind = true;
+				camera.smartTime = 20;
 			}
 		}
 		// Ctrl + X free camera binding
 		if (key == 88) {
-			if (theCamera.freeBind) theCamera.freeBind = false;
-				else theCamera.freeBind = true;
+			if (camera.freeBind) camera.freeBind = false;
+				else camera.freeBind = true;
 		}
         
         // Ctrl + D wireframe visualization switcher
@@ -524,9 +522,9 @@ public void keyPressed(KeyEvent e) {
 			else theRender.drawStars = true;
             
 		// Ctrl + P - pause
-		if (key == 80) theScene.pause = true;
+		if (key == 80) scene.pause = true;
 		// Ctrl + T - timing
-		if (key == 84) theScene.changeTiming();
+		if (key == 84) scene.changeTiming();
 
 		//Functional
 		if (key == KeyEvent.VK_F5) storeCamera(5);
@@ -545,12 +543,12 @@ public void keyPressed(KeyEvent e) {
 
 	if (key == 32) {
 		//space pressed
-		if (theCamera.iRelatedObject != -1) {
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(theRender.indexCross);
+		if (camera.iRelatedObject != -1) {
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(theRender.indexCross);
 			theMedia.auPing.play();
 		} else if (theRender.indexCross != -1) {
-			if (theScene.Objects.isPlaced(theRender.indexCross)) {
-				theCamera.iRelatedObject = theRender.indexCross;
+			if (scene.Objects.isPlaced(theRender.indexCross)) {
+				camera.iRelatedObject = theRender.indexCross;
 				theMedia.auTeleport.play();
 			}
 		}
@@ -558,10 +556,10 @@ public void keyPressed(KeyEvent e) {
 	}
 	if (key == 10) {
 		//enter pressed
-		if (theCamera.iRelatedObject != -1) {
-            if (theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen != -1)
-            if (theScene.Objects.isPlaced(theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen)) {
-                theCamera.iRelatedObject = theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen;
+		if (camera.iRelatedObject != -1) {
+            if (scene.Objects.Objects[camera.iRelatedObject].taskScreen != -1)
+            if (scene.Objects.isPlaced(scene.Objects.Objects[camera.iRelatedObject].taskScreen)) {
+                camera.iRelatedObject = scene.Objects.Objects[camera.iRelatedObject].taskScreen;
                 theMedia.auTeleport.play();
             }
         } else {
@@ -570,21 +568,21 @@ public void keyPressed(KeyEvent e) {
             int model = Models.getIndexByName("Nav Point");
             if (model != -1) {
                 SpaceObject theObject = new SpaceObject("", Models.theModels[model],
-                    theCamera.x, theCamera.y, theCamera.z);
-                theScene.Objects.add(theObject);
+                    camera.x, camera.y, camera.z);
+                scene.Objects.add(theObject);
             }
         }
 		return;
 	}
 	if (key == 27) {
-		theScene.end = true;
-		theScene.cntEnd = 0;
+		scene.end = true;
+		scene.cntEnd = 0;
 		return;
 	}
 
 	//functional
 	if (key == KeyEvent.VK_F1) {
-		theScene.pause = true;
+		scene.pause = true;
 		try {
 			URL helpURL = new URL(getCodeBase() + "Help.html");
 			this.getAppletContext().showDocument(helpURL, "Help");	
@@ -593,7 +591,7 @@ public void keyPressed(KeyEvent e) {
 	}
 
 	if (key == KeyEvent.VK_F2) {
-		theScene.pause = true;
+		scene.pause = true;
 		try {
 			URL helpURL = new URL(getCodeBase() + "KeyRef.html");
 			this.getAppletContext().showDocument(helpURL, "Key Reference");	
@@ -607,13 +605,13 @@ public void keyPressed(KeyEvent e) {
 	}
 
 	if (key == KeyEvent.VK_F4) {
-		if (theScene.turnBased) {
-			theScene.nextParty();
+		if (scene.turnBased) {
+			scene.nextParty();
 		} else {
-			if (theScene.statis) theScene.statis = false;
-				else theScene.statis = true;
+			if (scene.statis) scene.statis = false;
+				else scene.statis = true;
 		}
-		theScene.theIndicatorScreen.expaired();
+		scene.theIndicatorScreen.expaired();
 		return;
 	}
 
@@ -629,62 +627,62 @@ public void keyPressed(KeyEvent e) {
 	if (binding != -1) restorePosition(binding);
 
 	//message screen
-	if (key == KeyEvent.VK_END)  theScene.theMessageScreen.end();
-	if (key == KeyEvent.VK_HOME) theScene.theMessageScreen.home();
-	if (key == KeyEvent.VK_PAGE_DOWN) theScene.theMessageScreen.pageDown();
-	if (key == KeyEvent.VK_PAGE_UP) theScene.theMessageScreen.pageUp();
+	if (key == KeyEvent.VK_END)  scene.theMessageScreen.end();
+	if (key == KeyEvent.VK_HOME) scene.theMessageScreen.home();
+	if (key == KeyEvent.VK_PAGE_DOWN) scene.theMessageScreen.pageDown();
+	if (key == KeyEvent.VK_PAGE_UP) scene.theMessageScreen.pageUp();
 
 	//task control
-	if (key == '[') theTaskScreen.prev();
-	if (key == ']') theTaskScreen.next();
-	if (key == KeyEvent.VK_P) theTaskScreen.nav();
-	if (key == KeyEvent.VK_O) theTaskScreen.foe();
-	if (key == KeyEvent.VK_I) theTaskScreen.friend();
-	if (key == KeyEvent.VK_U) theTaskScreen.setAttacker();
-	if (key == KeyEvent.VK_Y) theTaskScreen.setTargetAttacker();
-	if (key == KeyEvent.VK_SEMICOLON) theTaskScreen.setPrimary();
-	if (key == KeyEvent.VK_QUOTE) theTaskScreen.setSecondary();
-	if (key == KeyEvent.VK_K) theTaskScreen.setDefend();
-	if (key == KeyEvent.VK_L) theTaskScreen.setAttack();
-	if (key == KeyEvent.VK_J) theTaskScreen.resetTarget();
-	if (key == KeyEvent.VK_N) theTaskScreen.setPrevPlan();
-	if (key == KeyEvent.VK_M) theTaskScreen.setNextPlan();
+	if (key == '[') taskScreen.prev();
+	if (key == ']') taskScreen.next();
+	if (key == KeyEvent.VK_P) taskScreen.nav();
+	if (key == KeyEvent.VK_O) taskScreen.foe();
+	if (key == KeyEvent.VK_I) taskScreen.friend();
+	if (key == KeyEvent.VK_U) taskScreen.setAttacker();
+	if (key == KeyEvent.VK_Y) taskScreen.setTargetAttacker();
+	if (key == KeyEvent.VK_SEMICOLON) taskScreen.setPrimary();
+	if (key == KeyEvent.VK_QUOTE) taskScreen.setSecondary();
+	if (key == KeyEvent.VK_K) taskScreen.setDefend();
+	if (key == KeyEvent.VK_L) taskScreen.setAttack();
+	if (key == KeyEvent.VK_J) taskScreen.resetTarget();
+	if (key == KeyEvent.VK_N) taskScreen.setPrevPlan();
+	if (key == KeyEvent.VK_M) taskScreen.setNextPlan();
 
-	if (key == '1') theTaskScreen.setAgression(1);
-	if (key == '2') theTaskScreen.setAgression(2);
-	if (key == '3') theTaskScreen.setAgression(3);
-	if (key == '4') theTaskScreen.setAgression(4);
+	if (key == '1') taskScreen.setAgression(1);
+	if (key == '2') taskScreen.setAgression(2);
+	if (key == '3') taskScreen.setAgression(3);
+	if (key == '4') taskScreen.setAgression(4);
 	if (key == KeyEvent.VK_Q) 
-		if (theCamera.iRelatedObject != -1) {
-			theScene.Objects.Objects[theCamera.iRelatedObject].HumanControlled = false;
-			theCamera.leaveObject();
+		if (camera.iRelatedObject != -1) {
+			scene.Objects.Objects[camera.iRelatedObject].HumanControlled = false;
+			camera.leaveObject();
 			theMedia.auTeleport.play();
 		}
 	if (key == KeyEvent.VK_W) {
-		int lindex = theCamera.iRelatedObject;
-		int nindex = theScene.Objects.getPrevIndex(theCamera.iRelatedObject);
+		int lindex = camera.iRelatedObject;
+		int nindex = scene.Objects.getPrevIndex(camera.iRelatedObject);
 		if (nindex != -1 && nindex != lindex) {
-			if (theCamera.iRelatedObject != -1)
-				theScene.Objects.Objects[theCamera.iRelatedObject].HumanControlled = false;
-			theCamera.iRelatedObject = nindex;
+			if (camera.iRelatedObject != -1)
+				scene.Objects.Objects[camera.iRelatedObject].HumanControlled = false;
+			camera.iRelatedObject = nindex;
 			theMedia.auTeleport.play();
 		}
 	}
 	if (key == KeyEvent.VK_E) {
-		int lindex = theCamera.iRelatedObject;
-		int nindex = theScene.Objects.getNextIndex(theCamera.iRelatedObject);
+		int lindex = camera.iRelatedObject;
+		int nindex = scene.Objects.getNextIndex(camera.iRelatedObject);
 		if (nindex != -1 && nindex != lindex) {
-			if (theCamera.iRelatedObject != -1)
-				theScene.Objects.Objects[theCamera.iRelatedObject].HumanControlled = false;
-			theCamera.iRelatedObject = nindex;
+			if (camera.iRelatedObject != -1)
+				scene.Objects.Objects[camera.iRelatedObject].HumanControlled = false;
+			camera.iRelatedObject = nindex;
 			theMedia.auTeleport.play();
 		}
 	}
-	if (key == KeyEvent.VK_T && theCamera.iRelatedObject != -1) {
-		theScene.Objects.Objects[theCamera.iRelatedObject].takeControl();
+	if (key == KeyEvent.VK_T && camera.iRelatedObject != -1) {
+		scene.Objects.Objects[camera.iRelatedObject].takeControl();
 	}
-	if (key == KeyEvent.VK_G  && theCamera.iRelatedObject != -1) {
-		theScene.Objects.Objects[theCamera.iRelatedObject].switchToNextLauncher();
+	if (key == KeyEvent.VK_G  && camera.iRelatedObject != -1) {
+		scene.Objects.Objects[camera.iRelatedObject].switchToNextLauncher();
 	}
 
 	//ship's control
@@ -696,8 +694,8 @@ public void keyPressed(KeyEvent e) {
 	if (key == KeyEvent.VK_C) AI.Keys.Fire = true;
 	if (key == KeyEvent.VK_V) AI.Keys.MissileLauncher = true;
 	if (key == KeyEvent.VK_B) AI.Keys.MissileLauncherCam = true;
-	if (key == KeyEvent.VK_F) theScene.Objects.Objects[theCamera.iRelatedObject].adjustedSpeed =
-		theScene.Objects.Objects[theCamera.iRelatedObject].currentSpeed;
+	if (key == KeyEvent.VK_F) scene.Objects.Objects[camera.iRelatedObject].adjustedSpeed =
+		scene.Objects.Objects[camera.iRelatedObject].currentSpeed;
 	if (key == KeyEvent.VK_UP) {
 		AI.Keys.keyUp = true;
 	}
@@ -713,8 +711,8 @@ public void keyPressed(KeyEvent e) {
 	if (key == ',') AI.Keys.rollLeft = true;
 	if (key == '.') AI.Keys.rollRight = true;
 
-	if (key == '=') theRadar.increaseZoom();
-	if (key == '-') theRadar.decreaseZoom();
+	if (key == '=') radar.increaseZoom();
+	if (key == '-') radar.decreaseZoom();
     
 	return;
 }
@@ -741,12 +739,12 @@ public void keyReleased(KeyEvent e) {
 public void keyTyped(KeyEvent e) {}
 
 public void selectTarget(int i) {	
-	if (theCamera.iRelatedObject != -1) {
-		theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(i);
+	if (camera.iRelatedObject != -1) {
+		scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(i);
 		theMedia.auPing.play();
 	} else {
-		if (theScene.Objects.isPlaced(i)) {
-			theCamera.iRelatedObject = i;
+		if (scene.Objects.isPlaced(i)) {
+			camera.iRelatedObject = i;
 			theMedia.auTeleport.play();
 		}
 	}
@@ -754,21 +752,21 @@ public void selectTarget(int i) {
 }
 
 private void mainFlow() {
-	for (int i = 0; i<theScene.timing; i++) {
-		theScene.Time++;
-		theScene.secTicker++;
-		if (theScene.secTicker == 20) {
-			theScene.secTicker = 0;
-			theScene.secTime++;
-			if (theScene.secTime == 60) {
-				theScene.secTime = 0;
-				theScene.minTime++;
+	for (int i = 0; i<scene.timing; i++) {
+		scene.Time++;
+		scene.secTicker++;
+		if (scene.secTicker == 20) {
+			scene.secTicker = 0;
+			scene.secTime++;
+			if (scene.secTime == 60) {
+				scene.secTime = 0;
+				scene.minTime++;
 			}
 			//turn flow
-			if (theScene.turnBased && theScene.actionTime != 0) {
-				theScene.actionCounter++;
-				if (theScene.actionCounter >= theScene.actionTime)
-					theScene.nextParty();
+			if (scene.turnBased && scene.actionTime != 0) {
+				scene.actionCounter++;
+				if (scene.actionCounter >= scene.actionTime)
+					scene.nextParty();
 			}
 		}
 		AI.takeControl();
@@ -776,21 +774,21 @@ private void mainFlow() {
 }
 
 private void staticFlow() {
-	if (theScene.turnBased && theScene.turnTime != 0) {
-		theScene.staticTicker++;
-		if (theScene.staticTicker == 20) {
-			theScene.staticTicker = 0;
-			theScene.turnCounter++;
-			if (theScene.turnCounter >= theScene.turnTime)
-				theScene.nextParty();
+	if (scene.turnBased && scene.turnTime != 0) {
+		scene.staticTicker++;
+		if (scene.staticTicker == 20) {
+			scene.staticTicker = 0;
+			scene.turnCounter++;
+			if (scene.turnCounter >= scene.turnTime)
+				scene.nextParty();
 		}
 	}
 }
 
 public void actionPerformed(ActionEvent ev) {
 	if (ev.getSource() == ticker) {
-		if (!theScene.pause && !theScene.result) {
-			if (!theScene.statis) {
+		if (!scene.pause && !scene.result) {
+			if (!scene.statis) {
 				mainFlow();
 			} else {
 				staticFlow();
@@ -798,8 +796,8 @@ public void actionPerformed(ActionEvent ev) {
 			}
 
 			update();
-		} else if (theScene.result) {
-			theResult.detail();
+		} else if (scene.result) {
+			result.detail();
 			update(); 
 		} else {
 			update();
@@ -808,16 +806,16 @@ public void actionPerformed(ActionEvent ev) {
 }
 
 public void clearifyPositions() {
-	theRadar.clearifyPosition(this.getWidth(), this.getHeight());
-	theStatusScreen.clearifyPosition(this.getWidth(), this.getHeight());
-	theTaskScreen.clearifyPosition(this.getWidth(), this.getHeight());
+	radar.clearifyPosition(this.getWidth(), this.getHeight());
+	statusScreen.clearifyPosition(this.getWidth(), this.getHeight());
+	taskScreen.clearifyPosition(this.getWidth(), this.getHeight());
 	tacticalFriendly.clearifyPosition(this.getWidth(), this.getHeight());
-	theScene.theIndicatorScreen.clearifyPosition(this.getWidth(), this.getHeight());
-	theScene.theMessageScreen.clearifyPosition(this.getWidth(), this.getHeight());
-	theCamera.clearifyPosition(this.getWidth(), this.getHeight());
+	scene.theIndicatorScreen.clearifyPosition(this.getWidth(), this.getHeight());
+	scene.theMessageScreen.clearifyPosition(this.getWidth(), this.getHeight());
+	camera.clearifyPosition(this.getWidth(), this.getHeight());
 	
 	// recreate rendering plate
-	imgBuffer = createImage(theCamera.ScreenWidth, theCamera.ScreenHeight);
+	imgBuffer = createImage(camera.ScreenWidth, camera.ScreenHeight);
 	iBufferWidth = getSize().width;
 	iBufferHeight = getSize().height;
 

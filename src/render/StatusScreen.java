@@ -118,60 +118,60 @@ public class StatusScreen {
 						case 4: theCanvas.setColor(new Color(255, 113, 255)); break; //pink
 						default: theCanvas.setColor(Color.white);				 //white - unknown
 				}
-				theCanvas.drawString(theObject.theModel.strIDName
+				theCanvas.drawString(theObject.model.strIDName
 					+ ": " + theObject.strObjectName, x, y+10);
 			}
 			theCanvas.setFont(screenFont);
 			//speed
-			if (lSpeed != theObject.currentSpeed || mSpeed != theObject.theModel.maxSpeed)
-			  drawBar(x + 5, y + 25, -theObject.theModel.maxSpeed, theObject.theModel.maxSpeed,
+			if (lSpeed != theObject.currentSpeed || mSpeed != theObject.model.maxSpeed)
+			  drawBar(x + 5, y + 25, -theObject.model.maxSpeed, theObject.model.maxSpeed,
 				theObject.currentSpeed, Color.blue, "SPD", theObject.currentSpeed);
 			//fuel
-			if (lFuel != theObject.currentFuel || mFuel != theObject.theModel.FuelTank)
-			  drawBar(x + 30, y + 25, 0, theObject.theModel.FuelTank,
+			if (lFuel != theObject.currentFuel || mFuel != theObject.model.FuelTank)
+			  drawBar(x + 30, y + 25, 0, theObject.model.FuelTank,
 				theObject.currentFuel, Color.red, "FUL", theObject.currentFuel / 100);
 			//speed zero line
 			theCanvas.setColor(Color.green);
 			theCanvas.drawLine(x+2, y+75, x+BarWidth+10, y+75);
 			//shield
-			if (lShield != theObject.Shield || mShield != theObject.theModel.Shield)
-			  drawBar(x + 55, y + 25, 0, theObject.theModel.Shield,
+			if (lShield != theObject.Shield || mShield != theObject.model.Shield)
+			  drawBar(x + 55, y + 25, 0, theObject.model.Shield,
 				theObject.Shield, Color.yellow, "SHD", theObject.Shield);
 			//hull
-			if (lHull != theObject.Hull || mHull != theObject.theModel.Hull)
-			  drawBar(x + 80, y + 25, 0, theObject.theModel.Hull,
+			if (lHull != theObject.Hull || mHull != theObject.model.Hull)
+			  drawBar(x + 80, y + 25, 0, theObject.model.Hull,
 				theObject.Hull, Color.green, "HUL", theObject.Hull);
 			//energy
-			if (lEnergy != theObject.Energy || mEnergy != theObject.theModel.Energy)
-			  drawBar(x + 105, y + 25, 0, theObject.theModel.Energy,
+			if (lEnergy != theObject.Energy || mEnergy != theObject.model.Energy)
+			  drawBar(x + 105, y + 25, 0, theObject.model.Energy,
 				theObject.Energy, Color.yellow, "LEB", theObject.Energy);
 			//missiles
-			if (theObject.theModel.cntLaunchers > 0 &&
+			if (theObject.model.cntLaunchers > 0 &&
 			     (lLauncher != theObject.currentLauncher
 			     || lMissiles != theObject.missilesLoad[theObject.currentLauncher]
-			     || mMissiles != theObject.theModel.missileCapacity[theObject.currentLauncher])) {
-			  drawBar(x + 130, y + 25, 0, theObject.theModel.missileCapacity[theObject.currentLauncher],
+			     || mMissiles != theObject.model.missileCapacity[theObject.currentLauncher])) {
+			  drawBar(x + 130, y + 25, 0, theObject.model.missileCapacity[theObject.currentLauncher],
 				theObject.missilesLoad[theObject.currentLauncher], Color.red,
-				theObject.theModel.missilesRack[theObject.currentLauncher].strIDName,
+				theObject.model.missilesRack[theObject.currentLauncher].strIDName,
 				theObject.missilesLoad[theObject.currentLauncher]);
 			  lMissiles = theObject.missilesLoad[theObject.currentLauncher];				
-			  mMissiles = theObject.theModel.missileCapacity[theObject.currentLauncher];
+			  mMissiles = theObject.model.missileCapacity[theObject.currentLauncher];
 			}
 
 			//missile recharge
-			if (theObject.theModel.cntLaunchers > 0 &&
-			    (mRecharge !=  theObject.theModel.missilesRack[theObject.currentLauncher].rechargeTime
+			if (theObject.model.cntLaunchers > 0 &&
+			    (mRecharge !=  theObject.model.missilesRack[theObject.currentLauncher].rechargeTime
 			     || lRecharge != theObject.missileRecharge[theObject.currentLauncher])) {
-			  drawBar(x + 155, y + 25, 0, theObject.theModel.missilesRack[theObject.currentLauncher].rechargeTime,
-				theObject.theModel.missilesRack[theObject.currentLauncher].rechargeTime
+			  drawBar(x + 155, y + 25, 0, theObject.model.missilesRack[theObject.currentLauncher].rechargeTime,
+				theObject.model.missilesRack[theObject.currentLauncher].rechargeTime
 				- theObject.missileRecharge[theObject.currentLauncher],
 				new Color(200, 0, 40), "RCH",
 				(theObject.missileRecharge[theObject.currentLauncher] + 19) / 20);
-			  mRecharge = theObject.theModel.missilesRack[theObject.currentLauncher].rechargeTime;
+			  mRecharge = theObject.model.missilesRack[theObject.currentLauncher].rechargeTime;
 			  lRecharge = theObject.missileRecharge[theObject.currentLauncher];
 			}
 
-			if (theObject.theModel.cntLaunchers == 0
+			if (theObject.model.cntLaunchers == 0
 			    && mMissiles != -13) {
 				theCanvas.setColor(Color.black);
 				theCanvas.fillRect(x + 125, y + 12, 50, 128);
@@ -195,17 +195,17 @@ public class StatusScreen {
 			lHull = theObject.Hull;
 			lEnergy = theObject.Energy;
 			lLauncher = theObject.currentLauncher;
-			mSpeed = theObject.theModel.maxSpeed;
-			mFuel = theObject.theModel.FuelTank;
-			mShield = theObject.theModel.Shield;
-			mHull = theObject.theModel.Hull;
-			mEnergy = theObject.theModel.Energy;
+			mSpeed = theObject.model.maxSpeed;
+			mFuel = theObject.model.FuelTank;
+			mShield = theObject.model.Shield;
+			mHull = theObject.model.Hull;
+			mEnergy = theObject.model.Energy;
 		}
 	}
 
 	
 	public void clearifyPosition(int w, int h) {
 		this.x = w - this.w - 10;
-		this.y = theApplet.theRadar.y + theApplet.theRadar.h + 10;
+		this.y = theApplet.radar.y + theApplet.radar.h + 10;
 	}
 }

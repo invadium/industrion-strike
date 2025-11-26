@@ -1,7 +1,6 @@
 package render;
 
 import java.awt.*;
-import java.applet.*;
 import java.util.*;
 
 import engine.Area;
@@ -14,9 +13,9 @@ import media.Media;
 public class MessageScreen implements AreaListener{
 	private static final String MESSAGELOG = "MessageLog";
 	
-	Strike theApplet;
-	Graphics theCanvas;
-	Media theMedia;
+	Strike applet;
+	Graphics canvas;
+	Media media;
 	Font screenFontL = new Font("Courier", Font.PLAIN, 12);
 
 	static final int cntMessages = 7;
@@ -32,10 +31,10 @@ public class MessageScreen implements AreaListener{
 	public int h = 110;
 
 	public MessageScreen(Strike theApplet, Graphics theCanvas, Media theMedia) {
-		this.theApplet = theApplet;
-		this.theApplet.areaControl.addArea(this, MESSAGELOG, AreaControl.MESSAGE_LOG, this.x,this.y, this.w, this.h);
-		this.theCanvas = theCanvas;
-		this.theMedia = theMedia;
+		this.applet = theApplet;
+		this.applet.areaControl.addArea(this, MESSAGELOG, AreaControl.MESSAGE_LOG, this.x,this.y, this.w, this.h);
+		this.canvas = theCanvas;
+		this.media = theMedia;
 	}
 
 	public void push(String strMessage) {
@@ -51,13 +50,13 @@ public class MessageScreen implements AreaListener{
 	public void spush(String strMessage) {
 		Msg.addElement(new Message(strMessage));
 		if (curMsg == Msg.size() - 2) curMsg++;
-		theMedia.auMsg.play();
+		media.auMsg.play();
 	}
 
 	public void spush(String strMessage, Color msgColor) {
 		Msg.addElement(new Message(strMessage, msgColor));
 		if (curMsg == Msg.size() - 2) curMsg++;
-		theMedia.auMsg.play();
+		media.auMsg.play();
 	}
 
 	public void expaired() {
@@ -68,17 +67,17 @@ public class MessageScreen implements AreaListener{
 	  Message ms;
 	  if (isExpired || lastMsg != curMsg) {
 		try {
-			theCanvas.setColor(Color.black);
-			theCanvas.fillRect(x, y, w, h);
-			theCanvas.setFont(screenFontL);
+			canvas.setColor(Color.black);
+			canvas.fillRect(x, y, w, h);
+			canvas.setFont(screenFontL);
 			int yc = y + h - 5;
 			int xc = x + 5;
 			int cnt = 0;
 			int i = curMsg;
 			while (i >= 0 && cnt < cntMessages) {
 				ms = (Message)Msg.elementAt(i);
-				theCanvas.setColor(ms.cMsg);
-				theCanvas.drawString(ms.strMsg, xc, yc);
+				canvas.setColor(ms.cMsg);
+				canvas.drawString(ms.strMsg, xc, yc);
 				i--;
 				cnt++;
 				yc -= 15;
@@ -127,10 +126,10 @@ public class MessageScreen implements AreaListener{
 	public void clearifyPosition(int w, int h) {
 		this.x = 10;
 		this.y = h - this.h - 10;
-		this.w = theApplet.theScene.theIndicatorScreen.x - this.x - 10;
+		this.w = applet.scene.theIndicatorScreen.x - this.x - 10;
 		
 		// update active areas
-		theApplet.areaControl.updateAreaCoords(
+		applet.areaControl.updateAreaCoords(
 				MESSAGELOG, this.x,this.y, this.w, this.h);
 	}
 }

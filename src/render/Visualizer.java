@@ -8,14 +8,14 @@ import java.applet.*;
 import media.Media;
 
 abstract public class Visualizer {
-	Applet theApplet;
-	Graphics theCanvas;
-	Graphics2D theCanvas2D;
-	Media theMedia;
+	Applet applet;
+	Graphics canvas;
+	Graphics2D canvas2D;
+	Media media;
 	//int xpoints[];
 	//int ypoints[];
 
-	abstract public void drawRenderedElement(RenderedElement theElement);
+	abstract public void drawRenderedElement(RenderedElement element);
 	
-	abstract public void updateCanvas(Graphics theCanvas);
+	abstract public void updateCanvas(Graphics canvas);
 }

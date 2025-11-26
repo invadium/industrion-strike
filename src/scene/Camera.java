@@ -265,10 +265,10 @@ public class Camera {
 		else this.ScreenX = 10;
 		this.ScreenY = 10;
 		if (theApplet.tacticalFriendly.isVisible())
-			this.ScreenWidth = theApplet.theRadar.x
+			this.ScreenWidth = theApplet.radar.x
 				- theApplet.tacticalFriendly.w - 30;
-		else this.ScreenWidth = theApplet.theRadar.x - 20;
-		this.ScreenHeight = h - theApplet.theScene.theMessageScreen.h - 30;
+		else this.ScreenWidth = theApplet.radar.x - 20;
+		this.ScreenHeight = h - theApplet.scene.theMessageScreen.h - 30;
 		this.ScreenShiftX = ScreenWidth / 2;
 		this.ScreenShiftY = ScreenHeight / 2;
 	}

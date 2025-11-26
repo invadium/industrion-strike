@@ -15,7 +15,7 @@ import render.RenderedElement;
  *
  */
 public class Triangle extends Primitive {
-	Applet theApplet;
+	Applet applet;
 	Graphics theCanvas;
 	public final int cntPoints = 3;
 	public primitives.Point P1, P2, P3;
@@ -110,7 +110,7 @@ public class Triangle extends Primitive {
 									P1.BP.y - sce.theSun.fire.y,
 									P1.BP.z - sce.theSun.fire.z);
 			double cosPsi = normal.getCosFi(sunVector);
-			double Psi = CMath.M.acos(cosPsi);
+			double Psi = Math.acos(cosPsi);
 
 			int colorVal = -(int)(cosPsi * 200.0);
 
