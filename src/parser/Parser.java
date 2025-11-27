@@ -1,12 +1,11 @@
 package parser;
 
 import java.applet.*;
-import java.awt.*;
 import java.io.*;
 import java.net.URL;
 
 public class Parser {
-	Applet theApplet;
+	Applet applet;
 	InputStream IS;
 
 	public int iLine, iLineChar;
@@ -18,13 +17,13 @@ public class Parser {
 	private Token bufToken;
 	private boolean isTokenInBuffer = false;
 
-	public Parser(Applet theApplet) {
-		this.theApplet = theApplet;
+	public Parser(Applet applet) {
+		this.applet = applet;
 	}
 
 	public boolean openStream(String strFileName) {
 		try {
-			 IS = new URL(theApplet.getCodeBase(), strFileName).openStream();
+			 IS = new URL(applet.getCodeBase(), strFileName).openStream();
 			 isEmpty = true;
 		} catch (Exception e) {
 			String err = e.toString();

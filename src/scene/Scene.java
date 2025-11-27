@@ -35,8 +35,8 @@ public class Scene {
 	public int turnCounter = 0;
 	public int sides = 0;
 	public SOCollector Objects;
-	public FlightPlan thePlan;
-	public RSun theSun;
+	public FlightPlan plan;
+	public RSun sun;
 	public MissionInterpreter Interpreter;
 	public MCmdCollector MissionCommands;
 	private Strike applet;
@@ -45,8 +45,8 @@ public class Scene {
 	private Camera camera;
 	private Stars stars;
 	private Parser prs;
-	public MessageScreen theMessageScreen;
-	public IndicatorScreen theIndicatorScreen;
+	public MessageScreen messageScreen;
+	public IndicatorScreen indicatorScreen;
 
 	public Scene (Strike applet, ModelsCollector Models,
 			Camera camera, Stars stars,
@@ -60,8 +60,8 @@ public class Scene {
 		setEnvironment();
 		this.Interpreter = new MissionInterpreter(camera, Models, this, Objects);
 		this.MissionCommands = new MCmdCollector();
-		this.theMessageScreen = new MessageScreen(applet, applet.getGraphics(), media);
-		this.theIndicatorScreen = new IndicatorScreen(applet, applet.getGraphics(), this, camera, media);
+		this.messageScreen = new MessageScreen(applet, applet.getGraphics(), media);
+		this.indicatorScreen = new IndicatorScreen(applet, applet.getGraphics(), this, camera, media);
 
 		loadScene(strMissionFileName);
 		createLights();
@@ -80,13 +80,13 @@ public class Scene {
 			
 			this.statis = true;
 			this.camera.Side = 1;
-			this.theMessageScreen.push("Turn based on");
+			this.messageScreen.push("Turn based on");
 			this.showSideControl();
 		}
 	}
 
 	private void setEnvironment() {
-		thePlan = new FlightPlan(this);
+		plan = new FlightPlan(this);
 		Objects = new SOCollector(camera);
 		SpaceObject.Objects = Objects;
 		SpaceObject.media = media;
@@ -499,7 +499,7 @@ public class Scene {
 	private void cmdProc ()
 			throws SceneException, ParserException, InterpreterException {
 		Token tok;
-		Procedure theProc;
+		Procedure proc;
 		int x = 0, y = 0, z = 0, r = 0;
 
 		tok = prs.getToken(); isMatch(tok, Token.STRING);
@@ -507,7 +507,7 @@ public class Scene {
 			//period
 			tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 			x = tok.iValue;
-			theProc = new Procedure(x);
+			proc = new Procedure(x);
 		} else if (tok.strValue.equals("ON")) {
 			//time
 			tok = prs.getToken(); isMatch(tok, Token.STRING, "TIME");
@@ -516,7 +516,7 @@ public class Scene {
 			tok = prs.getToken(); isMatch(tok, Token.DOT);
 			tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 			y = tok.iValue;
-			theProc = new Procedure(x, y);
+			proc = new Procedure(x, y);
 		} else if (tok.strValue.equals("AT")) {
 			//place
 			tok = prs.getToken(); isMatch(tok, Token.NUMBER);
@@ -528,14 +528,14 @@ public class Scene {
 			tok = prs.getToken(); isMatch(tok, Token.STRING, "AREA");
 			tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 			r = tok.iValue;
-			theProc = new Procedure(x, y, z, r);
+			proc = new Procedure(x, y, z, r);
 		} else {
 			//normal procedure
-			theProc = new Procedure(tok.strValue);
+			proc = new Procedure(tok.strValue);
 		}
 
 		tok = prs.getToken(); isMatch(tok, Token.SEMI);			
-		Interpreter.createProcedure(theProc);
+		Interpreter.createProcedure(proc);
 	}
 
 	private void cmdEndProc ()
@@ -751,17 +751,17 @@ public class Scene {
 	}
 
 	private void createLights() {
-		theSun = new RSun(400000000.0, -20000000.0, -1000000000.0, 1, 1, 1);
+		sun = new RSun(400000000.0, -20000000.0, -1000000000.0, 1, 1, 1);
 	}
 
 	public void changeTiming() {
 		this.timing+= this.timing;
 		if (this.timing > 4) this.timing = 1;
-		theMessageScreen.spush("Time set to x" + this.timing);
+		messageScreen.spush("Time set to x" + this.timing);
 	}
 	
 	public void showSideControl() {
-		theMessageScreen.spush(Interpreter.getsVariable("SideName" + camera.Side)
+		messageScreen.spush(Interpreter.getsVariable("SideName" + camera.Side)
 			+ " takes control");
 	}
 	

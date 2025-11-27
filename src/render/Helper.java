@@ -5,10 +5,10 @@ import java.awt.Graphics;
 
 public class Helper {
 	public static Helper instance;
-	public Graphics theCanvas;
+	public Graphics canvas;
 	
-	public Helper(Graphics theCanvas) {
-		this.theCanvas = theCanvas;
+	public Helper(Graphics canvas) {
+		this.canvas = canvas;
 		instance = this;
 	}
 	
@@ -18,7 +18,7 @@ public class Helper {
 	
 	private int acb = 40;
 	public void drawArea(int x, int y, int w, int h) {
-		Color baseColor = theCanvas.getColor();
+		Color baseColor = canvas.getColor();
 		int r = baseColor.getRed();
 		int g = baseColor.getGreen();
 		int b = baseColor.getBlue();
@@ -29,8 +29,8 @@ public class Helper {
 		for (int i = 0; i < h; i++) {
 			Color color = new Color(r, g, b);
 			r -= sr; g -= sg; b -= sb;
-			theCanvas.setColor(color);
-			theCanvas.drawLine(x, y + i, x + w - 1, y + i);
+			canvas.setColor(color);
+			canvas.drawLine(x, y + i, x + w - 1, y + i);
 		}
 	}
 }

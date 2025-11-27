@@ -24,9 +24,9 @@ public class Model {
 	public static final int maxPrimitives = 100;
 	public int cntFrames = 0;
 	public int cntPrimitives;
-	public Primitive thePrimitives[];
-	public Model theFragment;
-	public Model theBlow;
+	public Primitive primitives[];
+	public Model fragment;
+	public Model blow;
 
 	//AI
 	public double reachRange = 5000;
@@ -75,19 +75,19 @@ public class Model {
 
 	public Model () {
 		this.strModelName = "";
-		thePrimitives = new Primitive[maxPrimitives];
+		primitives = new Primitive[maxPrimitives];
 		cntPrimitives = 0;
 	}
 	
 	public Model (String strModelName) {
 		this.strModelName = strModelName;
-		thePrimitives = new Primitive[maxPrimitives];
+		primitives = new Primitive[maxPrimitives];
 		cntPrimitives = 0;
 	}
 
-	public boolean addPrimitive(Primitive thePrimitive) {
+	public boolean addPrimitive(Primitive primitive) {
 		if (cntPrimitives >= maxPrimitives) return false;
-		thePrimitives[cntPrimitives] = thePrimitive;
+		primitives[cntPrimitives] = primitive;
 		cntPrimitives++;
 		return true;
 	}

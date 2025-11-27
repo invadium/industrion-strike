@@ -5,9 +5,9 @@ public class MCmdCollector {
 	public static final int maxCommands = 0xFFFF;
 
 	public int cntProc = 0;
-	public Procedure theProc[] = new Procedure[maxProcedures];
+	public Procedure proc[] = new Procedure[maxProcedures];
 	public int cntCommands = 0;
-	public MissionCommand theCommands[] = new MissionCommand[maxCommands];
+	public MissionCommand commands[] = new MissionCommand[maxCommands];
 
 	public MCmdCollector() {
 		
@@ -15,7 +15,7 @@ public class MCmdCollector {
 
 	public void addProc(Procedure newProcedure) throws InterpreterException {
 		if (cntProc < maxProcedures && cntCommands < (maxCommands)) {
-			theProc[cntProc] = newProcedure;
+			proc[cntProc] = newProcedure;
 			newProcedure.startPoint = cntCommands;
 			cntProc++;
 		} else throw new InterpreterException("no room for the new procedure");
@@ -23,15 +23,15 @@ public class MCmdCollector {
 
 	public void storeCmd(MissionCommand newCmd) throws InterpreterException {
 		if (cntCommands < maxCommands) {
-			theCommands[cntCommands] = newCmd;
+			commands[cntCommands] = newCmd;
 			cntCommands++;
 } else throw new InterpreterException("no room for the new command");
 	}
 
 	public int findProc(int min, int sec) {
 		for (int i=0; i<cntProc; i++)
-			if (theProc[i].iType == Procedure.procTime && min == theProc[i].x
-				&& sec == theProc[i].y) return i;
+			if (proc[i].iType == Procedure.procTime && min == proc[i].x
+				&& sec == proc[i].y) return i;
 		return -1;
 	}
 	
@@ -39,10 +39,10 @@ public class MCmdCollector {
 			int res = -1;
 			int cp = curStart;
 
-			while (this.theCommands[cp].type != MissionCommand.cmdEndProc
+			while (this.commands[cp].type != MissionCommand.cmdEndProc
 				&& cp < this.cntCommands) {
-					if (this.theCommands[cp].type == MissionCommand.cmdLabel
-						&& this.theCommands[cp].strValue.equals(strName)) {
+					if (this.commands[cp].type == MissionCommand.cmdLabel
+						&& this.commands[cp].strValue.equals(strName)) {
 							res = cp;
 							break;
 					}
@@ -55,15 +55,15 @@ public class MCmdCollector {
 	public int findPeriod(int time, int index) {
 		index++;
 		for (int i=index; i<cntProc; i++)
-			if (theProc[i].iType == Procedure.procPeriod
-				&& (time % theProc[i].x) == 0) return i;
+			if (proc[i].iType == Procedure.procPeriod
+				&& (time % proc[i].x) == 0) return i;
 		return -1;
 	}
 
 	public int findProc(String strName) {
 		for (int i=0; i<cntProc; i++)
-			if (theProc[i].iType == Procedure.procNormal
-				&& theProc[i].strName.equals(strName)) return i;
+			if (proc[i].iType == Procedure.procNormal
+				&& proc[i].strName.equals(strName)) return i;
 		return -1;
 	}
 }

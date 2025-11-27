@@ -1,7 +1,6 @@
 package render;
 
 import java.awt.*;
-import java.applet.*;
 
 import engine.Strike;
 import scene.Scene;
@@ -9,10 +8,10 @@ import scene.Camera;
 import scene.SpaceObject;
 
 public class StatusScreen {
-	Strike theApplet;
-	Graphics theCanvas;
-	Scene theScene;
-	Camera theCamera;
+	Strike applet;
+	Graphics canvas;
+	Scene scene;
+	Camera camera;
 	Font screenFont = new Font("Courier", Font.PLAIN, 9);
 	Font screenFontL = new Font("Courier", Font.PLAIN, 12);
 	int x = 530;
@@ -29,26 +28,26 @@ public class StatusScreen {
 	int lBlank = -1;
 	
 
-	public StatusScreen(Strike theApplet, Graphics theCanvas, Scene theScene, Camera theCamera) {
-		this.theApplet = theApplet;
-		this.theCanvas = theCanvas;
-		this.theScene = theScene;
-		this.theCamera = theCamera;
+	public StatusScreen(Strike applet, Graphics canvas, Scene scene, Camera camera) {
+		this.applet = applet;
+		this.canvas = canvas;
+		this.scene = scene;
+		this.camera = camera;
 	}
 
 	public void clearAll() {           
-		theCanvas.setColor(Color.black);
-		theCanvas.fillRect(x, y, w, h);		
+		canvas.setColor(Color.black);
+		canvas.fillRect(x, y, w, h);		
 	}
 
 	public void clear() {
-		theCanvas.setColor(Color.black);
-		theCanvas.fillRect(x, y, w, 12);		
+		canvas.setColor(Color.black);
+		canvas.fillRect(x, y, w, 12);		
 	}
 
 	public void drawEmpty(int Bx, int By) {
-		theCanvas.setColor(Color.black);
-		theCanvas.fillRect(Bx - 5, By - 13, BarWidth + 10, BarHeight + 15);
+		canvas.setColor(Color.black);
+		canvas.fillRect(Bx - 5, By - 13, BarWidth + 10, BarHeight + 15);
 	}
 
 	public void drawBar(int Bx, int By, int min, int max, int cur, 
@@ -57,27 +56,27 @@ public class StatusScreen {
 		double coef = (double)(cur - min) / (double)(max - min);
 		int level = (int)((double)BarHeight * coef);
 
-		theCanvas.setColor(Color.black);
-		theCanvas.fillRect(Bx, By-13, BarWidth+3, BarHeight-level+13);
-		theCanvas.setColor(Color.green);
-		theCanvas.drawRect(Bx, By, BarWidth + 2, BarHeight + 1);
+		canvas.setColor(Color.black);
+		canvas.fillRect(Bx, By-13, BarWidth+3, BarHeight-level+13);
+		canvas.setColor(Color.green);
+		canvas.drawRect(Bx, By, BarWidth + 2, BarHeight + 1);
 
-		theCanvas.setColor(C);
-		theCanvas.fillRect(Bx+1, By+BarHeight-level+1, BarWidth, level);
-		theCanvas.setColor(Color.black);
-		theCanvas.drawLine(Bx+1, By+1, Bx+1, By+BarHeight);
-		theCanvas.drawLine(Bx+BarWidth+1, By+1, Bx+BarWidth+1, By+BarHeight);
+		canvas.setColor(C);
+		canvas.fillRect(Bx+1, By+BarHeight-level+1, BarWidth, level);
+		canvas.setColor(Color.black);
+		canvas.drawLine(Bx+1, By+1, Bx+1, By+BarHeight);
+		canvas.drawLine(Bx+BarWidth+1, By+1, Bx+BarWidth+1, By+BarHeight);
 
 		String strLevel = "" + visLevel;
-		FontMetrics FM = theCanvas.getFontMetrics();
+		FontMetrics FM = canvas.getFontMetrics();
 		int sx = (BarWidth - FM.stringWidth(strLevel)) / 2;
-		theCanvas.setColor(Color.black);
-		theCanvas.fillRect(Bx+BarWidth+3, By - 13, 2, BarHeight + 15);
-		theCanvas.fillRect(Bx - 5, By - 13, 5, BarHeight + 15);
-		theCanvas.fillRect(Bx - 5, By+BarHeight+2, BarWidth + 10, 13);
-		theCanvas.setColor(Color.green);
-		theCanvas.drawString(strLevel, Bx + sx, By - 1);
-		theCanvas.drawString(Descr, Bx, By + BarHeight + 10);
+		canvas.setColor(Color.black);
+		canvas.fillRect(Bx+BarWidth+3, By - 13, 2, BarHeight + 15);
+		canvas.fillRect(Bx - 5, By - 13, 5, BarHeight + 15);
+		canvas.fillRect(Bx - 5, By+BarHeight+2, BarWidth + 10, 13);
+		canvas.setColor(Color.green);
+		canvas.drawString(strLevel, Bx + sx, By - 1);
+		canvas.drawString(Descr, Bx, By + BarHeight + 10);
 	}
 
 	private void resetAllRegs() {
@@ -93,88 +92,88 @@ public class StatusScreen {
 	}
 
 	public void drawStatusScreen() {
-		theCanvas.setFont(screenFontL);
-		if (theCamera.iRelatedObject == -1) {
-			if (lid != -1 || camSpeed != theCamera.CameraSpeed) {
+		canvas.setFont(screenFontL);
+		if (camera.iRelatedObject == -1) {
+			if (lid != -1 || camSpeed != camera.CameraSpeed) {
 				resetAllRegs();
 				clearAll();
-				theCanvas.setColor(Color.green);
-				theCanvas.drawString("FreeCamera", x, y+10);
-				theCanvas.drawString("Camera speed: " + theCamera.CameraSpeed, x, y+20);
-				camSpeed = theCamera.CameraSpeed;
+				canvas.setColor(Color.green);
+				canvas.drawString("FreeCamera", x, y+10);
+				canvas.drawString("Camera speed: " + camera.CameraSpeed, x, y+20);
+				camSpeed = camera.CameraSpeed;
 				lid = -1;
 			}
 		} else {
-			SpaceObject theObject;
-			theObject = theScene.Objects.Objects[theCamera.iRelatedObject];
+			SpaceObject spaceObject;
+			spaceObject = scene.Objects.Objects[camera.iRelatedObject];
 			//class & name
-			if (lid != theObject.id) {
+			if (lid != spaceObject.id) {
 				clear();
-				switch(theScene.Objects.Objects[theCamera.iRelatedObject].Side) {
-						case 0: theCanvas.setColor(Color.white); break;			 //white - neutral
-						case 1: theCanvas.setColor(new Color(100, 255, 100)); break; //green
-						case 2: theCanvas.setColor(new Color(255, 70, 70)); break;   //red
-						case 3: theCanvas.setColor(new Color(255, 200, 100)); break; //yellow
-						case 4: theCanvas.setColor(new Color(255, 113, 255)); break; //pink
-						default: theCanvas.setColor(Color.white);				 //white - unknown
+				switch(scene.Objects.Objects[camera.iRelatedObject].Side) {
+						case 0: canvas.setColor(Color.white); break;			 //white - neutral
+						case 1: canvas.setColor(new Color(100, 255, 100)); break; //green
+						case 2: canvas.setColor(new Color(255, 70, 70)); break;   //red
+						case 3: canvas.setColor(new Color(255, 200, 100)); break; //yellow
+						case 4: canvas.setColor(new Color(255, 113, 255)); break; //pink
+						default: canvas.setColor(Color.white);				 //white - unknown
 				}
-				theCanvas.drawString(theObject.model.strIDName
-					+ ": " + theObject.strObjectName, x, y+10);
+				canvas.drawString(spaceObject.model.strIDName
+					+ ": " + spaceObject.strObjectName, x, y+10);
 			}
-			theCanvas.setFont(screenFont);
+			canvas.setFont(screenFont);
 			//speed
-			if (lSpeed != theObject.currentSpeed || mSpeed != theObject.model.maxSpeed)
-			  drawBar(x + 5, y + 25, -theObject.model.maxSpeed, theObject.model.maxSpeed,
-				theObject.currentSpeed, Color.blue, "SPD", theObject.currentSpeed);
+			if (lSpeed != spaceObject.currentSpeed || mSpeed != spaceObject.model.maxSpeed)
+			  drawBar(x + 5, y + 25, -spaceObject.model.maxSpeed, spaceObject.model.maxSpeed,
+				spaceObject.currentSpeed, Color.blue, "SPD", spaceObject.currentSpeed);
 			//fuel
-			if (lFuel != theObject.currentFuel || mFuel != theObject.model.FuelTank)
-			  drawBar(x + 30, y + 25, 0, theObject.model.FuelTank,
-				theObject.currentFuel, Color.red, "FUL", theObject.currentFuel / 100);
+			if (lFuel != spaceObject.currentFuel || mFuel != spaceObject.model.FuelTank)
+			  drawBar(x + 30, y + 25, 0, spaceObject.model.FuelTank,
+				spaceObject.currentFuel, Color.red, "FUL", spaceObject.currentFuel / 100);
 			//speed zero line
-			theCanvas.setColor(Color.green);
-			theCanvas.drawLine(x+2, y+75, x+BarWidth+10, y+75);
+			canvas.setColor(Color.green);
+			canvas.drawLine(x+2, y+75, x+BarWidth+10, y+75);
 			//shield
-			if (lShield != theObject.Shield || mShield != theObject.model.Shield)
-			  drawBar(x + 55, y + 25, 0, theObject.model.Shield,
-				theObject.Shield, Color.yellow, "SHD", theObject.Shield);
+			if (lShield != spaceObject.Shield || mShield != spaceObject.model.Shield)
+			  drawBar(x + 55, y + 25, 0, spaceObject.model.Shield,
+				spaceObject.Shield, Color.yellow, "SHD", spaceObject.Shield);
 			//hull
-			if (lHull != theObject.Hull || mHull != theObject.model.Hull)
-			  drawBar(x + 80, y + 25, 0, theObject.model.Hull,
-				theObject.Hull, Color.green, "HUL", theObject.Hull);
+			if (lHull != spaceObject.Hull || mHull != spaceObject.model.Hull)
+			  drawBar(x + 80, y + 25, 0, spaceObject.model.Hull,
+				spaceObject.Hull, Color.green, "HUL", spaceObject.Hull);
 			//energy
-			if (lEnergy != theObject.Energy || mEnergy != theObject.model.Energy)
-			  drawBar(x + 105, y + 25, 0, theObject.model.Energy,
-				theObject.Energy, Color.yellow, "LEB", theObject.Energy);
+			if (lEnergy != spaceObject.Energy || mEnergy != spaceObject.model.Energy)
+			  drawBar(x + 105, y + 25, 0, spaceObject.model.Energy,
+				spaceObject.Energy, Color.yellow, "LEB", spaceObject.Energy);
 			//missiles
-			if (theObject.model.cntLaunchers > 0 &&
-			     (lLauncher != theObject.currentLauncher
-			     || lMissiles != theObject.missilesLoad[theObject.currentLauncher]
-			     || mMissiles != theObject.model.missileCapacity[theObject.currentLauncher])) {
-			  drawBar(x + 130, y + 25, 0, theObject.model.missileCapacity[theObject.currentLauncher],
-				theObject.missilesLoad[theObject.currentLauncher], Color.red,
-				theObject.model.missilesRack[theObject.currentLauncher].strIDName,
-				theObject.missilesLoad[theObject.currentLauncher]);
-			  lMissiles = theObject.missilesLoad[theObject.currentLauncher];				
-			  mMissiles = theObject.model.missileCapacity[theObject.currentLauncher];
+			if (spaceObject.model.cntLaunchers > 0 &&
+			     (lLauncher != spaceObject.currentLauncher
+			     || lMissiles != spaceObject.missilesLoad[spaceObject.currentLauncher]
+			     || mMissiles != spaceObject.model.missileCapacity[spaceObject.currentLauncher])) {
+			  drawBar(x + 130, y + 25, 0, spaceObject.model.missileCapacity[spaceObject.currentLauncher],
+				spaceObject.missilesLoad[spaceObject.currentLauncher], Color.red,
+				spaceObject.model.missilesRack[spaceObject.currentLauncher].strIDName,
+				spaceObject.missilesLoad[spaceObject.currentLauncher]);
+			  lMissiles = spaceObject.missilesLoad[spaceObject.currentLauncher];				
+			  mMissiles = spaceObject.model.missileCapacity[spaceObject.currentLauncher];
 			}
 
 			//missile recharge
-			if (theObject.model.cntLaunchers > 0 &&
-			    (mRecharge !=  theObject.model.missilesRack[theObject.currentLauncher].rechargeTime
-			     || lRecharge != theObject.missileRecharge[theObject.currentLauncher])) {
-			  drawBar(x + 155, y + 25, 0, theObject.model.missilesRack[theObject.currentLauncher].rechargeTime,
-				theObject.model.missilesRack[theObject.currentLauncher].rechargeTime
-				- theObject.missileRecharge[theObject.currentLauncher],
+			if (spaceObject.model.cntLaunchers > 0 &&
+			    (mRecharge !=  spaceObject.model.missilesRack[spaceObject.currentLauncher].rechargeTime
+			     || lRecharge != spaceObject.missileRecharge[spaceObject.currentLauncher])) {
+			  drawBar(x + 155, y + 25, 0, spaceObject.model.missilesRack[spaceObject.currentLauncher].rechargeTime,
+				spaceObject.model.missilesRack[spaceObject.currentLauncher].rechargeTime
+				- spaceObject.missileRecharge[spaceObject.currentLauncher],
 				new Color(200, 0, 40), "RCH",
-				(theObject.missileRecharge[theObject.currentLauncher] + 19) / 20);
-			  mRecharge = theObject.model.missilesRack[theObject.currentLauncher].rechargeTime;
-			  lRecharge = theObject.missileRecharge[theObject.currentLauncher];
+				(spaceObject.missileRecharge[spaceObject.currentLauncher] + 19) / 20);
+			  mRecharge = spaceObject.model.missilesRack[spaceObject.currentLauncher].rechargeTime;
+			  lRecharge = spaceObject.missileRecharge[spaceObject.currentLauncher];
 			}
 
-			if (theObject.model.cntLaunchers == 0
+			if (spaceObject.model.cntLaunchers == 0
 			    && mMissiles != -13) {
-				theCanvas.setColor(Color.black);
-				theCanvas.fillRect(x + 125, y + 12, 50, 128);
+				canvas.setColor(Color.black);
+				canvas.fillRect(x + 125, y + 12, 50, 128);
 				mMissiles = -13;
 				lMissiles = -1;
 				mRecharge = -1;
@@ -182,30 +181,30 @@ public class StatusScreen {
 			}
 
 			if (lBlank == -1) {
-				theCanvas.setColor(Color.black);
-				theCanvas.fillRect(x + 175, y + 12, 25, 128);
+				canvas.setColor(Color.black);
+				canvas.fillRect(x + 175, y + 12, 25, 128);
 				lBlank = 1;
 			}
 
 			//save last values
-			lid = theObject.id;
-			lSpeed = theObject.currentSpeed;
-			lFuel = theObject.currentFuel;
-			lShield = theObject.Shield;
-			lHull = theObject.Hull;
-			lEnergy = theObject.Energy;
-			lLauncher = theObject.currentLauncher;
-			mSpeed = theObject.model.maxSpeed;
-			mFuel = theObject.model.FuelTank;
-			mShield = theObject.model.Shield;
-			mHull = theObject.model.Hull;
-			mEnergy = theObject.model.Energy;
+			lid = spaceObject.id;
+			lSpeed = spaceObject.currentSpeed;
+			lFuel = spaceObject.currentFuel;
+			lShield = spaceObject.Shield;
+			lHull = spaceObject.Hull;
+			lEnergy = spaceObject.Energy;
+			lLauncher = spaceObject.currentLauncher;
+			mSpeed = spaceObject.model.maxSpeed;
+			mFuel = spaceObject.model.FuelTank;
+			mShield = spaceObject.model.Shield;
+			mHull = spaceObject.model.Hull;
+			mEnergy = spaceObject.model.Energy;
 		}
 	}
 
 	
 	public void clearifyPosition(int w, int h) {
 		this.x = w - this.w - 10;
-		this.y = theApplet.radar.y + theApplet.radar.h + 10;
+		this.y = applet.radar.y + applet.radar.h + 10;
 	}
 }

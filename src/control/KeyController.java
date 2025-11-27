@@ -7,9 +7,9 @@ import render.Render;
 import render.Stars;
 
 public class KeyController {
-	Render theRender;
-	Stars theStars;
-	Scene theScene;
+	Render render;
+	Stars stars;
+	Scene scene;
 	public boolean keyUp = false;
 	public boolean keyDown = false;
 	public boolean keyRight = false;
@@ -29,100 +29,100 @@ public class KeyController {
 	public int Functional[] = new int[13];
 	public int Id[] = new int[13];
 	
-	public KeyController(Render theRender, Stars theStars, Scene theScene) {
-		this.theRender = theRender;
-		this.theStars = theStars;
-		this.theScene = theScene;
+	public KeyController(Render render, Stars stars, Scene scene) {
+		this.render = render;
+		this.stars = stars;
+		this.scene = scene;
 
 		for (int i=0; i<13; i++) Functional[i] = -1;
 	}
 
-	public void applyKeys(Camera theCamera) {
+	public void applyKeys(Camera camera) {
 		if (keyUp) {
-			theCamera.decPitch();
-			theStars.shiftY(-theCamera.PitchFactor);
+			camera.decPitch();
+			stars.shiftY(-camera.PitchFactor);
 		}
 		if (keyDown) {
-			theCamera.incPitch();
-			theStars.shiftY(theCamera.PitchFactor);
+			camera.incPitch();
+			stars.shiftY(camera.PitchFactor);
 		}
 		if (keyRight) {
-			theCamera.decYaw();
-			theStars.shiftX(-theCamera.YawFactor);
+			camera.decYaw();
+			stars.shiftX(-camera.YawFactor);
 		}
 		if (keyLeft) {
-			theCamera.incYaw();
-			theStars.shiftX(theCamera.YawFactor);
+			camera.incYaw();
+			stars.shiftX(camera.YawFactor);
 		}
 		if (rollRight) {
-			theCamera.incRoll();
+			camera.incRoll();
 		}
 		if (rollLeft) {
-			theCamera.decRoll();
+			camera.decRoll();
 		}
 		if (SpeedUp) {
-			theCamera.CameraSpeed+= 25;
+			camera.CameraSpeed+= 25;
 		}
 		if (SpeedDown) {
-			theCamera.CameraSpeed-= 25;
+			camera.CameraSpeed-= 25;
 		}
 		if (CruiseSpeed) {
-			theCamera.CameraSpeed = 400;
+			camera.CameraSpeed = 400;
 		}
 		if (ZeroSpeed) {
-			theCamera.CameraSpeed = 0;
+			camera.CameraSpeed = 0;
 		}
 		if (MatchSpeed) {
-			if (theRender.indexCross >= 0) {
-				theCamera.CameraSpeed = 
-				theScene.Objects.Objects[theRender.indexCross].currentSpeed;
+			if (render.indexCross >= 0) {
+				camera.CameraSpeed = 
+				scene.Objects.Objects[render.indexCross].currentSpeed;
 			}
 		}
 	}
 
-	public void applyKeys(SpaceObject theObject) {
+	public void applyKeys(SpaceObject spaceObject) {
 		if (keyUp) {
-			theObject.decPitch();
+			spaceObject.decPitch();
 		}
 		if (keyDown) {
-			theObject.addPitch();
+			spaceObject.addPitch();
 		}
 		if (keyRight) {
-			theObject.decYaw();
+			spaceObject.decYaw();
 		}
 		if (keyLeft) {
-			theObject.addYaw();
+			spaceObject.addYaw();
 		}
 		if (Fire) {
-			theObject.tryToFire();
+			spaceObject.tryToFire();
 		}
 		if (MissileLauncher) {
-			theObject.tryToLaunch(false);
+			spaceObject.tryToLaunch(false);
 		}
 		if (MissileLauncherCam) {
-			theObject.tryToLaunch(true);
+			spaceObject.tryToLaunch(true);
 		}
 		if (SpeedUp) {
-			theObject.increaseSpeed();
+			spaceObject.increaseSpeed();
 		}
 		if (SpeedDown) {
-			theObject.decreaseSpeed();
+			spaceObject.decreaseSpeed();
 		}
 		if (ZeroSpeed) {
-			if (theObject.currentSpeed > 0) theObject.decreaseSpeed();
-			else if (theObject.currentSpeed < 0) theObject.increaseSpeed();
+			if (spaceObject.currentSpeed > 0) spaceObject.decreaseSpeed();
+			else if (spaceObject.currentSpeed < 0) spaceObject.increaseSpeed();
 		}
 		if (CruiseSpeed) {
-			if (theObject.currentSpeed > theObject.model.cruiseSpeed) theObject.decreaseSpeed();
-			else if (theObject.currentSpeed < theObject.model.cruiseSpeed) theObject.increaseSpeed();
+			if (spaceObject.currentSpeed > spaceObject.model.cruiseSpeed) spaceObject.decreaseSpeed();
+			else if (spaceObject.currentSpeed < spaceObject.model.cruiseSpeed) spaceObject.increaseSpeed();
 		}
 		if (MatchSpeed) {
-			int target = theObject.taskScreen;
+			int target = spaceObject.taskScreen;
 			if (target >= 0) {
-				if (theScene.Objects.Objects[target].currentSpeed > theObject.currentSpeed)
-					theObject.increaseSpeed();
-				else if (theScene.Objects.Objects[target].currentSpeed < theObject.currentSpeed)
-					theObject.decreaseSpeed();
+				if (scene.Objects.Objects[target].currentSpeed > spaceObject.currentSpeed)
+					spaceObject.increaseSpeed();
+				else if (scene.Objects.Objects[target].currentSpeed < spaceObject.currentSpeed)
+					spaceObject.decreaseSpeed();
 			}       
 		}
 	}

@@ -2,7 +2,6 @@ package primitives;
 
 import java.awt.*;
 import java.applet.*;
-import math.*;	
 import scene.Camera;
 import scene.SpaceObject;
 import scene.Scene;
@@ -15,8 +14,8 @@ import render.RenderedElement;
  *
  */
 public class Trixel extends Primitive {
-	Applet theApplet;
-	Graphics theCanvas;
+	Applet applet;
+	Graphics canvas;
 	private boolean isInScreen;
 	public final int cntPoints = 1;
 	primitives.Point P1;
@@ -54,20 +53,20 @@ public class Trixel extends Primitive {
 		this.isInScreen = true;
 	}
 
-	public RenderedElement getRenderedElement(SpaceObject theSpaceObject) {
-		RenderedElement theElement;
-		theElement = new RenderedElement();
-		theElement.PrimitiveColor = this.PrimitiveColor;
-		theElement.cntPoints = 1;
-		theElement.ix1 = P1.ipx;
-		theElement.iy1 = P1.ipy;
-		theElement.d1 = P1.z_buffer;
-		theElement.calcAverageDistance();
-		theElement.isBitmapped = this.isBitmapped;
-		if (this.isBitmapped) theElement.imgElement = theSpaceObject.model.imgModel;
-		int vdist = (int)(theElement.distance / 4000);
-		theElement.volume = this.volume - vdist;
-		if (theElement.volume < 1) theElement.volume = 1;
-		return theElement;
+	public RenderedElement getRenderedElement(SpaceObject spaceObject) {
+		RenderedElement element;
+		element = new RenderedElement();
+		element.PrimitiveColor = this.PrimitiveColor;
+		element.cntPoints = 1;
+		element.ix1 = P1.ipx;
+		element.iy1 = P1.ipy;
+		element.d1 = P1.z_buffer;
+		element.calcAverageDistance();
+		element.isBitmapped = this.isBitmapped;
+		if (this.isBitmapped) element.imgElement = spaceObject.model.imgModel;
+		int vdist = (int)(element.distance / 4000);
+		element.volume = this.volume - vdist;
+		if (element.volume < 1) element.volume = 1;
+		return element;
 	}
 }

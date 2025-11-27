@@ -9,44 +9,44 @@ import scene.*;
 import control.PlanPosition;
 
 public class MissionInterpreter {
-	Camera theCamera;
+	Camera camera;
 	ModelsCollector Models;
-	Scene theScene;
+	Scene scene;
 	SOCollector Objects;
 
 	public Hashtable Heap = new Hashtable();
-	public MCmdCollector theCommands = new MCmdCollector();
+	public MCmdCollector commands = new MCmdCollector();
 	InterpretersStack Stack = new InterpretersStack();
 	boolean isStoring = false;
 
-	public MissionInterpreter(Camera theCamera, ModelsCollector Models,
-			Scene theScene, SOCollector Objects) {
-		this.theCamera = theCamera;
+	public MissionInterpreter(Camera camera, ModelsCollector Models,
+			Scene scene, SOCollector Objects) {
+		this.camera = camera;
 		this.Models = Models;
-		this.theScene = theScene;
+		this.scene = scene;
 		this.Objects = Objects;
 	}
 
 	public void createProcedure(Procedure newProcedure) throws InterpreterException {
 		if (isStoring) throw new InterpreterException ("wrong place to declarate procedure");
 		isStoring = true;
-		theCommands.addProc(newProcedure);
+		commands.addProc(newProcedure);
 	}
 
 	public void closeProcedure()  throws InterpreterException {
 		MissionCommand cmd = new MissionCommand(MissionCommand.cmdEndProc);
-		theCommands.storeCmd(cmd);
+		commands.storeCmd(cmd);
 		isStoring = false;
 	}
 
 	public void exitProcedure()  throws InterpreterException {
 		MissionCommand cmd = new MissionCommand(MissionCommand.cmdEndProc);
-		theCommands.storeCmd(cmd);
+		commands.storeCmd(cmd);
 	}
 
 	public void send(MissionCommand cmd) throws InterpreterException {
 		try {
-			if (isStoring) theCommands.storeCmd(cmd);
+			if (isStoring) commands.storeCmd(cmd);
 				else this.run(cmd);
 		} catch (InterpreterException e){
 			Stack.dumpValues(10);
@@ -58,16 +58,16 @@ public class MissionInterpreter {
 	int curStart = 0;//current proc start
 	public void runProc(int index) {
 		try {			
-			if (index>=0 && index<theCommands.cntProc) {
-				cur = theCommands.theProc[index].startPoint;
+			if (index>=0 && index<commands.cntProc) {
+				cur = commands.proc[index].startPoint;
 				curStart = cur;
 				int topStack = Stack.getTop();
-				while (theCommands.theCommands[cur].type != MissionCommand.cmdEndProc
-						&& theCommands.theCommands[cur].type != MissionCommand.cmdRetProc) {
+				while (commands.commands[cur].type != MissionCommand.cmdEndProc
+						&& commands.commands[cur].type != MissionCommand.cmdRetProc) {
 					try {
-						this.run(theCommands.theCommands[cur]);
+						this.run(commands.commands[cur]);
 					} catch (InterpreterException e) {
-						System.out.println("exception at point " + cur + " command #" + theCommands.theCommands[cur].type);
+						System.out.println("exception at point " + cur + " command #" + commands.commands[cur].type);
 						System.out.println(e.toString());
 					}
 					cur++;
@@ -75,7 +75,7 @@ public class MissionInterpreter {
 				Stack.setTop(topStack);
 			} else throw new InterpreterException("procedure with index " + index + " doesn't exist");
 		} catch (InterpreterException e) {
-			System.out.println("exception at point " + cur + " command #" + theCommands.theCommands[cur].type);
+			System.out.println("exception at point " + cur + " command #" + commands.commands[cur].type);
 			System.out.println(e.toString());
 		}
 	}
@@ -174,7 +174,7 @@ public class MissionInterpreter {
 	}
 
 	private void doCallProc(MissionCommand cmd) throws InterpreterException {
-		int index = theCommands.findProc(cmd.strValue);
+		int index = commands.findProc(cmd.strValue);
 		if (index == -1) throw new InterpreterException("procedure " + cmd.strValue + " doesn't exist");
 		int lastCur = this.cur;
 		int lastStart = this.curStart;
@@ -184,7 +184,7 @@ public class MissionInterpreter {
 	}
 	
 	private void doGoTo(MissionCommand cmd) throws InterpreterException {
-		int iLabel = theCommands.findLabel(cmd.strValue, this.curStart);
+		int iLabel = commands.findLabel(cmd.strValue, this.curStart);
 		if (iLabel != -1) {
 				this.cur = iLabel;
 		} else {
@@ -210,10 +210,10 @@ public class MissionInterpreter {
 
 		int model = Models.getIndexByName(strModel);
 		if (model == -1) throw new InterpreterException("unknown model '" + strModel + "'");
-		SpaceObject theObject = new SpaceObject(strName,
-			Models.theModels[model], (double)x, (double)y, (double)z);
+		SpaceObject spaceObject = new SpaceObject(strName,
+			Models.models[model], (double)x, (double)y, (double)z);
 
-		Objects.add(theObject);
+		Objects.add(spaceObject);
 	}
 
 	private void doBindCameraTo() throws InterpreterException {
@@ -221,10 +221,10 @@ public class MissionInterpreter {
 
 		int index = Objects.getIndexByName(strName);
 		if (index < 0) throw new InterpreterException("object '" + strName + "' dos't exist");
-		if (theCamera.iRelatedObject != -1)
-			if (Objects.Objects[theCamera.iRelatedObject].HumanControlled)
-				Objects.Objects[theCamera.iRelatedObject].HumanControlled = false;
-		theCamera.iRelatedObject = index;
+		if (camera.iRelatedObject != -1)
+			if (Objects.Objects[camera.iRelatedObject].HumanControlled)
+				Objects.Objects[camera.iRelatedObject].HumanControlled = false;
+		camera.iRelatedObject = index;
 	}
     
     private void doBindViewCameraTo() throws InterpreterException {
@@ -233,22 +233,22 @@ public class MissionInterpreter {
 
 		int index = Objects.getIndexByName(strName);
 		if (index < 0) throw new InterpreterException("object '" + strName + "' dos't exist");
-		if (theCamera.iRelatedObject != -1)
-			if (Objects.Objects[theCamera.iRelatedObject].HumanControlled)
-				Objects.Objects[theCamera.iRelatedObject].HumanControlled = false;
+		if (camera.iRelatedObject != -1)
+			if (Objects.Objects[camera.iRelatedObject].HumanControlled)
+				Objects.Objects[camera.iRelatedObject].HumanControlled = false;
             
-		theCamera.iRelatedObject = index;
+		camera.iRelatedObject = index;
         if (view < 0 || view > 8) view = 0;
-        theCamera.iRelationType = view;
+        camera.iRelationType = view;
 	}
 
 	private void doMsg() throws InterpreterException {
 		if (Stack.topType() == DataElement.strElement) {
 			String strMsg = Stack.pops();
-			theScene.theMessageScreen.push(strMsg);
+			scene.messageScreen.push(strMsg);
 		} else {
 			String strMsg = "" + Stack.popi();
-			theScene.theMessageScreen.push(strMsg);
+			scene.messageScreen.push(strMsg);
 		}
 	}
 
@@ -260,20 +260,20 @@ public class MissionInterpreter {
 
 		if (Stack.topType() == DataElement.strElement) {
 			String strMsg = Stack.pops();
-			theScene.theMessageScreen.push(strMsg, msgColor);
+			scene.messageScreen.push(strMsg, msgColor);
 		} else {
 			String strMsg = "" + Stack.popi();
-			theScene.theMessageScreen.push(strMsg, msgColor);
+			scene.messageScreen.push(strMsg, msgColor);
 		}
 	}
 
 	private void doSMsg() throws InterpreterException {
 		if (Stack.topType() == DataElement.strElement) {
 			String strMsg = Stack.pops();
-			theScene.theMessageScreen.spush(strMsg);
+			scene.messageScreen.spush(strMsg);
 		} else {
 			String strMsg = "" + Stack.popi();
-			theScene.theMessageScreen.spush(strMsg);
+			scene.messageScreen.spush(strMsg);
 		}
 	}
 
@@ -285,24 +285,24 @@ public class MissionInterpreter {
 
 		if (Stack.topType() == DataElement.strElement) {
 			String strMsg = Stack.pops();
-			theScene.theMessageScreen.spush(strMsg, msgColor);
+			scene.messageScreen.spush(strMsg, msgColor);
 		} else {
 			String strMsg = "" + Stack.popi();
-			theScene.theMessageScreen.spush(strMsg, msgColor);
+			scene.messageScreen.spush(strMsg, msgColor);
 		}
 	}
 
 	private void doShowFinish() throws InterpreterException {
-		theScene.end = true;
-		theScene.cntEnd = 0;
+		scene.end = true;
+		scene.cntEnd = 0;
 	}
 	
 	private void doSmartCameraOn() throws InterpreterException {
-		theCamera.smartBind = true;
+		camera.smartBind = true;
 	}
 	
 	private void doSmartCameraOff() throws InterpreterException {
-		theCamera.smartBind = false;
+		camera.smartBind = false;
 	}
 
 	private void doSetVariable(MissionCommand cmd) throws InterpreterException {
@@ -316,9 +316,9 @@ public class MissionInterpreter {
 	}
 
 	private void doGetVariable(MissionCommand cmd) throws InterpreterException {
-		DataElement theDE = (DataElement)Heap.get(cmd.strValue);
-		if (theDE == null) throw new InterpreterException("variable " + cmd.strValue + " hasn't been inicialized");
-		Stack.push(theDE);
+		DataElement dataElement = (DataElement)Heap.get(cmd.strValue);
+		if (dataElement == null) throw new InterpreterException("variable " + cmd.strValue + " hasn't been inicialized");
+		Stack.push(dataElement);
 	}
 
 	private void doIf() throws InterpreterException {
@@ -552,7 +552,7 @@ public class MissionInterpreter {
 		String strName = Stack.pops();
 		int index = Objects.getIndexByName(strName);
 		if (index == -1) throw new InterpreterException("object '" + strName + "' dos't exist");		
-		int kill = theCommands.findProc(strProc);
+		int kill = commands.findProc(strProc);
 
 		if (kill >= 0) Objects.Objects[index].killProcedure = kill;
 	}
@@ -562,7 +562,7 @@ public class MissionInterpreter {
 		String strName = Stack.pops();
 		int index = Objects.getIndexByName(strName);
 		if (index == -1) throw new InterpreterException("object '" + strName + "' dos't exist");
-		int reach = theCommands.findProc(strProc);
+		int reach = commands.findProc(strProc);
 
 		if (reach >= 0) Objects.Objects[index].reachProcedure = reach;
 	}
@@ -573,8 +573,8 @@ public class MissionInterpreter {
 		int index = Objects.getIndexByName(strName);
 		if (index == -1) throw new InterpreterException("object '" + strName + "' dos't exist");
 
-		if (i > 0) theScene.Objects.Objects[index].isLive = true;
-		else theScene.Objects.Objects[index].isLive = false;
+		if (i > 0) scene.Objects.Objects[index].isLive = true;
+		else scene.Objects.Objects[index].isLive = false;
 	}
 
 	private void doSetLoad() throws InterpreterException {
@@ -584,7 +584,7 @@ public class MissionInterpreter {
 		int index = Objects.getIndexByName(strName);
 		if (index == -1) throw new InterpreterException("object '" + strName + "' dos't exist");
 		
-		theScene.Objects.Objects[index].missilesLoad[bay] = quantity;
+		scene.Objects.Objects[index].missilesLoad[bay] = quantity;
 	}
 	
 	private void doSetLifeTime() throws InterpreterException {
@@ -593,7 +593,7 @@ public class MissionInterpreter {
 		int index = Objects.getIndexByName(strName);
 		if (index == -1) throw new InterpreterException("object '" + strName + "' dos't exist");
 		
-		theScene.Objects.Objects[index].lifeTime = time;
+		scene.Objects.Objects[index].lifeTime = time;
 	}
 
 
@@ -605,7 +605,7 @@ public class MissionInterpreter {
 		int index = Objects.getIndexByName(strName);
 		if (index == -1) throw new InterpreterException("object '" + strName + "' dos't exist");
 
-		Stack.push((int)theScene.Objects.Objects[index].x / 10);
+		Stack.push((int)scene.Objects.Objects[index].x / 10);
 	}
 
 	private void doGetY() throws InterpreterException {
@@ -613,7 +613,7 @@ public class MissionInterpreter {
 		int index = Objects.getIndexByName(strName);
 		if (index == -1) throw new InterpreterException("object '" + strName + "' dos't exist");
 
-		Stack.push((int)theScene.Objects.Objects[index].y / 10);
+		Stack.push((int)scene.Objects.Objects[index].y / 10);
 	}
 
 	private void doGetZ() throws InterpreterException {
@@ -621,7 +621,7 @@ public class MissionInterpreter {
 		int index = Objects.getIndexByName(strName);
 		if (index == -1) throw new InterpreterException("object '" + strName + "' dos't exist");
 
-		Stack.push((int)theScene.Objects.Objects[index].z / 10);
+		Stack.push((int)scene.Objects.Objects[index].z / 10);
 	}
 	//***************************************************
 
@@ -650,7 +650,7 @@ public class MissionInterpreter {
 		else if (iCmd == 1) pos = new PlanPosition(side, plan, type, agression, strPrimary);
 		else pos = new PlanPosition(side, plan, type, agression);
 
-		theScene.thePlan.add(pos);
+		scene.plan.add(pos);
 	}
 
 	private void doAdd() throws InterpreterException {
@@ -846,23 +846,23 @@ public class MissionInterpreter {
 	//This is the gate for the SDL variables 
 	//**********************************************
 	public DataElement getVariable(String varName) {		
-		DataElement theDE = (DataElement)Heap.get(varName);
-		if (theDE != null) return new DataElement(theDE);
+		DataElement dataElement = (DataElement)Heap.get(varName);
+		if (dataElement != null) return new DataElement(dataElement);
 		else return null;
 	}
 
 	public int getiVariable(String varName) {
-		DataElement theDE = (DataElement)Heap.get(varName);
-		if (theDE == null) return 0;
-		if (theDE.type != DataElement.intElement) return 0;
-		return theDE.iValue;
+		DataElement dataElement = (DataElement)Heap.get(varName);
+		if (dataElement == null) return 0;
+		if (dataElement.type != DataElement.intElement) return 0;
+		return dataElement.iValue;
 	}
 
 	public String getsVariable(String varName) {
-		DataElement theDE = (DataElement)Heap.get(varName);
-		if (theDE == null) return "";
-		if (theDE.type != DataElement.strElement) return "";
-		return theDE.strValue;
+		DataElement dataElement = (DataElement)Heap.get(varName);
+		if (dataElement == null) return "";
+		if (dataElement.type != DataElement.strElement) return "";
+		return dataElement.strValue;
 	}
 
 	public void setVariable (String varName, int iValue) {
@@ -875,7 +875,7 @@ public class MissionInterpreter {
 		Heap.put(varName, newDE);
 	}
 
-	public void setVariable (String varName, DataElement theDE) {
-		Heap.put(varName, theDE);
+	public void setVariable (String varName, DataElement dataElement) {
+		Heap.put(varName, dataElement);
 	}
 }

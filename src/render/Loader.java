@@ -4,8 +4,8 @@ import java.awt.*;
 import java.applet.*;
 
 public class Loader {
-	Applet theApplet;
-	Graphics theCanvas;
+	Applet applet;
+	Graphics canvas;
 
 	int x = 200;
 	int y = 200;
@@ -18,9 +18,9 @@ public class Loader {
 	public String strStatus = "Loading...";
 
 
-	public Loader(Applet theApplet, Graphics theCanvas) {
-		this.theApplet = theApplet;
-		this.theCanvas = theCanvas;
+	public Loader(Applet applet, Graphics canvas) {
+		this.applet = applet;
+		this.canvas = canvas;
 	}
 
 	public void increase(int iValue) {
@@ -29,25 +29,25 @@ public class Loader {
 	}
 
 	public void draw() {
-        this.x = (theApplet.getWidth() - 300) / 2;
-        this.y = (theApplet.getHeight() / 2);
+        this.x = (applet.getWidth() - 300) / 2;
+        this.y = (applet.getHeight() / 2);
         
 		double coef = (double)(status - min) / (double)(max - min);
 		int level = (int)((double)w * coef);
 
-		theCanvas.setColor(new Color(255, 255, 255));
-		theCanvas.drawRect(x - 1, y - 1, w + 2, h + 2);
+		canvas.setColor(new Color(255, 255, 255));
+		canvas.drawRect(x - 1, y - 1, w + 2, h + 2);
 
-		theCanvas.setColor(new Color(110, 110, 110));
-		theCanvas.fillRect(x, y, level, h);
-		theCanvas.setColor(new Color(80, 80, 80));
-		theCanvas.fillRect(x + level, y, w - level, h);
+		canvas.setColor(new Color(110, 110, 110));
+		canvas.fillRect(x, y, level, h);
+		canvas.setColor(new Color(80, 80, 80));
+		canvas.fillRect(x + level, y, w - level, h);
 	
 
-		FontMetrics FM = theCanvas.getFontMetrics();
+		FontMetrics FM = canvas.getFontMetrics();
 		int sx = (this.w - FM.stringWidth(this.strStatus)) / 2;
 
-		theCanvas.setColor(new Color(255, 255, 255));
-		theCanvas.drawString(strStatus, x + sx, y + h - 5);
+		canvas.setColor(new Color(255, 255, 255));
+		canvas.drawString(strStatus, x + sx, y + h - 5);
 	}
 }

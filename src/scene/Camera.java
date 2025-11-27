@@ -1,14 +1,11 @@
 package scene;
 
-import java.math.*;
-
 import engine.Strike;
 import math.*;
-import render.*;
 
 public class Camera {
 	public static final int cntRelationTypes = 8;
-	private Strike theApplet;
+	private Strike applet;
 	public int iRelatedObject = -1;
 	public int iRelationType = 0;
 	public int iTargetObject = -1;
@@ -58,8 +55,8 @@ public class Camera {
 		this.postRotate();
 	}
 
-	public Camera(Strike theApplet, int iRelatedObject, double x, double y, double z, int alpha, int beta, int gamma){
-		this.theApplet = theApplet;
+	public Camera(Strike applet, int iRelatedObject, double x, double y, double z, int alpha, int beta, int gamma){
+		this.applet = applet;
         
 		//set properties by default
 		ScreenShiftX = ScreenWidth / 2;
@@ -259,16 +256,16 @@ public class Camera {
 	}
 	
 	public void clearifyPosition(int w, int h) {
-		if (theApplet.tacticalFriendly.isVisible())
-			this.ScreenX = theApplet.tacticalFriendly.x
-				+ theApplet.tacticalFriendly.w + 10;
+		if (applet.tacticalFriendly.isVisible())
+			this.ScreenX = applet.tacticalFriendly.x
+				+ applet.tacticalFriendly.w + 10;
 		else this.ScreenX = 10;
 		this.ScreenY = 10;
-		if (theApplet.tacticalFriendly.isVisible())
-			this.ScreenWidth = theApplet.radar.x
-				- theApplet.tacticalFriendly.w - 30;
-		else this.ScreenWidth = theApplet.radar.x - 20;
-		this.ScreenHeight = h - theApplet.scene.theMessageScreen.h - 30;
+		if (applet.tacticalFriendly.isVisible())
+			this.ScreenWidth = applet.radar.x
+				- applet.tacticalFriendly.w - 30;
+		else this.ScreenWidth = applet.radar.x - 20;
+		this.ScreenHeight = h - applet.scene.messageScreen.h - 30;
 		this.ScreenShiftX = ScreenWidth / 2;
 		this.ScreenShiftY = ScreenHeight / 2;
 	}

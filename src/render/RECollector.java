@@ -28,14 +28,14 @@ public class RECollector {
 		}
 	}
 
-	private void findPlace(RenderedElement theElement, int i) {
+	private void findPlace(RenderedElement element, int i) {
 			//find the elements place in the list
 			boolean isFindPlace = false;
 			int k = -1;
 			int j = iHead;
 			while (isFindPlace == false && j != -1) {
 				////System.out.println("OK:" + Elements[j].distance + " > " + Elements[i].distance);
-				if (theElement.test(Elements[j])) {
+				if (element.test(Elements[j])) {
 					isFindPlace = true;
 					k = Elements[j].prevElement;
 				} else {
@@ -52,11 +52,11 @@ public class RECollector {
 				else iTail = i;
 	}
 
-	public boolean addElement(RenderedElement theElement) {
-		if (theElement.distance <= 0) return false;
-		if (!theElement.isInScreen) return false;
+	public boolean addElement(RenderedElement element) {
+		if (element.distance <= 0) return false;
+		if (!element.isInScreen) return false;
 		if (cntElements == 0) {
-			Elements[0] = theElement;
+			Elements[0] = element;
 			iHead = 0;
 			iTail = 0;
 			Elements[0].prevElement = -1;
@@ -69,23 +69,23 @@ public class RECollector {
 			while (Elements[i].inList == true) {i++;}
 
 			//insert the element in the array
-			Elements[i] = theElement;
-			theElement.inList = true;
+			Elements[i] = element;
+			element.inList = true;
 			cntElements++;
 
-			findPlace(theElement, i);
+			findPlace(element, i);
 
 		} else {	
 			//there is no room for this new element
 			//...
 			//here we need to find farest element end remove it from list
 			//and insert new element instead
-			if (Elements[iTail].distance > theElement.distance) {
+			if (Elements[iTail].distance > element.distance) {
 				Elements[iTail].inList = false;
 				iTail = Elements[iTail].prevElement;
 				Elements[iTail].nextElement = -1;
 				cntElements--;
-				this.addElement(theElement);
+				this.addElement(element);
 				return true;
 			}
 			return false;

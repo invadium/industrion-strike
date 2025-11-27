@@ -98,24 +98,24 @@ public class SpaceObject {
 	public int hits = 0;
 	public int actionPoints = 0;
 
-	public SpaceObject(String strName, Model theModel,
+	public SpaceObject(String strName, Model model,
 						double x, double y, double z) {
 		this.colorExtension = false;
 		this.strObjectName = strName;
-		this.model = theModel;
+		this.model = model;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.currentSpeed = theModel.startSpeed;
-		this.currentFuel = theModel.FuelTank;
-		this.farColor = theModel.farColor;
-		this.Energy = theModel.Energy;
-		this.Shield = theModel.Shield;
-		this.Hull = theModel.Hull;
-		this.lifeTime = theModel.lifeTime;
+		this.currentSpeed = model.startSpeed;
+		this.currentFuel = model.FuelTank;
+		this.farColor = model.farColor;
+		this.Energy = model.Energy;
+		this.Shield = model.Shield;
+		this.Hull = model.Hull;
+		this.lifeTime = model.lifeTime;
 		//load launchers
 		for (int i = 0; i < this.model.cntLaunchers; i++) {
-			this.missilesLoad[i] = theModel.missileCapacity[i];
+			this.missilesLoad[i] = model.missileCapacity[i];
 		}
 
 		this.Dirrection = new Vector(0, 0, 1);
@@ -714,7 +714,7 @@ public class SpaceObject {
 	public void createFragments() {
 		for (int i = 0; i < this.model.fragments; i++) {
 			SpaceObject fragment = new SpaceObject("fragment",
-			this.model.theFragment, this.x, this.y, this.z);
+			this.model.fragment, this.x, this.y, this.z);
 			fragment.dirRotate = new Matrix43();
 			fragment.dirRotate.copy(this.matRotate);
 
@@ -742,7 +742,7 @@ public class SpaceObject {
 	public void createBlows() {
 		for (int i = 0; i < this.model.blows; i++) {
 			SpaceObject blow = new SpaceObject("blow",
-			this.model.theBlow, this.x, this.y, this.z);
+			this.model.blow, this.x, this.y, this.z);
 
 			int yawSpeed = (int)(CMath.R.nextFloat() * 10) * 200 + 100;
 			int pitchSpeed = (int)(CMath.R.nextFloat() * 10) * 200 + 100;    
@@ -772,12 +772,12 @@ public class SpaceObject {
 		
 		//fragments control
 		if ((this.model.isShip || this.model.isFighter
-			|| this.model.isStatic) && this.model.theFragment != null)
+			|| this.model.isStatic) && this.model.fragment != null)
 				createFragments();
 
 		//blows control
 		if ((this.model.isShip || this.model.isFighter
-			|| this.model.isStatic) && this.model.theBlow != null)
+			|| this.model.isStatic) && this.model.blow != null)
 				createBlows();
 
 		//score control

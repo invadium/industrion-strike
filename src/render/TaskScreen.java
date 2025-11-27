@@ -10,12 +10,12 @@ import scene.Action;
 import control.Task;
 
 public class TaskScreen {
-	Applet theApplet;
-	Graphics theCanvas;
-	Scene theScene;
-	Camera theCamera;
-	SpaceObject theObject;
-	Media theMedia;
+	Applet applet;
+	Graphics canvas;
+	Scene scene;
+	Camera camera;
+	SpaceObject spaceObject;
+	Media media;
 	Font screenFont = new Font("Courier", Font.PLAIN, 9);
 	Font screenFontL = new Font("Courier", Font.PLAIN, 12);
 	int x = 530;
@@ -31,18 +31,18 @@ public class TaskScreen {
 	int iTaskScreen = -1;
 	int iCam = -1;
 
-	public TaskScreen(Applet theApplet, Graphics theCanvas, Scene theScene,
-						Camera theCamera, Media theMedia) {
-		this.theApplet = theApplet;
-		this.theCanvas = theCanvas;
-		this.theScene = theScene;
-		this.theCamera = theCamera;
-		this.theMedia = theMedia;
+	public TaskScreen(Applet applet, Graphics canvas, Scene scene,
+						Camera camera, Media media) {
+		this.applet = applet;
+		this.canvas = canvas;
+		this.scene = scene;
+		this.camera = camera;
+		this.media = media;
 	}
 
 	private void clearAll() {           
-		theCanvas.setColor(Color.black);
-		theCanvas.fillRect(x, y, w, h);		
+		canvas.setColor(Color.black);
+		canvas.fillRect(x, y, w, h);		
 	}
 
 	public void expaired() {
@@ -57,154 +57,154 @@ public class TaskScreen {
 
 
 	private void drawTask() {
- 		theCanvas.setFont(screenFontL);
-		theCanvas.setColor(Color.green);
+ 		canvas.setFont(screenFontL);
+		canvas.setColor(Color.green);
 
-		if (theCamera.iRelatedObject != -1) {
+		if (camera.iRelatedObject != -1) {
 			iCam = -1;
-			theObject = theScene.Objects.Objects[theCamera.iRelatedObject];
+			spaceObject = scene.Objects.Objects[camera.iRelatedObject];
 
-			if (iType != theObject.currentTask.iType  || iAgression != theObject.agressionLevel
-				|| iPrimary != theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iTarget
-				|| iSecondary != theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iSecondaryTarget) {
+			if (iType != spaceObject.currentTask.iType  || iAgression != spaceObject.agressionLevel
+				|| iPrimary != scene.Objects.Objects[camera.iRelatedObject].currentTask.iTarget
+				|| iSecondary != scene.Objects.Objects[camera.iRelatedObject].currentTask.iSecondaryTarget) {
 
-				theCanvas.setColor(Color.black);
-				theCanvas.fillRect(x, y, w, 40);
-				theCanvas.setColor(Color.green);
+				canvas.setColor(Color.black);
+				canvas.fillRect(x, y, w, 40);
+				canvas.setColor(Color.green);
 
 				//Task Type
-				switch(theObject.currentTask.iType) {
-					case Task.Defend: theCanvas.drawString("Follow:", x, y + 10);
+				switch(spaceObject.currentTask.iType) {
+					case Task.Defend: canvas.drawString("Follow:", x, y + 10);
 								  break;
-					case Task.Attack: theCanvas.drawString("Attack:", x, y + 10);
+					case Task.Attack: canvas.drawString("Attack:", x, y + 10);
 								  break;
-					default: theCanvas.drawString("None:", x, y + 10);
+					default: canvas.drawString("None:", x, y + 10);
 				}
 
 				//Primary Task
-				if (theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iTarget == -1) {
-					theCanvas.drawString("---- empty ----", x + 45, y + 10);
+				if (scene.Objects.Objects[camera.iRelatedObject].currentTask.iTarget == -1) {
+					canvas.drawString("---- empty ----", x + 45, y + 10);
 				} else {
-					theCanvas.drawString(
-						theScene.Objects.Objects[theObject.currentTask.iTarget].model.strIDName + ": " +
-						theScene.Objects.Objects[theObject.currentTask.iTarget].strObjectName,
+					canvas.drawString(
+						scene.Objects.Objects[spaceObject.currentTask.iTarget].model.strIDName + ": " +
+						scene.Objects.Objects[spaceObject.currentTask.iTarget].strObjectName,
 						x + 45, y + 10);
 				}
 
 				//Secondary Task
-				if (theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iSecondaryTarget == -1) {
-					theCanvas.drawString("---- empty ----", x + 45, y + 22);
+				if (scene.Objects.Objects[camera.iRelatedObject].currentTask.iSecondaryTarget == -1) {
+					canvas.drawString("---- empty ----", x + 45, y + 22);
 				} else {
-					theCanvas.drawString(
-						theScene.Objects.Objects[theObject.currentTask.iSecondaryTarget].model.strIDName + ": " +
-						theScene.Objects.Objects[theObject.currentTask.iSecondaryTarget].strObjectName,
+					canvas.drawString(
+						scene.Objects.Objects[spaceObject.currentTask.iSecondaryTarget].model.strIDName + ": " +
+						scene.Objects.Objects[spaceObject.currentTask.iSecondaryTarget].strObjectName,
 						x + 45, y + 22);
 				}
 
 				//Agressive level
-				theCanvas.setColor(Color.cyan);
-				theCanvas.drawString("AL:", x, y+34);
-				for (int i=1; i<5; i++) theCanvas.drawString(""+i, x+i*10+10, y+34);
-				theCanvas.setColor(Color.red);
-				theCanvas.drawString("" + theObject.agressionLevel, x+theObject.agressionLevel*10+10, y+34);
+				canvas.setColor(Color.cyan);
+				canvas.drawString("AL:", x, y+34);
+				for (int i=1; i<5; i++) canvas.drawString(""+i, x+i*10+10, y+34);
+				canvas.setColor(Color.red);
+				canvas.drawString("" + spaceObject.agressionLevel, x+spaceObject.agressionLevel*10+10, y+34);
 
-				iType = theObject.currentTask.iType;
-				iPrimary = theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iTarget;
-				iSecondary = theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iSecondaryTarget;
-				iAgression = theObject.agressionLevel;
+				iType = spaceObject.currentTask.iType;
+				iPrimary = scene.Objects.Objects[camera.iRelatedObject].currentTask.iTarget;
+				iSecondary = scene.Objects.Objects[camera.iRelatedObject].currentTask.iSecondaryTarget;
+				iAgression = spaceObject.agressionLevel;
 			}
 
 			/****************************************
 			//only for debbuging purposes
 			//show current target name
 			String strType = "none of all";
-			theCanvas.setColor(Color.black);
-			theCanvas.fillRect(x + 70, y + 22, 130, 14);
-			theCanvas.setColor(Color.green);
-			if (theObject.currentTarget > 0) {
-				if (theObject.typeManoeuvre == Action.OppositeTarget)
+			canvas.setColor(Color.black);
+			canvas.fillRect(x + 70, y + 22, 130, 14);
+			canvas.setColor(Color.green);
+			if (spaceObject.currentTarget > 0) {
+				if (spaceObject.typeManoeuvre == Action.OppositeTarget)
 					strType = "removal with "
-					+ theScene.Objects.Objects[theObject.currentTarget].theModel.strIDName
-					+ ": " + theScene.Objects.Objects[theObject.currentTarget].strObjectName;
-				else if (theObject.targetType == Task.Attack) strType 
-				  = "attacking " + theScene.Objects.Objects[theObject.currentTarget].theModel.strIDName
-					+ ": " + theScene.Objects.Objects[theObject.currentTarget].strObjectName;
-				else if (theObject.targetType == Task.SupportAttack) strType 
-				  = "attacking " + theScene.Objects.Objects[theObject.currentTarget].theModel.strIDName
-					+ ": " + theScene.Objects.Objects[theObject.currentTarget].strObjectName;
-				else if (theObject.targetType == Task.Defend) strType = "following "
-					+ theScene.Objects.Objects[theObject.currentTarget].theModel.strIDName + ": "
-					+ theScene.Objects.Objects[theObject.currentTarget].strObjectName;
-				else if (theObject.targetType == Task.None) strType = "none ";
-			}   else if (theObject.currentTarget == Action.AvoidCollision) strType = "avoid collision";
-			else if (theObject.currentTarget == Action.AvoidFire) strType = "avoid fire";
+					+ scene.Objects.Objects[spaceObject.currentTarget].model.strIDName
+					+ ": " + scene.Objects.Objects[object.currentTarget].strObjectName;
+				else if (spaceObject.targetType == Task.Attack) strType 
+				  = "attacking " + scene.Objects.Objects[spaceObject.currentTarget].model.strIDName
+					+ ": " + scene.Objects.Objects[spaceObject.currentTarget].strObjectName;
+				else if (spaceObject.targetType == Task.SupportAttack) strType 
+				  = "attacking " + scene.Objects.Objects[spaceObject.currentTarget].model.strIDName
+					+ ": " + scene.Objects.Objects[spaceObject.currentTarget].strObjectName;
+				else if (spaceObject.targetType == Task.Defend) strType = "following "
+					+ scene.Objects.Objects[spaceObject.currentTarget].model.strIDName + ": "
+					+ scene.Objects.Objects[spaceObject.currentTarget].strObjectName;
+				else if (spaceObject.targetType == Task.None) strType = "none ";
+			}   else if (spaceObject.currentTarget == Action.AvoidCollision) strType = "avoid collision";
+			else if (spaceObject.currentTarget == Action.AvoidFire) strType = "avoid fire";
 			else strType = "none";
-			theCanvas.drawString(strType, x + 75, y+34);
+			canvas.drawString(strType, x + 75, y+34);
 			/******************************************/
 
 			//Flight Plan 
-			if (theObject.flightPlan != iPlan) {
-				theCanvas.setColor(Color.black);
-				theCanvas.fillRect(x + 60, y + 22, 140, 14);
-				theCanvas.setColor(Color.green);
-				theCanvas.drawString(theScene.thePlan.getName(theObject), x + 60, y+34);
+			if (spaceObject.flightPlan != iPlan) {
+				canvas.setColor(Color.black);
+				canvas.fillRect(x + 60, y + 22, 140, 14);
+				canvas.setColor(Color.green);
+				canvas.drawString(scene.plan.getName(spaceObject), x + 60, y+34);
 			}
 			
 
 			//****************************************
 			//			targeted object
 			//****************************************
-			if (theObject.taskScreen != -1 && theScene.Objects.Objects[theObject.taskScreen].isLive) {
+			if (spaceObject.taskScreen != -1 && scene.Objects.Objects[spaceObject.taskScreen].isLive) {
 				//model image
-				if (iTarget != theObject.taskScreen) {
-					if (theScene.Objects.Objects[theObject.taskScreen].model.imgModel != null) {
-						theCanvas.drawImage(theScene.Objects.Objects[theObject.taskScreen].model.imgModel,
-									x, y + 40, theApplet);
+				if (iTarget != spaceObject.taskScreen) {
+					if (scene.Objects.Objects[spaceObject.taskScreen].model.imgModel != null) {
+						canvas.drawImage(scene.Objects.Objects[spaceObject.taskScreen].model.imgModel,
+									x, y + 40, applet);
 					} else {
-						theCanvas.setColor(Color.black);
-						theCanvas.fillRect(x, y + 40, 70, 70);
+						canvas.setColor(Color.black);
+						canvas.fillRect(x, y + 40, 70, 70);
 					}
 				}
 
 				//speed, shield, hull
-				if (iSpeed != theScene.Objects.Objects[theObject.taskScreen].currentSpeed
-					|| iShield != theScene.Objects.Objects[theObject.taskScreen].Shield
-					|| iHull != theScene.Objects.Objects[theObject.taskScreen].Hull) {
-					theCanvas.setColor(Color.black);
-					theCanvas.fillRect(x + 70, y + 40, w - 70, 70);
-					theCanvas.setColor(Color.green);
-					theCanvas.drawString("SPD: " + theScene.Objects.Objects[theObject.taskScreen].currentSpeed, x + 75, y + 60);
-					theCanvas.drawString("SHL: " + theScene.Objects.Objects[theObject.taskScreen].Shield, x + 75, y + 75);
-					theCanvas.drawString("HUL: " + theScene.Objects.Objects[theObject.taskScreen].Hull, x + 75, y + 90);
-					iSpeed = theScene.Objects.Objects[theObject.taskScreen].currentSpeed;
-					iShield = theScene.Objects.Objects[theObject.taskScreen].Shield;
-					iHull = theScene.Objects.Objects[theObject.taskScreen].Hull;
+				if (iSpeed != scene.Objects.Objects[spaceObject.taskScreen].currentSpeed
+					|| iShield != scene.Objects.Objects[spaceObject.taskScreen].Shield
+					|| iHull != scene.Objects.Objects[spaceObject.taskScreen].Hull) {
+					canvas.setColor(Color.black);
+					canvas.fillRect(x + 70, y + 40, w - 70, 70);
+					canvas.setColor(Color.green);
+					canvas.drawString("SPD: " + scene.Objects.Objects[spaceObject.taskScreen].currentSpeed, x + 75, y + 60);
+					canvas.drawString("SHL: " + scene.Objects.Objects[spaceObject.taskScreen].Shield, x + 75, y + 75);
+					canvas.drawString("HUL: " + scene.Objects.Objects[spaceObject.taskScreen].Hull, x + 75, y + 90);
+					iSpeed = scene.Objects.Objects[spaceObject.taskScreen].currentSpeed;
+					iShield = scene.Objects.Objects[spaceObject.taskScreen].Shield;
+					iHull = scene.Objects.Objects[spaceObject.taskScreen].Hull;
 	
 
 					//target targeting system
 					String strType = "none of all";
-					theCanvas.setColor(Color.black);
-					theCanvas.fillRect(x + 75, y + 94, 125, 14);
-					theCanvas.setColor(Color.green);
+					canvas.setColor(Color.black);
+					canvas.fillRect(x + 75, y + 94, 125, 14);
+					canvas.setColor(Color.green);
 
- 	           		SpaceObject obj = theScene.Objects.Objects[theObject.taskScreen];
+ 	           		SpaceObject obj = scene.Objects.Objects[spaceObject.taskScreen];
 					if (obj.currentTarget > 0) {						
 						if (obj.typeManoeuvre == Action.OppositeTarget)
 							strType = "O "
-							+ theScene.Objects.Objects[obj.currentTarget].model.strIDName
-							+ ": " + theScene.Objects.Objects[obj.currentTarget].strObjectName;
+							+ scene.Objects.Objects[obj.currentTarget].model.strIDName
+							+ ": " + scene.Objects.Objects[obj.currentTarget].strObjectName;
 
 						else if (obj.targetType == Task.Attack) strType 
-							  = "A " + theScene.Objects.Objects[obj.currentTarget].model.strIDName
-							+ ": " + theScene.Objects.Objects[obj.currentTarget].strObjectName;
+							  = "A " + scene.Objects.Objects[obj.currentTarget].model.strIDName
+							+ ": " + scene.Objects.Objects[obj.currentTarget].strObjectName;
 
-						else if (theObject.targetType == Task.SupportAttack) strType 
-						  = "A " + theScene.Objects.Objects[obj.currentTarget].model.strIDName
-							+ ": " + theScene.Objects.Objects[obj.currentTarget].strObjectName;
+						else if (spaceObject.targetType == Task.SupportAttack) strType 
+						  = "A " + scene.Objects.Objects[obj.currentTarget].model.strIDName
+							+ ": " + scene.Objects.Objects[obj.currentTarget].strObjectName;
 
 						else if (obj.targetType == Task.Defend) strType = "F "
-							+ theScene.Objects.Objects[obj.currentTarget].model.strIDName + ": "
-							+ theScene.Objects.Objects[obj.currentTarget].strObjectName;
+							+ scene.Objects.Objects[obj.currentTarget].model.strIDName + ": "
+							+ scene.Objects.Objects[obj.currentTarget].strObjectName;
 						else if (obj.targetType == Task.None) strType = "none";
 
 					} else if (obj.currentTarget == Action.AvoidCollision) strType = "avoid collision";
@@ -212,36 +212,36 @@ public class TaskScreen {
 					else if (obj.currentTarget == Action.AvoidFire) strType = "avoid fire";
 					else strType = "none";
 
-					theCanvas.drawString(strType, x + 75, y+105);
+					canvas.drawString(strType, x + 75, y+105);
 				}
 
 
-    			if (iTarget != theObject.taskScreen) {
-					theCanvas.setColor(Color.black);
-					theCanvas.fillRect(x, y + 110, w, 14);
-				  	switch(theScene.Objects.Objects[theObject.taskScreen].Side) {
-						case 0: theCanvas.setColor(Color.white); break;			 	//white - neutral
-						case 1: theCanvas.setColor(new Color(100, 255, 100)); break;//green
-						case 2: theCanvas.setColor(new Color(255, 70, 70)); break;  //red
-						case 3: theCanvas.setColor(new Color(255, 200, 100)); break;//yellow
-						case 4: theCanvas.setColor(new Color(255, 113, 255)); break;//pink
-						default: theCanvas.setColor(Color.white);				 //white - unknown
+    			if (iTarget != spaceObject.taskScreen) {
+					canvas.setColor(Color.black);
+					canvas.fillRect(x, y + 110, w, 14);
+				  	switch(scene.Objects.Objects[spaceObject.taskScreen].Side) {
+						case 0: canvas.setColor(Color.white); break;			 	//white - neutral
+						case 1: canvas.setColor(new Color(100, 255, 100)); break;//green
+						case 2: canvas.setColor(new Color(255, 70, 70)); break;  //red
+						case 3: canvas.setColor(new Color(255, 200, 100)); break;//yellow
+						case 4: canvas.setColor(new Color(255, 113, 255)); break;//pink
+						default: canvas.setColor(Color.white);				 //white - unknown
 					}
-					theCanvas.drawString(
-						theScene.Objects.Objects[theObject.taskScreen].model.strIDName + ": " +
-						theScene.Objects.Objects[theObject.taskScreen].strObjectName,
+					canvas.drawString(
+						scene.Objects.Objects[spaceObject.taskScreen].model.strIDName + ": " +
+						scene.Objects.Objects[spaceObject.taskScreen].strObjectName,
 						x, y + 124);
 
-					iTarget = theObject.taskScreen;
+					iTarget = spaceObject.taskScreen;
 				}
 
 				//distance
-				int dist = (int)theObject.getDistance(theScene.Objects.Objects[theObject.taskScreen]);
+				int dist = (int)spaceObject.getDistance(scene.Objects.Objects[spaceObject.taskScreen]);
 				if (dist!=iDistance) {
-					theCanvas.setColor(Color.black);
-					theCanvas.fillRect(x, y + 124, w, 16);
-					theCanvas.setColor(Color.green);
-					theCanvas.drawString("distance: " + dist/10 + "m", x, y + 136);
+					canvas.setColor(Color.black);
+					canvas.fillRect(x, y + 124, w, 16);
+					canvas.setColor(Color.green);
+					canvas.drawString("distance: " + dist/10 + "m", x, y + 136);
 					iDistance = dist;
 				}
 				iTaskScreen = -1;
@@ -249,9 +249,9 @@ public class TaskScreen {
 				if (iTaskScreen == -1) {
 					this.expaired();
 					iTaskScreen = 1;
-					theObject.taskScreen = -1;
-					theCanvas.setColor(Color.black);
-					theCanvas.fillRect(x, y + 35, w, 105);
+					spaceObject.taskScreen = -1;
+					canvas.setColor(Color.black);
+					canvas.fillRect(x, y + 35, w, 105);
 				}
 			}
 		} else {
@@ -269,124 +269,124 @@ public class TaskScreen {
 
 
 	public void nav() {
-	if (theCamera.iRelatedObject != -1)
-		if (theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen != -1) {
-			theMedia.auPing.play();
-			int t = theScene.Objects.getNavTarget(theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+	if (camera.iRelatedObject != -1)
+		if (scene.Objects.Objects[camera.iRelatedObject].taskScreen != -1) {
+			media.auPing.play();
+			int t = scene.Objects.getNavTarget(scene.Objects.Objects[camera.iRelatedObject].taskScreen);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		} else {
-			int t = theScene.Objects.getNavTarget(0);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+			int t = scene.Objects.getNavTarget(0);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		}
 	}
 
 	public void foe() {
-	if (theCamera.iRelatedObject != -1)
-		if (theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen != -1) {
-			theMedia.auPing.play();
-			int t = theScene.Objects.getFoeTarget(theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen,
-				theScene.Objects.Objects[theCamera.iRelatedObject].Side);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+	if (camera.iRelatedObject != -1)
+		if (scene.Objects.Objects[camera.iRelatedObject].taskScreen != -1) {
+			media.auPing.play();
+			int t = scene.Objects.getFoeTarget(scene.Objects.Objects[camera.iRelatedObject].taskScreen,
+				scene.Objects.Objects[camera.iRelatedObject].Side);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		} else {
-			int t = theScene.Objects.getFoeTarget(0, theScene.Objects.Objects[theCamera.iRelatedObject].Side);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+			int t = scene.Objects.getFoeTarget(0, scene.Objects.Objects[camera.iRelatedObject].Side);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		}
 	}
 
 	public void friend() {
-	if (theCamera.iRelatedObject != -1)
-		if (theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen != -1) {
-			theMedia.auPing.play();
-			int t = theScene.Objects.getFriendTarget(theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen,
-				theScene.Objects.Objects[theCamera.iRelatedObject].Side);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+	if (camera.iRelatedObject != -1)
+		if (scene.Objects.Objects[camera.iRelatedObject].taskScreen != -1) {
+			media.auPing.play();
+			int t = scene.Objects.getFriendTarget(scene.Objects.Objects[camera.iRelatedObject].taskScreen,
+				scene.Objects.Objects[camera.iRelatedObject].Side);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		} else {
-			int t = theScene.Objects.getFriendTarget(0, theScene.Objects.Objects[theCamera.iRelatedObject].Side);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+			int t = scene.Objects.getFriendTarget(0, scene.Objects.Objects[camera.iRelatedObject].Side);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		}
 	}
 
 	public void setAttacker() {
-	  if (theCamera.iRelatedObject != -1) {
-		int t = theScene.Objects.getNearestAttacker(theCamera.iRelatedObject);
+	  if (camera.iRelatedObject != -1) {
+		int t = scene.Objects.getNearestAttacker(camera.iRelatedObject);
 		if (t != -1) {
-			theMedia.auPing.play();
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+			media.auPing.play();
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		}
 	  }
 	}
 
 	public void setTargetAttacker() {
-	  if (theCamera.iRelatedObject != -1) {
-		if (theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen < 0) return;
-		int t = theScene.Objects.getNearestAttacker(theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen);
+	  if (camera.iRelatedObject != -1) {
+		if (scene.Objects.Objects[camera.iRelatedObject].taskScreen < 0) return;
+		int t = scene.Objects.getNearestAttacker(scene.Objects.Objects[camera.iRelatedObject].taskScreen);
 		if (t != -1) {
-			theMedia.auPing.play();
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+			media.auPing.play();
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		}
 	  }
 	}
 
 	public void prev() {
-	if (theCamera.iRelatedObject != -1)
-		if (theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen != -1) {
-			theMedia.auPing.play();
-			int t = theScene.Objects.getPrevTarget(theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+	if (camera.iRelatedObject != -1)
+		if (scene.Objects.Objects[camera.iRelatedObject].taskScreen != -1) {
+			media.auPing.play();
+			int t = scene.Objects.getPrevTarget(scene.Objects.Objects[camera.iRelatedObject].taskScreen);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		} else {
-			int t = theScene.Objects.getPrevTarget(0);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+			int t = scene.Objects.getPrevTarget(0);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		}
 	}
 
 	public void next() {
-	if (theCamera.iRelatedObject != -1)
-		if (theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen != -1) {
-			theMedia.auPing.play();
-			int t = theScene.Objects.getNextTarget(theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+	if (camera.iRelatedObject != -1)
+		if (scene.Objects.Objects[camera.iRelatedObject].taskScreen != -1) {
+			media.auPing.play();
+			int t = scene.Objects.getNextTarget(scene.Objects.Objects[camera.iRelatedObject].taskScreen);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		} else {
-			int t = theScene.Objects.getNextTarget(0);
-			theScene.Objects.Objects[theCamera.iRelatedObject].setTaskScreen(t);
+			int t = scene.Objects.getNextTarget(0);
+			scene.Objects.Objects[camera.iRelatedObject].setTaskScreen(t);
 		}
 	}
 
 	public void setAgression(int level) {
-		if (theCamera.iRelatedObject != -1) {
-			theMedia.auPing.play();
-			theScene.Objects.Objects[theCamera.iRelatedObject].agressionLevel = level;
-			theScene.Objects.Objects[theCamera.iRelatedObject].resetTarget();
+		if (camera.iRelatedObject != -1) {
+			media.auPing.play();
+			scene.Objects.Objects[camera.iRelatedObject].agressionLevel = level;
+			scene.Objects.Objects[camera.iRelatedObject].resetTarget();
 		}
 	}
 
 	public void resetTarget() {
-		if (theCamera.iRelatedObject != -1) {
-			theScene.Objects.Objects[theCamera.iRelatedObject].resetTarget();
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iType
+		if (camera.iRelatedObject != -1) {
+			scene.Objects.Objects[camera.iRelatedObject].resetTarget();
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.iType
 				= Task.None;
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iTarget
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.iTarget
 				= -1;
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iSecondaryTarget
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.iSecondaryTarget
 				= -1;
-			theMedia.auPing.play();
+			media.auPing.play();
 		}
 	}
 
 	public void setPrimary() {
-		if (theCamera.iRelatedObject != -1) {
-			theMedia.auPing.play();
-			theScene.Objects.Objects[theCamera.iRelatedObject].resetTarget();
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iTarget
-				= theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen;
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.id
-		= theScene.Objects.Objects[theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iTarget].id;
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.isActual = true;
+		if (camera.iRelatedObject != -1) {
+			media.auPing.play();
+			scene.Objects.Objects[camera.iRelatedObject].resetTarget();
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.iTarget
+				= scene.Objects.Objects[camera.iRelatedObject].taskScreen;
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.id
+		= scene.Objects.Objects[scene.Objects.Objects[camera.iRelatedObject].currentTask.iTarget].id;
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.isActual = true;
 
-			SpaceObject obj = theScene.Objects.Objects[theCamera.iRelatedObject];
-			if (theScene.Objects.Objects[obj.currentTask.iTarget].Side == obj.Side)
+			SpaceObject obj = scene.Objects.Objects[camera.iRelatedObject];
+			if (scene.Objects.Objects[obj.currentTask.iTarget].Side == obj.Side)
 				setDefend();
 			else {
-				if (theScene.Objects.Objects[theCamera.iRelatedObject].model.isFighter) 
+				if (scene.Objects.Objects[camera.iRelatedObject].model.isFighter) 
 					setAttack();
 				else
 					setDefend();
@@ -395,20 +395,20 @@ public class TaskScreen {
 	}
 
 	public void setSecondary() {
-		if (theCamera.iRelatedObject != -1) {
-			theMedia.auPing.play();
-			theScene.Objects.Objects[theCamera.iRelatedObject].resetTarget();
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iSecondaryTarget
-				= theScene.Objects.Objects[theCamera.iRelatedObject].taskScreen;
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.sid
-		= theScene.Objects.Objects[theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iSecondaryTarget].id;
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.isSecondaryActual = true;
+		if (camera.iRelatedObject != -1) {
+			media.auPing.play();
+			scene.Objects.Objects[camera.iRelatedObject].resetTarget();
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.iSecondaryTarget
+				= scene.Objects.Objects[camera.iRelatedObject].taskScreen;
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.sid
+		= scene.Objects.Objects[scene.Objects.Objects[camera.iRelatedObject].currentTask.iSecondaryTarget].id;
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.isSecondaryActual = true;
 
-			SpaceObject obj = theScene.Objects.Objects[theCamera.iRelatedObject];
-			if (theScene.Objects.Objects[obj.currentTask.iSecondaryTarget].Side == obj.Side)
+			SpaceObject obj = scene.Objects.Objects[camera.iRelatedObject];
+			if (scene.Objects.Objects[obj.currentTask.iSecondaryTarget].Side == obj.Side)
 				setDefend();
 			else {
-				if (theScene.Objects.Objects[theCamera.iRelatedObject].model.isFighter) 
+				if (scene.Objects.Objects[camera.iRelatedObject].model.isFighter) 
 					setAttack();
 				else
 					setDefend();
@@ -417,36 +417,36 @@ public class TaskScreen {
 	}
 	
 	public void setDefend() {
-		if (theCamera.iRelatedObject != -1
-			&& (theScene.Objects.Objects[theCamera.iRelatedObject].model.isFighter
-				|| theScene.Objects.Objects[theCamera.iRelatedObject].model.isShip)) {
-			theMedia.auPing.play();
-			theScene.Objects.Objects[theCamera.iRelatedObject].resetTarget();
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iType = Task.Defend;
+		if (camera.iRelatedObject != -1
+			&& (scene.Objects.Objects[camera.iRelatedObject].model.isFighter
+				|| scene.Objects.Objects[camera.iRelatedObject].model.isShip)) {
+			media.auPing.play();
+			scene.Objects.Objects[camera.iRelatedObject].resetTarget();
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.iType = Task.Defend;
 		}
 	}
 
 	public void setAttack() {
-		if (theCamera.iRelatedObject != -1 && theScene.Objects.Objects[theCamera.iRelatedObject].model.isFighter) {
-			theMedia.auPing.play();
-			theScene.Objects.Objects[theCamera.iRelatedObject].resetTarget();
-			theScene.Objects.Objects[theCamera.iRelatedObject].currentTask.iType = Task.Attack;
+		if (camera.iRelatedObject != -1 && scene.Objects.Objects[camera.iRelatedObject].model.isFighter) {
+			media.auPing.play();
+			scene.Objects.Objects[camera.iRelatedObject].resetTarget();
+			scene.Objects.Objects[camera.iRelatedObject].currentTask.iType = Task.Attack;
 		}
 	}
 
 	public void setPrevPlan() {
-		if (theCamera.iRelatedObject != -1) {
-			theMedia.auPing.play();
-			int plan = theScene.thePlan.getPrevPlan(theScene.Objects.Objects[theCamera.iRelatedObject]);
-			theScene.Objects.Objects[theCamera.iRelatedObject].flightPlan = plan;
+		if (camera.iRelatedObject != -1) {
+			media.auPing.play();
+			int plan = scene.plan.getPrevPlan(scene.Objects.Objects[camera.iRelatedObject]);
+			scene.Objects.Objects[camera.iRelatedObject].flightPlan = plan;
 		}
 	}
 
 	public void setNextPlan() {
-		if (theCamera.iRelatedObject != -1) {
-			theMedia.auPing.play();
-			int plan = theScene.thePlan.getNextPlan(theScene.Objects.Objects[theCamera.iRelatedObject]);
-			if (plan != -1) theScene.Objects.Objects[theCamera.iRelatedObject].flightPlan = plan;
+		if (camera.iRelatedObject != -1) {
+			media.auPing.play();
+			int plan = scene.plan.getNextPlan(scene.Objects.Objects[camera.iRelatedObject]);
+			if (plan != -1) scene.Objects.Objects[camera.iRelatedObject].flightPlan = plan;
 		}
 	}
 	

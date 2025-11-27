@@ -53,8 +53,8 @@ public class Stars {
 		SC3 = new Color(150, 150, 255);
     }
 	
-	public void updateCanvas(Graphics theCanvas) {
-		this.canvas = theCanvas;
+	public void updateCanvas(Graphics canvas) {
+		this.canvas = canvas;
 	}
 	
 	public void draw() {
@@ -69,7 +69,7 @@ public class Stars {
 			case 3: canvas.setColor(SC3);
 					break;
 			}
-			//theCanvas.setColor(Color.white);
+			//canvas.setColor(Color.white);
 			canvas.drawLine(StarsX[i], StarsY[i], StarsX[i], StarsY[i]);
 		}
 	}
@@ -108,14 +108,14 @@ public class Stars {
 		int x, y;
 		double a = (double)val * CMath.dFactor;
 		for (int i=0; i<cntStars; i++) {
-			ox = (double)(StarsX[i] - theCamera.ScreenShiftX);
-			oy = (double)(StarsY[i] - theCamera.ScreenShiftY);
+			ox = (double)(StarsX[i] - camera.ScreenShiftX);
+			oy = (double)(StarsY[i] - camera.ScreenShiftY);
 			oy *= -1;
 			x = (int)(ox * CMath.M.cos(a) + oy * CMath.M.sin(a));
 			y = (int)(- ox * CMath.M.sin(a) + oy * CMath.M.cos(a));	
 			y *= -1;
-			StarsX[i] = x + theCamera.ScreenShiftX;
-			StarsY[i] = y + theCamera.ScreenShiftY;
+			StarsX[i] = x + camera.ScreenShiftX;
+			StarsY[i] = y + camera.ScreenShiftY;
 		}
 		*/
 	}

@@ -427,8 +427,8 @@ public class SOCollector {
 
 	public byte getObjectSector(SpaceObject B, int weapon, SpaceObject T) {
 		try {
-			//System.out.println(B.strObjectName + " class " + B.theModel.strModelName);
-			//System.out.println(T.strObjectName + " class " + T.theModel.strModelName);
+			//System.out.println(B.strObjectName + " class " + B.model.strModelName);
+			//System.out.println(T.strObjectName + " class " + T.model.strModelName);
 			Vector dir = new Vector(T.x - B.x, T.y - B.y, T.z - B.z);
 			dir.mul(B.matRotate);
 			dir.x -= B.model.rackCoord[weapon].x;

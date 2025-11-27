@@ -30,41 +30,41 @@ class Modifier {
 		eFrame = 0;
 	}
 
-	public void setValues(Triangle theTriangle) {
-		theTriangle.matIlluminated = this.Illuminated;
-		theTriangle.Solid = this.Solid;
-		theTriangle.Wareframe = this.Wareframe;
-		if (!Solid && !Wareframe) theTriangle.Solid = true;
-		theTriangle.matMetal = this.iMetal;
-		theTriangle.sFrame = this.sFrame;
-		theTriangle.eFrame = this.eFrame;
+	public void setValues(Triangle triangle) {
+		triangle.matIlluminated = this.Illuminated;
+		triangle.Solid = this.Solid;
+		triangle.Wareframe = this.Wareframe;
+		if (!Solid && !Wareframe) triangle.Solid = true;
+		triangle.matMetal = this.iMetal;
+		triangle.sFrame = this.sFrame;
+		triangle.eFrame = this.eFrame;
 	}
 
-	public void setValues(Rectangle theRectangle) {
-		theRectangle.matIlluminated = this.Illuminated;
-		theRectangle.Solid = this.Solid;
-		theRectangle.Wareframe = this.Wareframe;
-		if (!Solid && !Wareframe) theRectangle.Solid = true;
-		theRectangle.matMetal = this.iMetal;
-		theRectangle.sFrame = this.sFrame;
-		theRectangle.eFrame = this.eFrame;
+	public void setValues(Rectangle rectangle) {
+		rectangle.matIlluminated = this.Illuminated;
+		rectangle.Solid = this.Solid;
+		rectangle.Wareframe = this.Wareframe;
+		if (!Solid && !Wareframe) rectangle.Solid = true;
+		rectangle.matMetal = this.iMetal;
+		rectangle.sFrame = this.sFrame;
+		rectangle.eFrame = this.eFrame;
 	}
 
-	public void setValues(Line theLine) {
-		theLine.sFrame = this.sFrame;
-		theLine.eFrame = this.eFrame;
-		theLine.volume = this.iVolume;
+	public void setValues(Line line) {
+		line.sFrame = this.sFrame;
+		line.eFrame = this.eFrame;
+		line.volume = this.iVolume;
 	}
 
-	public void setValues(Trixel theTrixel) {
-		theTrixel.sFrame = this.sFrame;
-		theTrixel.eFrame = this.eFrame;
-		theTrixel.isBitmapped = this.Bitmapped;
-		theTrixel.volume = this.iVolume;
+	public void setValues(Trixel trixel) {
+		trixel.sFrame = this.sFrame;
+		trixel.eFrame = this.eFrame;
+		trixel.isBitmapped = this.Bitmapped;
+		trixel.volume = this.iVolume;
 	}
 
-	public void setValues(Text theText) {
-		theText.volume = this.iVolume;
+	public void setValues(Text text) {
+		text.volume = this.iVolume;
 	}
 
 

@@ -6,25 +6,25 @@ import parser.*;
 import primitives.*;
 
 public class ModelsCollector {
-	Applet theApplet;
-	Graphics theCanvas;
+	Applet applet;
+	Graphics canvas;
 	Parser prs;
 	public boolean isError = false;
 
 	public final int maxModels = 256;
 
 	public int cntModels = 0;
-	public Model theModels[];
+	public Model models[];
 
-	public void updateCanvas(Graphics theCanvas) {
-		this.theCanvas = theCanvas;
+	public void updateCanvas(Graphics canvas) {
+		this.canvas = canvas;
 	}
 	
-	public ModelsCollector(Applet theApplet, Graphics theCanvas, String strFileName)
+	public ModelsCollector(Applet applet, Graphics canvas, String strFileName)
 			throws ModelsException, ParserException {
-		this.theApplet = theApplet;
-		this.theCanvas = theCanvas;		
-		prs = new Parser(theApplet);
+		this.applet = applet;
+		this.canvas = canvas;		
+		prs = new Parser(applet);
 		String strNames[] = new String [maxModels];
 		int declModels = 0;
 		
@@ -49,15 +49,15 @@ public class ModelsCollector {
         System.out.println("declared models: " + declModels);
         
 		//create rooms for all declarated models
-		theModels = new Model[declModels];
+		models = new Model[declModels];
 		Model curModel;
 		//modifiers
 		Modifier mod = new Modifier();	
-		primitives.Text theText;
-		primitives.Trixel theTrixel;
-		primitives.Line theLine;
-		primitives.Triangle theTriangle;
-		primitives.Rectangle theRectangle;
+		primitives.Text text;
+		primitives.Trixel trixel;
+		primitives.Line line;
+		primitives.Triangle triangle;
+		primitives.Rectangle rectangle;
 
 		//loading all declarated models
 		for (int i=0; i<declModels; i++)
@@ -144,8 +144,8 @@ public class ModelsCollector {
 						if (mod.isModified()) raiseException("prefix modifiers are not allowed here");
 						tok = prs.getToken(); isMatch(tok, Token.EQ);
 						tok = prs.getToken(); isMatch(tok, Token.STRING);
-						curModel.imgModel = theApplet.getImage(theApplet.getCodeBase(), tok.strValue);
-						theCanvas.drawImage(curModel.imgModel, 0, 0, theApplet);
+						curModel.imgModel = applet.getImage(applet.getCodeBase(), tok.strValue);
+						canvas.drawImage(curModel.imgModel, 0, 0, applet);
 						tok = prs.getToken(); isMatch(tok, Token.SEMI);
 						mod.resetModifiers();
 				}
@@ -163,35 +163,35 @@ public class ModelsCollector {
 				}
 				else if (tok.strValue.equals("TEXT")) {
 						if (mod.isModified2()) raiseException("prefix modifiers are not allowed here");
-						theText = takeText(curColor);
-						mod.setValues(theText);
-						curModel.addPrimitive(theText);
+						text = takeText(curColor);
+						mod.setValues(text);
+						curModel.addPrimitive(text);
 						mod.resetModifiers();
 				}
 				else if (tok.strValue.equals("TRIXEL")) {
 						if (mod.isModified2()) raiseException("prefix modifiers are not allowed here");
-						theTrixel = takeTrixel(curColor);
-						mod.setValues(theTrixel);
-						curModel.addPrimitive(theTrixel);
+						trixel = takeTrixel(curColor);
+						mod.setValues(trixel);
+						curModel.addPrimitive(trixel);
 						mod.resetModifiers();
 				}
 				else if (tok.strValue.equals("LINE")) {
 						if (mod.isModified2()) raiseException("prefix modifiers are not allowed here");
-						theLine = takeLine(curColor);
-						mod.setValues(theLine);
-						curModel.addPrimitive(theLine);
+						line = takeLine(curColor);
+						mod.setValues(line);
+						curModel.addPrimitive(line);
 						mod.resetModifiers();
 				}
 				else if (tok.strValue.equals("TRIANGLE")) {
-						theTriangle = takeTriangle(curColor);
-						mod.setValues(theTriangle);
-						curModel.addPrimitive(theTriangle);
+						triangle = takeTriangle(curColor);
+						mod.setValues(triangle);
+						curModel.addPrimitive(triangle);
 						mod.resetModifiers();
 				}
 				else if (tok.strValue.equals("RECTANGLE")) {
-						theRectangle = takeRectangle(curColor);
-						mod.setValues(theRectangle);
-						curModel.addPrimitive(theRectangle);
+						rectangle = takeRectangle(curColor);
+						mod.setValues(rectangle);
+						curModel.addPrimitive(rectangle);
 						mod.resetModifiers();
 				}
 				else if (tok.strValue.equals("SHIFT_X")) {
@@ -226,7 +226,7 @@ public class ModelsCollector {
 						if (modIndex == -1) raiseException("can't mount unexistent model " + tok.strValue);
 						tok = prs.getToken(); isMatch(tok, Token.SEMI);
 
-						curModel.theFragment = theModels[modIndex];
+						curModel.fragment = models[modIndex];
 						mod.resetModifiers();
 				}
 				else if (tok.strValue.equals("BLOW")) {
@@ -236,7 +236,7 @@ public class ModelsCollector {
 						if (modIndex == -1) raiseException("can't mount unexistent model " + tok.strValue);
 						tok = prs.getToken(); isMatch(tok, Token.SEMI);
 
-						curModel.theBlow = theModels[modIndex];
+						curModel.blow = models[modIndex];
 						mod.resetModifiers();
 				}
 				else if (tok.strValue.equals("MOUNT")) {
@@ -256,7 +256,7 @@ public class ModelsCollector {
 						curModel.rackCoord[curModel.cntWeapons].z = tok.iValue;
 						tok = prs.getToken(); isMatch(tok, Token.SEMI);
 
-						curModel.weaponRack[curModel.cntWeapons] = theModels[modIndex];
+						curModel.weaponRack[curModel.cntWeapons] = models[modIndex];
 						curModel.cntWeapons++;
 						mod.resetModifiers();
 				}
@@ -290,7 +290,7 @@ public class ModelsCollector {
 
 						tok = prs.getToken(); isMatch(tok, Token.SEMI);
 
-						curModel.weaponRack[curModel.cntWeapons] = theModels[modIndex];
+						curModel.weaponRack[curModel.cntWeapons] = models[modIndex];
 						curModel.cntWeapons++;
 						mod.resetModifiers();
 				}
@@ -304,7 +304,7 @@ public class ModelsCollector {
 						tok = prs.getToken(); isMatch(tok, Token.STRING, "CAPACITY");
 						tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 						curModel.missileCapacity[curModel.cntLaunchers] = tok.iValue;
-						curModel.missilesRack[curModel.cntLaunchers] = theModels[modIndex];
+						curModel.missilesRack[curModel.cntLaunchers] = models[modIndex];
 						//get coordinates
 						tok = prs.getToken(); isMatch(tok, Token.STRING, "TO");
 						curModel.launchersCoord[curModel.cntLaunchers] = new Coord3D();
@@ -424,7 +424,7 @@ public class ModelsCollector {
 				throw new ModelsException(7, "unexpected end of the file occured",
 								prs.strFileName, prs.iLine, prs.iLineChar);
 
-			theModels[i] = curModel;
+			models[i] = curModel;
 			System.out.println("succesfull");
 			cntModels++;
 		} else throw new ModelsException(7, "can't open models file", prs.strFileName, 0, 0);
@@ -473,8 +473,8 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER); z = tok.iValue;
 		tok = prs.getToken(); isMatch(tok, Token.SEMI);
 		
-		Text theText = new Text(curColor, (double)x, (double)y, (double)z, txtNote);
-		return theText;
+		Text text = new Text(curColor, (double)x, (double)y, (double)z, txtNote);
+		return text;
 	}
 
 	private Trixel takeTrixel(Color curColor) throws ModelsException, ParserException {
@@ -486,8 +486,8 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER); z = tok.iValue;
 		tok = prs.getToken(); isMatch(tok, Token.SEMI);
 		
-		Trixel theTrixel = new Trixel(curColor, (double)x, (double)y, (double)z);
-		return theTrixel;
+		Trixel trixel = new Trixel(curColor, (double)x, (double)y, (double)z);
+		return trixel;
 	}
 
 	private Line takeLine(Color curColor) throws ModelsException, ParserException {
@@ -502,9 +502,9 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER); z2 = tok.iValue;
 		tok = prs.getToken(); isMatch(tok, Token.SEMI);
 		
-		Line theLine = new Line(curColor, (double)x1, (double)y1, (double)z1,
+		Line line = new Line(curColor, (double)x1, (double)y1, (double)z1,
 								(double)x2, (double)y2, (double)z2);
-		return theLine;
+		return line;
 	}
 
 	private Triangle takeTriangle(Color curColor) throws ModelsException, ParserException {
@@ -522,11 +522,11 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER); z3 = tok.iValue;
 		tok = prs.getToken(); isMatch(tok, Token.SEMI);
 		
-		Triangle theTriangle = new Triangle(curColor,
+		Triangle triangle = new Triangle(curColor,
 								(double)x1, (double)y1, (double)z1,
 								(double)x2, (double)y2, (double)z2,
 								(double)x3, (double)y3, (double)z3);
-		return theTriangle;
+		return triangle;
 	}
 
 	private primitives.Rectangle takeRectangle(Color curColor)
@@ -548,12 +548,12 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER); z4 = tok.iValue;
 		tok = prs.getToken(); isMatch(tok, Token.SEMI);
 		
-		primitives.Rectangle theRectangle = new primitives.Rectangle(curColor,
+		primitives.Rectangle rectangle = new primitives.Rectangle(curColor,
 								(double)x1, (double)y1, (double)z1,
 								(double)x2, (double)y2, (double)z2,
 								(double)x3, (double)y3, (double)z3,
 								(double)x4, (double)y4, (double)z4);
-		return theRectangle;
+		return rectangle;
 	}
 
 	private void shiftX(Model M) throws ModelsException, ParserException {
@@ -561,7 +561,7 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 		double factor = (double)tok.iValue;
 		for (int i = 0; i<M.cntPrimitives; i++) {
-			M.thePrimitives[i].shift(factor, 0.0, 0.0);
+			M.primitives[i].shift(factor, 0.0, 0.0);
 		}
 		for (int i = 0; i<M.cntWeapons; i++) {
 			M.shiftWeapon(i, factor, 0.0, 0.0);
@@ -575,7 +575,7 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 		double factor = (double)tok.iValue;
 		for (int i = 0; i<M.cntPrimitives; i++) {
-			M.thePrimitives[i].shift(0.0, factor, 0.0);
+			M.primitives[i].shift(0.0, factor, 0.0);
 		}
 		for (int i = 0; i<M.cntWeapons; i++) {
 			M.shiftWeapon(i, 0.0, factor, 0.0);
@@ -589,7 +589,7 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 		double factor = (double)tok.iValue;
 		for (int i = 0; i<M.cntPrimitives; i++) {
-			M.thePrimitives[i].shift(0.0, 0.0, factor);
+			M.primitives[i].shift(0.0, 0.0, factor);
 		}
 		for (int i = 0; i<M.cntWeapons; i++) {
 			M.shiftWeapon(i, 0.0, 0.0, factor);
@@ -603,7 +603,7 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 		double factor = (double)tok.iValue;
 		for (int i = 0; i<M.cntPrimitives; i++) {
-			M.thePrimitives[i].reduceScale(factor);
+			M.primitives[i].reduceScale(factor);
 		}
 		for (int i = 0; i<M.cntWeapons; i++) {
 			M.reduceWeaponScale(i, factor);
@@ -617,7 +617,7 @@ public class ModelsCollector {
 		tok = prs.getToken(); isMatch(tok, Token.NUMBER);
 		double factor = (double)tok.iValue;
 		for (int i = 0; i<M.cntPrimitives; i++) {
-			M.thePrimitives[i].increaseScale(factor);
+			M.primitives[i].increaseScale(factor);
 		}
 		for (int i = 0; i<M.cntWeapons; i++) {
 			M.increaseWeaponScale(i, factor);
@@ -653,7 +653,7 @@ public class ModelsCollector {
 	public int getIndexByName(String strModelName) {
 		int index = -1;
 		for (int i=0; i<cntModels; i++)
-			if (strModelName.equals(theModels[i].strModelName)) index = i;
+			if (strModelName.equals(models[i].strModelName)) index = i;
 		return index;
 	}
 }

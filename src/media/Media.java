@@ -12,7 +12,7 @@ import java.applet.*;
  */
 public class Media {
 	public static final int maxImages = 16;
-	private Applet theApplet;
+	private Applet applet;
 
 	public Image imgResult;
 
@@ -28,40 +28,28 @@ public class Media {
 	public AudioClip auHit;
 	public AudioClip auWeapon[] = new AudioClip[4];
 
-	public Media(Applet theApplet) {
-		this.theApplet = theApplet;
+	public Media(Applet applet) {
+		this.applet = applet;
 
 		try {
-			imgResult = theApplet.getImage(theApplet.getCodeBase(), "data/images/result.jpg");
-			MediaTracker all = new MediaTracker(theApplet);
+			imgResult = applet.getImage(applet.getCodeBase(), "data/images/result.jpg");
+			MediaTracker all = new MediaTracker(applet);
 
-			//auNoise = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/noise.au");
-			auNoise = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/rambling-noise.wav");
-			//auPing = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/ping.au");
-			auPing = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/select.wav");
-			//auMsg = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/msg.au");
-			auMsg = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/ping.wav");
-			//auAlarm = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/alarm.au");
-			auAlarm = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/digital-alarm.wav");
-			//auSignal = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/signal.au");
-			auSignal = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/alarm-2-9.wav");
-			//auTeleport = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/teleport.au");
-			auTeleport = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/machine.wav");
+			auNoise = applet.getAudioClip(applet.getCodeBase(), "data/audio/rambling-noise.wav");
+			auPing = applet.getAudioClip(applet.getCodeBase(), "data/audio/select.wav");
+			auMsg = applet.getAudioClip(applet.getCodeBase(), "data/audio/ping.wav");
+			auAlarm = applet.getAudioClip(applet.getCodeBase(), "data/audio/digital-alarm.wav");
+			auSignal = applet.getAudioClip(applet.getCodeBase(), "data/audio/alarm-2-9.wav");
+			auTeleport = applet.getAudioClip(applet.getCodeBase(), "data/audio/machine.wav");
 
-			//auWeapon[0] = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/flak.au");
-			auWeapon[0] = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/blast-04.wav");
-			//auWeapon[1] = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/medium_laser.au");
-			//auWeapon[1] = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/quick-laser.wav");
-			auWeapon[1] = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/cool-lil-laser-1.wav");
-			auWeapon[2] = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/dusty-laser-wav");
-			auWeapon[3] = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/rayo-laser.wav");
+			auWeapon[0] = applet.getAudioClip(applet.getCodeBase(), "data/audio/blast-04.wav");
+			auWeapon[1] = applet.getAudioClip(applet.getCodeBase(), "data/audio/cool-lil-laser-1.wav");
+			auWeapon[2] = applet.getAudioClip(applet.getCodeBase(), "data/audio/dusty-laser-wav");
+			auWeapon[3] = applet.getAudioClip(applet.getCodeBase(), "data/audio/rayo-laser.wav");
 
-			//auExplosion = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/explosion.au");
-			auExplosion = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/explosion-1.wav");
-			//auBlow = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/blow.au");
-			auBlow = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/explosion-medium.wav");
-			//auHit = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/hit.au");
-			auHit = theApplet.getAudioClip(theApplet.getCodeBase(), "data/audio/impact-095.wav");
+			auExplosion = applet.getAudioClip(applet.getCodeBase(), "data/audio/explosion-1.wav");
+			auBlow = applet.getAudioClip(applet.getCodeBase(), "data/audio/explosion-medium.wav");
+			auHit = applet.getAudioClip(applet.getCodeBase(), "data/audio/impact-095.wav");
 
 			all.addImage(imgResult, 0);
 			all.waitForAll();

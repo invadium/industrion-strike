@@ -4,20 +4,20 @@ import scene.SpaceObject;
 import scene.Scene;
 
 public class FlightPlan {
-	Scene theScene;
+	Scene scene;
 	public final int maxPositions = 200;
 
 	public int cntPositions = 0;
 	public PlanPosition Positions[] = new PlanPosition[maxPositions];
 
-	public FlightPlan(Scene theScene) {
-		this.theScene = theScene;
+	public FlightPlan(Scene scene) {
+		this.scene = scene;
 	}
 
-	public void add(PlanPosition thePosition) {
+	public void add(PlanPosition position) {
 		if (cntPositions < maxPositions) {
-			Positions[cntPositions] = thePosition;
-			thePosition.iPos = this.getMax(thePosition.iSide, thePosition.iPlan);
+			Positions[cntPositions] = position;
+			position.iPos = this.getMax(position.iSide, position.iPlan);
 			cntPositions++;
 		}
 	}
@@ -29,20 +29,20 @@ public class FlightPlan {
 			C.currentTask.iType = Positions[i].iType;
 			C.agressionLevel = Positions[i].iAgression;
 			if (Positions[i].strTarget != null) {
-				int index = theScene.Objects.getIndexByName(Positions[i].strTarget);
+				int index = scene.Objects.getIndexByName(Positions[i].strTarget);
 				if (index == -1) C.currentTask.iTarget = -1;
 				else {
 					C.currentTask.iTarget = index;
-					C.currentTask.id = theScene.Objects.Objects[index].id;
+					C.currentTask.id = scene.Objects.Objects[index].id;
 					C.currentTask.isActual = true;
 				}
 			}
 			if (Positions[i].strSecondaryTarget != null) {
-				int index = theScene.Objects.getIndexByName(Positions[i].strSecondaryTarget);
+				int index = scene.Objects.getIndexByName(Positions[i].strSecondaryTarget);
 				if (index == -1) C.currentTask.iSecondaryTarget = -1;
 				else {
 					C.currentTask.iSecondaryTarget = index;
-					C.currentTask.sid = theScene.Objects.Objects[index].id;
+					C.currentTask.sid = scene.Objects.Objects[index].id;
 					C.currentTask.isSecondaryActual = true;
 				}
 			}

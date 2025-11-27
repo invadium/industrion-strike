@@ -30,11 +30,11 @@ public class MessageScreen implements AreaListener{
 	public int w = 350;
 	public int h = 110;
 
-	public MessageScreen(Strike theApplet, Graphics theCanvas, Media theMedia) {
-		this.applet = theApplet;
+	public MessageScreen(Strike applet, Graphics canvas, Media media) {
+		this.applet = applet;
 		this.applet.areaControl.addArea(this, MESSAGELOG, AreaControl.MESSAGE_LOG, this.x,this.y, this.w, this.h);
-		this.canvas = theCanvas;
-		this.media = theMedia;
+		this.canvas = canvas;
+		this.media = media;
 	}
 
 	public void push(String strMessage) {
@@ -126,7 +126,7 @@ public class MessageScreen implements AreaListener{
 	public void clearifyPosition(int w, int h) {
 		this.x = 10;
 		this.y = h - this.h - 10;
-		this.w = applet.scene.theIndicatorScreen.x - this.x - 10;
+		this.w = applet.scene.indicatorScreen.x - this.x - 10;
 		
 		// update active areas
 		applet.areaControl.updateAreaCoords(

@@ -2,7 +2,6 @@ package primitives;
 
 import java.awt.*;
 import java.applet.*;
-import math.*;	
 import scene.Camera;
 import scene.SpaceObject;
 import scene.Scene;
@@ -15,8 +14,8 @@ import render.RenderedElement;
  *
  */
 public class Text extends Primitive {
-	Applet theApplet;
-	Graphics theCanvas;
+	Applet applet;
+	Graphics canvas;
 	private boolean isInScreen;
 	public final int cntPoints = 1;
 	primitives.Point P1;
@@ -56,17 +55,17 @@ public class Text extends Primitive {
 		this.isInScreen = true;
 	}
 
-	public RenderedElement getRenderedElement(SpaceObject theSpaceObject) {
-		RenderedElement theElement;
-		theElement = new RenderedElement();
-		theElement.PrimitiveColor = this.PrimitiveColor;
-		theElement.cntPoints = -13;
-		theElement.ix1 = P1.ipx;
-		theElement.iy1 = P1.ipy;
-		theElement.d1 = P1.z_buffer;
-		theElement.calcAverageDistance();
-		theElement.volume = this.volume;
-		theElement.txtNote = this.txtNote;
-		return theElement;
+	public RenderedElement getRenderedElement(SpaceObject spaceObject) {
+		RenderedElement element;
+		element = new RenderedElement();
+		element.PrimitiveColor = this.PrimitiveColor;
+		element.cntPoints = -13;
+		element.ix1 = P1.ipx;
+		element.iy1 = P1.ipy;
+		element.d1 = P1.z_buffer;
+		element.calcAverageDistance();
+		element.volume = this.volume;
+		element.txtNote = this.txtNote;
+		return element;
 	}
 }

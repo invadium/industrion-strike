@@ -8,11 +8,11 @@ import media.Media;
 import scene.Scene;
 
 public class ResultScreen {
-	Applet theApplet;
-	Graphics theCanvas;
+	Applet applet;
+	Graphics bufCanvas;
 	Graphics appCanvas;
-	Scene theScene;
-	Media theMedia;
+	Scene scene;
+	Media media;
 	Image imgBuffer;
 
 	long iDetail = 1;
@@ -26,14 +26,14 @@ public class ResultScreen {
 	Font screenFontL = new Font("Courier", Font.PLAIN, 32);
 	boolean isExpaired = true;
 
-	public ResultScreen(Applet theApplet, Graphics appCanvas, Scene theScene, Media theMedia) {
-		this.theApplet = theApplet;
+	public ResultScreen(Applet applet, Graphics appCanvas, Scene scene, Media media) {
+		this.applet = applet;
 		this.appCanvas = appCanvas;
-		this.theScene = theScene;
-		this.theMedia = theMedia;
+		this.scene = scene;
+		this.media = media;
 
-		imgBuffer = theApplet.createImage(theApplet.getWidth(), theApplet.getHeight());
-		this.theCanvas = imgBuffer.getGraphics();
+		imgBuffer = applet.createImage(applet.getWidth(), applet.getHeight());
+		this.bufCanvas = imgBuffer.getGraphics();
 	}
 
 	public void detail() {
@@ -51,26 +51,26 @@ public class ResultScreen {
 
 	private void drawResult() {
 			Color FColor = new Color(255, 200, 60);
-			int mis = theScene.Interpreter.getiVariable("Mission");
+			int mis = scene.Interpreter.getiVariable("Mission");
 
 			String strMissionResult = "Mission finished";
 			if (mis < 0) strMissionResult = "Mission failed";
 			if (mis > 0) strMissionResult = "Mission is successful";
 			
-			theCanvas.setFont(screenFontL);
-			FontMetrics FM = theCanvas.getFontMetrics();
-			int sx = (theApplet.getWidth() - FM.stringWidth(strMissionResult)) / 2;
+			bufCanvas.setFont(screenFontL);
+			FontMetrics FM = bufCanvas.getFontMetrics();
+			int sx = (applet.getWidth() - FM.stringWidth(strMissionResult)) / 2;
 
-			theCanvas.setColor(Color.black);
-			theCanvas.drawString(strMissionResult, sx+4, 54);
-			theCanvas.setColor(FColor);
-			theCanvas.drawString(strMissionResult, sx, 50);
+			bufCanvas.setColor(Color.black);
+			bufCanvas.drawString(strMissionResult, sx+4, 54);
+			bufCanvas.setColor(FColor);
+			bufCanvas.drawString(strMissionResult, sx, 50);
 	}
 
 	private void drawScore() {
 		Color FColor = new Color(255, 200, 60);
 		int iDet = 1;
-		int Sides = theScene.Interpreter.getiVariable("Sides");
+		int Sides = scene.Interpreter.getiVariable("Sides");
 		int startx = 140;
 		int starty = 160;
 		int sx = 145;
@@ -90,56 +90,56 @@ public class ResultScreen {
 				}
 				iDet++;
 				if (iDet < this.iDetail) {
-					theCanvas.setFont(screenFontH);
-					theCanvas.setColor(Color.black);
-					theCanvas.drawString(strHead, startx-73, starty + j*sy+2);
-					theCanvas.setColor(FColor);
-					theCanvas.drawString(strHead, startx-75, starty + j*sy);
+					bufCanvas.setFont(screenFontH);
+					bufCanvas.setColor(Color.black);
+					bufCanvas.drawString(strHead, startx-73, starty + j*sy+2);
+					bufCanvas.setColor(FColor);
+					bufCanvas.drawString(strHead, startx-75, starty + j*sy);
 				}
 		}
 
 		for (int i = 1; i <= Sides; i++) {
-			String sideName = theScene.Interpreter.getsVariable("SideName" + i);
+			String sideName = scene.Interpreter.getsVariable("SideName" + i);
 			if (sideName.equals("")) sideName = "Side " + i;
 			iDet++;
 			if (iDet < this.iDetail) {
-				theCanvas.setFont(screenFontN);
-				theCanvas.setColor(Color.black);
-				theCanvas.drawString(sideName, startx + i*sx+2, starty - 60+2);
-				theCanvas.setColor(FColor);
-				theCanvas.drawString(sideName, startx + i*sx, starty - 60);
+				bufCanvas.setFont(screenFontN);
+				bufCanvas.setColor(Color.black);
+				bufCanvas.drawString(sideName, startx + i*sx+2, starty - 60+2);
+				bufCanvas.setColor(FColor);
+				bufCanvas.drawString(sideName, startx + i*sx, starty - 60);
 			}
 
-			String sideInfo = theScene.Interpreter.getsVariable("SideInfo" + i);
+			String sideInfo = scene.Interpreter.getsVariable("SideInfo" + i);
 			if (!sideInfo.equals("")) {
 				iDet++;
 				if (iDet < this.iDetail) {
-					theCanvas.setFont(screenFontN);
-					theCanvas.setColor(Color.black);
-					theCanvas.drawString(sideInfo, startx + i*sx+2, starty - 35+2);
-					theCanvas.setColor(FColor);
-					theCanvas.drawString(sideInfo, startx + i*sx, starty - 35);
+					bufCanvas.setFont(screenFontN);
+					bufCanvas.setColor(Color.black);
+					bufCanvas.drawString(sideInfo, startx + i*sx+2, starty - 35+2);
+					bufCanvas.setColor(FColor);
+					bufCanvas.drawString(sideInfo, startx + i*sx, starty - 35);
 				}
 			}
 
 			int iVal = 0;
 		  	for (int j = 0; j < 7; j++) {
 				switch (j) {
-				  case 0: iVal = theScene.Interpreter.getiVariable("Score" + i); break;
-				  case 1: iVal = theScene.Interpreter.getiVariable("ShipsDestroy" + i); break;
-				  case 2: iVal = theScene.Interpreter.getiVariable("ShipsLost" + i); break;
-				  case 3: iVal = theScene.Interpreter.getiVariable("FightersDestroy" + i); break;
-				  case 4: iVal = theScene.Interpreter.getiVariable("FightersLost" + i); break;
-				  case 5: iVal = theScene.Interpreter.getiVariable("StaticDestroy" + i); break;
-				  case 6: iVal = theScene.Interpreter.getiVariable("StaticLost" + i); break;
+				  case 0: iVal = scene.Interpreter.getiVariable("Score" + i); break;
+				  case 1: iVal = scene.Interpreter.getiVariable("ShipsDestroy" + i); break;
+				  case 2: iVal = scene.Interpreter.getiVariable("ShipsLost" + i); break;
+				  case 3: iVal = scene.Interpreter.getiVariable("FightersDestroy" + i); break;
+				  case 4: iVal = scene.Interpreter.getiVariable("FightersLost" + i); break;
+				  case 5: iVal = scene.Interpreter.getiVariable("StaticDestroy" + i); break;
+				  case 6: iVal = scene.Interpreter.getiVariable("StaticLost" + i); break;
 				}
 				iDet++;
 				if (iDet < this.iDetail) {
-					theCanvas.setFont(screenFontH);
-					theCanvas.setColor(Color.black);
-					theCanvas.drawString("" + iVal, startx + i*sx+2, starty + j*sy+2);
-					theCanvas.setColor(FColor);
-					theCanvas.drawString("" + iVal, startx + i*sx, starty + j*sy);
+					bufCanvas.setFont(screenFontH);
+					bufCanvas.setColor(Color.black);
+					bufCanvas.drawString("" + iVal, startx + i*sx+2, starty + j*sy+2);
+					bufCanvas.setColor(FColor);
+					bufCanvas.drawString("" + iVal, startx + i*sx, starty + j*sy);
 				}
 			}
 			
@@ -148,29 +148,29 @@ public class ResultScreen {
 		iDet++;
 		if (iDet < this.iDetail) {
 			String strPress = "Press Enter to continue...";
-			theCanvas.setFont(screenFontE);
-			FontMetrics FM = theCanvas.getFontMetrics();
-			int stx = (theApplet.getWidth() - FM.stringWidth(strPress)) / 2;
-			theCanvas.setColor(Color.black);
-			theCanvas.drawString(strPress, stx+2, theApplet.getHeight() - 50);
-			theCanvas.setColor(FColor);
-			theCanvas.drawString(strPress, stx, theApplet.getHeight() - 50);
+			bufCanvas.setFont(screenFontE);
+			FontMetrics FM = bufCanvas.getFontMetrics();
+			int stx = (applet.getWidth() - FM.stringWidth(strPress)) / 2;
+			bufCanvas.setColor(Color.black);
+			bufCanvas.drawString(strPress, stx+2, applet.getHeight() - 50);
+			bufCanvas.setColor(FColor);
+			bufCanvas.drawString(strPress, stx, applet.getHeight() - 50);
 		}
 
 
-		if (!noMoreDetails) theMedia.auPing.play();
+		if (!noMoreDetails) media.auPing.play();
 		if (iDet <= this.iDetail) this.noMoreDetails = true;
 	}
 
 	public void draw() {
 		if (isExpaired) {
-			theCanvas.drawImage(theMedia.imgResult, 0, 0, 
-				theApplet.getWidth(), theApplet.getHeight(), theApplet);
+			bufCanvas.drawImage(media.imgResult, 0, 0, 
+				applet.getWidth(), applet.getHeight(), applet);
 
 			drawResult();
 			drawScore();
 
-			appCanvas.drawImage(imgBuffer, 0, 0, this.theApplet);
+			appCanvas.drawImage(imgBuffer, 0, 0, this.applet);
 			isExpaired = false;
 		}
 	}

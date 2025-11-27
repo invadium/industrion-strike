@@ -15,8 +15,8 @@ import render.RenderedElement;
  *
  */
 public class Line extends Primitive {
-	Applet theApplet;
-	Graphics theCanvas;
+	Applet applet;
+	Graphics canvas;
 	private boolean isInScreen;
 	public final int cntPoints = 2;
 	primitives.Point P1, P2;
@@ -68,22 +68,22 @@ public class Line extends Primitive {
 		this.isInScreen = true;
 	}
 
-	public RenderedElement getRenderedElement(SpaceObject theSpaceObject) {
-		RenderedElement theElement;
-		theElement = new RenderedElement();
-		if (theSpaceObject.colorExtension == false) theElement.PrimitiveColor = this.PrimitiveColor;
-		    else theElement.PrimitiveColor = theSpaceObject.ownColor;
-		theElement.cntPoints = 2;
-		theElement.ix1 = P1.ipx;
-		theElement.iy1 = P1.ipy;
-		theElement.d1 = P1.z_buffer;
-		theElement.ix2 = P2.ipx;
-		theElement.iy2 = P2.ipy;
-		theElement.d2 = P2.z_buffer;
-		theElement.calcAverageDistance();
-		int vdist = (int)(theElement.distance / 4000);
-		theElement.volume = this.volume - vdist;
-		if (theElement.volume < 1) theElement.volume = 1;
-		return theElement;
+	public RenderedElement getRenderedElement(SpaceObject spaceObject) {
+		RenderedElement element;
+		element = new RenderedElement();
+		if (spaceObject.colorExtension == false) element.PrimitiveColor = this.PrimitiveColor;
+		    else element.PrimitiveColor = spaceObject.ownColor;
+		element.cntPoints = 2;
+		element.ix1 = P1.ipx;
+		element.iy1 = P1.ipy;
+		element.d1 = P1.z_buffer;
+		element.ix2 = P2.ipx;
+		element.iy2 = P2.ipy;
+		element.d2 = P2.z_buffer;
+		element.calcAverageDistance();
+		int vdist = (int)(element.distance / 4000);
+		element.volume = this.volume - vdist;
+		if (element.volume < 1) element.volume = 1;
+		return element;
 	}
 }

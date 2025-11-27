@@ -9,8 +9,8 @@ import scene.Scene;
 import render.RenderedElement;
 
 public class Rectangle extends Primitive {
-	Applet theApplet;
-	Graphics theCanvas;
+	Applet applet;
+	Graphics canvas;
 	public final int cntPoints = 4;
 	public primitives.Point P1, P2, P3, P4;
 	private RColor renderedColor;
@@ -111,9 +111,9 @@ public class Rectangle extends Primitive {
 				Fi = CMath.M.acos(cosFi);
 			}
 		
-			Vector sunVector = new Vector(P1.BP.x - sce.theSun.fire.x,
-									P1.BP.y - sce.theSun.fire.y,
-									P1.BP.z - sce.theSun.fire.z);
+			Vector sunVector = new Vector(P1.BP.x - sce.sun.fire.x,
+									P1.BP.y - sce.sun.fire.y,
+									P1.BP.z - sce.sun.fire.z);
 			double cosPsi = normal.getCosFi(sunVector);
 			double Psi = CMath.M.acos(cosPsi);
 
@@ -121,34 +121,34 @@ public class Rectangle extends Primitive {
 
 			//if colorVal negative, sun does'nt fall on verge
 			if (cosPsi > 0) {
-				renderedColor.darkDiffuse(sce.theSun.fonLight - cosPsi/10);
+				renderedColor.darkDiffuse(sce.sun.fonLight - cosPsi/10);
 			} else {
 				//shadding (for diffuse model)
-				renderedColor.diffuse((-cosPsi) + sce.theSun.fonLight);
+				renderedColor.diffuse((-cosPsi) + sce.sun.fonLight);
 				//metal blik
 				if (matMetal != 0) renderedColor.increase(
 					(int)(cosPsi*cosPsi * (double)matMetal));
 			}
 	}
 
-	public RenderedElement getRenderedElement(SpaceObject theSpaceObject) {
-		RenderedElement theElement;
-		theElement = new RenderedElement();
-		theElement.PrimitiveColor = this.renderedColor;
-		theElement.cntPoints = 4;
-		theElement.ix1 = P1.ipx;
-		theElement.iy1 = P1.ipy;
-		theElement.d1 = P1.z_buffer;
-		theElement.ix2 = P2.ipx;
-		theElement.iy2 = P2.ipy;
-		theElement.d2 = P2.z_buffer;
-		theElement.ix3 = P3.ipx;
-		theElement.iy3 = P3.ipy;
-		theElement.d3 = P3.z_buffer;
-		theElement.ix4 = P4.ipx;
-		theElement.iy4 = P4.ipy;
-		theElement.d4 = P4.z_buffer;
-		theElement.calcAverageDistance();
-		return theElement;
+	public RenderedElement getRenderedElement(SpaceObject spaceObject) {
+		RenderedElement element;
+		element = new RenderedElement();
+		element.PrimitiveColor = this.renderedColor;
+		element.cntPoints = 4;
+		element.ix1 = P1.ipx;
+		element.iy1 = P1.ipy;
+		element.d1 = P1.z_buffer;
+		element.ix2 = P2.ipx;
+		element.iy2 = P2.ipy;
+		element.d2 = P2.z_buffer;
+		element.ix3 = P3.ipx;
+		element.iy3 = P3.ipy;
+		element.d3 = P3.z_buffer;
+		element.ix4 = P4.ipx;
+		element.iy4 = P4.ipy;
+		element.d4 = P4.z_buffer;
+		element.calcAverageDistance();
+		return element;
 	}
 }

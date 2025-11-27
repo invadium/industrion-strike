@@ -20,7 +20,7 @@ public class Render {
 	private Visualizer visualizer;
     private Visualizer plateVisualizer;
     private Visualizer frameVisualizer;
-	RECollector theRECollector;
+	RECollector reCollector;
 
 	public boolean drawCross = true;
 	public boolean drawFrame = false;
@@ -41,7 +41,7 @@ public class Render {
         frameVisualizer = new FrameVisualizer(applet, canvas, media);
 		visualizer = plateVisualizer;
         
-		theRECollector = new RECollector();	
+		reCollector = new RECollector();	
 	}
     
     public void switchVisualization() {
@@ -165,9 +165,9 @@ public class Render {
 		checkTargetCross();
 		
 		//rendering
-		RenderedElement theElement;
+		RenderedElement element;
 		primitives.Point center = new primitives.Point();
-		theRECollector.clearList();
+		reCollector.clearList();
 		scene.Objects.startListing();
 		while ((obj = scene.Objects.getNext()) != null) {
 		  center.set(0, 0, 0);
@@ -198,22 +198,22 @@ public class Render {
 			  if(((center.z_buffer > camera.ShipSightRange && obj.model.isShip) ||
 				  (center.z_buffer > camera.SightRange && !obj.model.isShip))
 				  && obj.model.isSpace==false) {
-					theElement = new RenderedElement();
-					theElement.PrimitiveColor = obj.farColor;
-					theElement.cntPoints = 1;
-					theElement.ix1 = center.ipx;
-					theElement.iy1 = center.ipy;
-					theElement.d1 = center.z_buffer;
-					theElement.calcAverageDistance();		
-					theElement.volume = obj.model.farSize;
-					theRECollector.addElement(theElement);
+					element = new RenderedElement();
+					element.PrimitiveColor = obj.farColor;
+					element.cntPoints = 1;
+					element.ix1 = center.ipx;
+					element.iy1 = center.ipy;
+					element.d1 = center.z_buffer;
+					element.calcAverageDistance();		
+					element.volume = obj.model.farSize;
+					reCollector.addElement(element);
 			  } else for (j = 0; j < obj.model.cntPrimitives; j++) {
-				if ((obj.frame >= obj.model.thePrimitives[j].sFrame
-					    && obj.frame <= obj.model.thePrimitives[j].eFrame)
-					 || obj.model.thePrimitives[j].sFrame == 0) {
-				  obj.model.thePrimitives[j].renderProection(
+				if ((obj.frame >= obj.model.primitives[j].sFrame
+					    && obj.frame <= obj.model.primitives[j].eFrame)
+					 || obj.model.primitives[j].sFrame == 0) {
+				  obj.model.primitives[j].renderProection(
 							scene, camera, obj);
-				  theRECollector.addElement(obj.model.thePrimitives[j].getRenderedElement(obj));
+				  reCollector.addElement(obj.model.primitives[j].getRenderedElement(obj));
 				}
 			  }
 
@@ -236,7 +236,7 @@ public class Render {
 				RE.distance = 1;
 				RE.isWareframed = true;
 				RE.PrimitiveColor = RC;
-				theRECollector.addElement(RE);
+				reCollector.addElement(RE);
 			  }
 
 			  //add primary target mark
@@ -256,7 +256,7 @@ public class Render {
 				RE.distance = 1;
 				RE.isWareframed = true;
 				RE.PrimitiveColor = RC;
-				theRECollector.addElement(RE);
+				reCollector.addElement(RE);
 			  }
 
 			  //add secondary target mark
@@ -276,7 +276,7 @@ public class Render {
 				RE.distance = 1;
 				RE.isWareframed = true;
 				RE.PrimitiveColor = RC;
-				theRECollector.addElement(RE);
+				reCollector.addElement(RE);
 			  }
 		  	}
 		  }
@@ -290,12 +290,12 @@ public class Render {
 	  		radar.addTargeted(center.P.x, center.P.y, center.P.z, obj.model.radarMark);
 		}
 
-		if (theRECollector.cntElements > 0) {
+		if (reCollector.cntElements > 0) {
 			//drawing
-			i = theRECollector.iTail;
+			i = reCollector.iTail;
 			while (i != -1) {
-				visualizer.drawRenderedElement(theRECollector.Elements[i]);
-				i = theRECollector.Elements[i].prevElement;
+				visualizer.drawRenderedElement(reCollector.Elements[i]);
+				i = reCollector.Elements[i].prevElement;
 			}
 		}
 	}

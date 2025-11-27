@@ -1,6 +1,5 @@
 package primitives;
 
-import java.awt.*;
 import scene.Scene;
 import scene.Camera;
 import scene.SpaceObject;
@@ -21,7 +20,7 @@ abstract public class Primitive {
 	public int eFrame = 0;
 
 	abstract public void renderProection(Scene sce, Camera cam, SpaceObject obj);
-	abstract public RenderedElement getRenderedElement(SpaceObject theSpaceObject);
+	abstract public RenderedElement getRenderedElement(SpaceObject spaceObject);
 	abstract public void reduceScale(double factor);
 	abstract public void increaseScale(double factor);
 	abstract public void shift(double sx, double sy, double sz);

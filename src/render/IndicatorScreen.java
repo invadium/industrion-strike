@@ -1,13 +1,11 @@
 package render;
 
 import java.awt.*;
-import java.applet.*;
 import media.Media;
 import scene.Scene;
 import scene.Camera;
 import scene.SpaceObject;
 import scene.Action;
-import control.Task;
 import engine.Area;
 import engine.AreaControl;
 import engine.AreaListener;
@@ -70,12 +68,12 @@ public class IndicatorScreen implements AreaListener {
 
 	public void drawIndicator(boolean Value, int sy,
 			String trueValue, String falseValue, Color trueColor, Color falseColor) {
-		//theCanvas.setColor(Color.black);
-		//theCanvas.fillRect(x, y + sy, w, 25);
+		//canvas.setColor(Color.black);
+		//canvas.fillRect(x, y + sy, w, 25);
 		Color color;
 		if (Value) color = new Color(40, 0, 150);
 		else color = new Color(40, 0, 100);
-		helper.theCanvas.setColor(color);
+		helper.canvas.setColor(color);
 		helper.drawArea(x, y + sy, w, 25);
 		
 		FontMetrics FM = canvas.getFontMetrics();
@@ -92,12 +90,12 @@ public class IndicatorScreen implements AreaListener {
 	}
 
 	public void drawValue(String strValue, int sy, Color valColor) {
-		//theCanvas.setColor(Color.black);
-		//theCanvas.fillRect(x, y + sy, w, 25);
+		//canvas.setColor(Color.black);
+		//canvas.fillRect(x, y + sy, w, 25);
 		Color color;
 		if (scene.statis) color = new Color(100, 100, 200);
 		else color = new Color(40, 0, 100);
-		helper.theCanvas.setColor(color);
+		helper.canvas.setColor(color);
 		helper.drawArea(x, y + sy, w, 25);
 		
 		canvas.setColor(valColor);
