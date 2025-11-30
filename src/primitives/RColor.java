@@ -1,7 +1,6 @@
 package primitives;
 
 import java.awt.*;
-import math.*;
 
 /**
  * Represents color.

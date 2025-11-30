@@ -1,11 +1,9 @@
 package math;
 
 /**
- * Represents 4x3 matrix.
- * Used in 3d transformation operations.
+ * Represents a 4x3 matrix.
  * 
- * @author Igor Khotin
- *
+ * Used in 3D transformations.
  */
 public class Matrix43 {
 	public double vals[][];

@@ -1,12 +1,10 @@
 package math;
 
 /**
- * Represents vector in 3d space.
- * 
- * @author Igor Khotin
- *
+ * Represents a vector in 3D space.
  */
 public class Vector {
+
 	public double x, y, z;
 
 	public Vector() {

@@ -3,8 +3,8 @@
  *  Industrion Strike strategic space simulation game
  *  Distributed under General Public License
  *
- *  @author Igor Khotin (aka Shock)
- *  @version 1.2, June 2008
+ *  @author Igor Khotin
+ *  @version 1.1, June 2008
  *
  ****************************************************/
 

@@ -1,9 +1,7 @@
 package render;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
-import java.awt.image.*;
 import java.applet.*;
 import media.Media;
 

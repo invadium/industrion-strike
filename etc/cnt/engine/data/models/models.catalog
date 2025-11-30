@@ -1,0 +1,83 @@
+#models files
+
+####################################
+#		space object models
+####################################
+"data/models/space/map.imod"
+"data/models/space/planet.imod"
+"data/models/space/snaevar.imod"
+"data/models/space/moon.imod"
+"data/models/space/magdalena.imod"
+"data/models/space/steel_nebula.imod"
+"data/models/space/red_nebula.imod"
+"data/models/space/camsat.imod"
+
+#####################################
+#			misc models
+#####################################
+"data/models/misc/fragment_t1.imod"
+"data/models/misc/fragment_t2.imod"
+"data/models/misc/fragment_t3.imod"
+"data/models/misc/blow.imod"
+"data/models/misc/destruct.imod"
+
+#####################################
+#			static models
+#####################################
+"data/models/static/nav_point.imod"
+"data/models/static/buoy.imod"
+"data/models/static/container.imod"
+
+#####################################
+#		  weapons models
+#####################################
+"data/models/weapons/laser_5mw.imod"
+"data/models/weapons/laser_7mw.imod"
+"data/models/weapons/laser_10mw.imod"
+"data/models/weapons/laser_15mw.imod"
+"data/models/weapons/laser_25mw.imod"
+"data/models/weapons/laser_50mw.imod"
+"data/models/weapons/stinger.imod"
+"data/models/weapons/sparrow.imod"
+"data/models/weapons/avalanche.imod"
+"data/models/weapons/proton.imod"
+
+######################################
+#		   fighters models
+######################################
+"data/models/fighters/hornet.imod"
+"data/models/fighters/falcon.imod"
+"data/models/fighters/phantom.imod"
+"data/models/fighters/tornado.imod"
+"data/models/fighters/raptor.imod"
+"data/models/fighters/dragonfly.imod"
+"data/models/fighters/mirage.imod"
+"data/models/fighters/zero.imod"
+"data/models/fighters/infinity.imod"
+"data/models/fighters/indefinite.imod"
+"data/models/fighters/comet.imod"
+"data/models/fighters/orion.imod"
+"data/models/fighters/flak_turret.imod"
+"data/models/fighters/laser_turret.imod"
+"data/models/fighters/probe.imod"
+"data/models/fighters/drone.imod"
+"data/models/fighters/shuttle.imod"
+
+########################################
+#			capships models
+########################################
+"data/models/capships/constellation.imod"
+"data/models/capships/lynx.imod"
+"data/models/capships/panther.imod"
+"data/models/capships/leopard.imod"
+"data/models/capships/jaguar.imod"
+"data/models/capships/tiger.imod"
+"data/models/capships/wasp.imod"
+"data/models/capships/oscar.imod"
+"data/models/capships/maradeur.imod"
+"data/models/capships/tsunami.imod"
+
+########################################
+#			station models
+########################################
+"data/models/static/outpost.imod"
