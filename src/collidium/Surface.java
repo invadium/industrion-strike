@@ -13,13 +13,13 @@ import collidium.mix.Mix;
 
 public class Surface extends JPanel implements Runnable {
 
-    private final double evoStep = 0.008;
+    private final float evoStep = 0.008f;
     private final double maxStep = 1;
 
     private Thread mixThread;
     private volatile boolean isRunning = false;
 
-    private volatile double time = 0;
+    private volatile float time = 0;
 
     private double x = 0, y = 0;
 
@@ -68,28 +68,27 @@ public class Surface extends JPanel implements Runnable {
         this.isRunning = false;
     }
 
-    private void evo(double dt) {
+    private void evo(float dt) {
         this.mix.evo(dt);
     }
 
     protected void paintComponent(Graphics g) {
         // super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
 
+        // setup the mix environment
         int width  = this.getWidth();
         int height = this.getHeight();
         this.mix.env.width = width;
         this.mix.env.height = height;
 
-        Context ctx = new Context(this.mix, g, g2d);
+        // create a drawing context?
+        Graphics2D g2d = (Graphics2D) g;
+        Context ctx = new Context(this.mix, g2d);
 
         // Enable whatever acceleration Swing can provide
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
                            RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // fill background
-        g2d.setColor(Color.getHSBColor(.1f, .05f, 0.1f));
-        g2d.fillRect(0, 0, width, height);
 
         this.mix.draw(ctx);
 
@@ -99,6 +98,7 @@ public class Surface extends JPanel implements Runnable {
     @Override
     public void run() {
         long frames = 0;
+
         double lastEvoTime = (double)System.nanoTime() / 1_000_000_000f;
 
         while (this.isRunning) {

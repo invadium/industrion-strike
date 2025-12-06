@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Frame implements Node {
+public class Frame extends AbstractNode {
 
     private Node __;
 
@@ -29,13 +29,13 @@ public class Frame implements Node {
     }
 
     @Override
-    public void evo(double dt) {
-        ls.forEach(node -> node.evo(dt));
+    public void evo(float dt) {
+        ls.forEach(node -> { if (node.isRunning()) node.evo(dt); });
     }
 
     @Override
     public void draw(Context ctx) {
-        ls.forEach(node -> node.draw(ctx));
+        ls.forEach(node -> { if (node.isVisible()) node.draw(ctx); });
     }
 
     @Override

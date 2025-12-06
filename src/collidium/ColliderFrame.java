@@ -15,8 +15,8 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-import collidium.dna.MegaMix;
 import collidium.mix.Mix;
+import collidium.mixer.MegaMix;
 
 public class ColliderFrame extends JFrame {
 
@@ -80,7 +80,6 @@ public class ColliderFrame extends JFrame {
         System.setProperty("sun.java2d.d3d", "true");
 
         Mix mix = new MegaMix();
-        mix.init();
         this.add(new Surface(mix));
         this.setSize(800, 600);
 
@@ -100,7 +99,7 @@ public class ColliderFrame extends JFrame {
         }
 
         this.showFrame();
-
+        mix.init();
     }
 
     private void setupTraps() {
