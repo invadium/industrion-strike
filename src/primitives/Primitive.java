@@ -7,9 +7,6 @@ import render.RenderedElement;
 
 /**
  * Abstract primitive
- * 
- * @author Igor Khotin
- *
  */
 abstract public class Primitive {
 	public RColor PrimitiveColor;

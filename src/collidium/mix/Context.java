@@ -6,11 +6,14 @@ public class Context {
 
     public final Mix $;
 
+    public final Mix mix;
+
     public final Graphics2D g;
 
     public Context(Mix $, Graphics2D g) {
         this.$ = $;
         this.g = g;
+        this.mix = $;
     }
 
 }

@@ -1,7 +1,6 @@
 package primitives;
 
 import java.awt.*;
-import java.applet.*;
 import math.*;
 import scene.Camera;
 import scene.SpaceObject;
@@ -15,7 +14,6 @@ import render.RenderedElement;
  *
  */
 public class Line extends Primitive {
-	Applet applet;
 	Graphics canvas;
 	private boolean isInScreen;
 	public final int cntPoints = 2;

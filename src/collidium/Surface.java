@@ -8,6 +8,7 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import collidium.gl.FrameBuffer;
 import collidium.mix.Context;
 import collidium.mix.Mix;
 
@@ -25,10 +26,13 @@ public class Surface extends JPanel implements Runnable {
 
     private Mix mix;
 
+    private FrameBuffer frameBuffer;
+
     public Surface(Mix mix) {
         super();
 
         this.mix = mix;
+        this.frameBuffer = new FrameBuffer();
 
         setFocusable(true);
         requestFocusInWindow();
@@ -78,18 +82,23 @@ public class Surface extends JPanel implements Runnable {
         // setup the mix environment
         int width  = this.getWidth();
         int height = this.getHeight();
-        this.mix.env.width = width;
+        this.mix.env.width  = width;
         this.mix.env.height = height;
 
         // create a drawing context?
         Graphics2D g2d = (Graphics2D) g;
+        // TODO the context MUST be cached and mutable
         Context ctx = new Context(this.mix, g2d);
+        this.frameBuffer.adjust(ctx);
 
         // Enable whatever acceleration Swing can provide
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
                            RenderingHints.VALUE_ANTIALIAS_ON);
 
-
+        if (this.frameBuffer.visible) {
+            this.frameBuffer.syncIn();
+            g2d.drawImage(this.frameBuffer.buffer, 0, 0, this);
+        }
         this.mix.draw(ctx);
 
         g.dispose();

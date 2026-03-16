@@ -6,7 +6,7 @@ import collidium.mix.AbstractProp;
 import collidium.mix.Context;
 import collidium.mix.Env;
 
-public class Background extends AbstractProp{
+public class Background extends AbstractProp {
 
     private Color color = Color.BLACK;
 
