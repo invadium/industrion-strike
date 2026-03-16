@@ -21,7 +21,9 @@ public class FrameBuffer {
     private void createBuffer(int width, int height) {
         this.buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         this.raster = this.buffer.getRaster();
-        this.pixels = new int[width * height];
+        DataBufferInt dataBuffer = (DataBufferInt)this.raster.getDataBuffer();
+        this.pixels = dataBuffer.getData();
+        //this.pixels = new int[width * height];
 
         // DEBUG random-fill the framebuffer
         for (int i = 0; i < this.pixels.length; i++) {
@@ -50,11 +52,11 @@ public class FrameBuffer {
     }
 
     public void syncOut() {
-        this.buffer.getRGB(0, 0, width, height, null, 0, width);
+        // this.buffer.getRGB(0, 0, width, height, null, 0, width);
     }
 
     public void syncIn() {
-        this.buffer.setRGB(0, 0, width, height, pixels, 0, width);
+        // this.buffer.setRGB(0, 0, width, height, pixels, 0, width);
     }
 
 }
